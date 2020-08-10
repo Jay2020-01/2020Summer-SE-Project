@@ -28,23 +28,23 @@
     <el-container>
       <!-- 侧边栏 -->
       <el-aside width="200px">
-        <!-- 侧边栏菜单区域 -->
+        <!-- 侧边栏菜单区域  default-active="1"没写-->
         <el-menu background-color="#fff" text-color="#535353" active-text-color="#409eff" router>
           <!-- 不分级菜单 -->
           <el-menu-item index="1">
-            <i class="el-icon-menu"></i>
+            <i class="fa fa-archive" style="padding: 0 10px 0 10px"></i>
             <span slot="title">工作台</span>
           </el-menu-item>
           <!-- 不分级菜单 -->
           <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
+            <i class="fa fa-envelope-o" style="padding: 0 10px 0 10px"></i>
             <span slot="title">收件箱</span>
           </el-menu-item>
           <!-- 分割线 -->
           <div style="margin: 8px 20px; height: 1.5px; background-color: rgb(230, 230, 230);"></div>
           <!-- 不分级菜单 -->
           <el-menu-item index="3">
-            <i class="el-icon-menu"></i>
+            <i class="fa fa-desktop" style="padding: 0 10px 0 10px"></i>
             <span slot="title">我的桌面</span>
           </el-menu-item>
           <!-- 一级菜单 -->
@@ -52,7 +52,7 @@
             <!-- 一级菜单模板区域 -->
             <template slot="title">
               <!-- 图标 -->
-              <i class="el-icon-location"></i>
+              <i class="fa fa-cube" style="padding: 0 10px 0 10px"></i>
               <!-- 文本 -->
               <span>团队空间</span>
             </template>
@@ -60,7 +60,7 @@
             <el-menu-item index="4-1">
               <template slot="title">
                 <!-- 图标 -->
-                <i class="el-icon-location"></i>
+                <!-- <i class="el-icon-location"></i> -->
                 <!-- 文本 -->
                 <span>团队名称</span>
               </template>
@@ -68,7 +68,7 @@
           </el-submenu>
           <!-- 不分级菜单 -->
           <el-menu-item index="5">
-            <i class="el-icon-menu"></i>
+            <i class="fa fa-trash-o" style="padding: 0 12px 0 11px"></i>
             <span slot="title">回收站</span>
           </el-menu-item>
         </el-menu>

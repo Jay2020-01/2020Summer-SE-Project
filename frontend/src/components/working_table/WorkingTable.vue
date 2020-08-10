@@ -1,19 +1,23 @@
 <template>
   <div class="tabs_container">
+    <!-- 标签组件 -->
     <el-tabs v-model="activeName" @tab-click="handleClick">
+      <!-- 标签内容 -->
       <el-tab-pane label="最近浏览" name="first">
-        <el-row>
-          <el-col :span="8" v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
-            <el-card :body-style="{ padding: '0px' }">
-              <img
-                src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                class="image"
-              />
-              <div style="padding: 14px;">
-                <span>好吃的汉堡</span>
-                <div class="bottom clearfix">
-                  <time class="time">{{ currentDate }}</time>
-                  <el-button type="text" class="button">操作按钮</el-button>
+        <!-- 一行两个 -->
+        <el-row :gutter="12">
+          <el-col v-for="(o) in 2" :key="o" :span="8">
+            <!-- 文件卡片 -->
+            <el-card shadow="hover">
+              <div class="card-container">
+                <!-- 图标 -->
+                <div class="picture inline-div">
+                  <span class="fa fa-file-text-o" style="font-size:25px"></span>
+                </div>
+                <!-- 文字 -->
+                <div class="word inline-div">
+                  <div class="tile">钻石文档</div>
+                  <div class="details">今天 10:20 我 打开</div>
                 </div>
               </div>
             </el-card>
@@ -44,10 +48,38 @@ export default {
 
 <style lang="less" scoped>
 // 切换标签样式
-.tabs_container {
-  // border: 1px solid red;
-}
+// 取消下方横线
 .tabs_container /deep/.el-tabs__nav-wrap::after {
   position: static !important;
+}
+
+// 卡片样式
+.el-card {
+  margin: 20px;
+}
+// 卡片内容样式
+.card-container {
+  align-items: center;
+  display: flex;
+}
+.inline-div {
+  display: inline-block;
+}
+.picture {
+  box-sizing: border-box;
+  align-items: center;
+  width: 25%;
+}
+.word {
+  width: 70%;
+  text-align: left;
+}
+.title {
+  font-size: 14px;
+}
+.details {
+  margin-top: 3px;
+  font-size: 11px;
+  color: #999;
 }
 </style>
