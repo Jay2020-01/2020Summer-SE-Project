@@ -7,3 +7,7 @@ django == 2.2.3
 # 使用方法
 1.用VScode打开frontend文件夹  
 2.终端运行npm install  
+
+# 配置
+python包:
+djnagorestframework 0.3.1
