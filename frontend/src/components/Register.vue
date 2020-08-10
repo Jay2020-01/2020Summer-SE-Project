@@ -21,7 +21,7 @@
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns" label>
-          <el-button type="primary">注册</el-button>
+          <el-button type="primary" @click="tologin">注册</el-button>
           <el-button type="info">重置</el-button>
         </el-form-item>
       </el-form>
@@ -41,6 +41,11 @@ export default {
       },
     };
   },
+  methods:{
+    tologin(){
+      this.$router.push("/login");
+    }
+  }
 };
 </script>
 

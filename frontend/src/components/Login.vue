@@ -17,7 +17,8 @@
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns" label>
-          <el-button type="primary">登录</el-button>
+          <el-button type="primary" @click="tohome">登录</el-button>
+          <el-button type="primary" @click="toregister">注册</el-button>
           <el-button type="info">重置</el-button>
         </el-form-item>
       </el-form>
@@ -36,6 +37,14 @@ export default {
       },
     };
   },
+  methods:{
+    tohome(){
+      this.$router.push("/home");
+    },
+    toregister(){
+      this.$router.push("/register");
+    }
+  }
 };
 </script>
 
