@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { Button, Form, FormItem, Input, Container, Header, Aside, Main, 
     Menu, Submenu, MenuItemGroup, MenuItem, Row, Col, Avatar, Tabs, TabPane,
-    Card } from 'element-ui'
+    Card, Dropdown, DropdownMenu,DropdownItem } from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Form)
@@ -21,3 +21,6 @@ Vue.use(Avatar)
 Vue.use(Tabs)
 Vue.use(TabPane)
 Vue.use(Card)
+Vue.use(Dropdown)
+Vue.use(DropdownMenu)
+Vue.use(DropdownItem)
