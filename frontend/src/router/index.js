@@ -4,18 +4,20 @@ import Login from '../components/Login.vue'
 import Home from '../components/Home.vue'
 import Register from '../components/Register.vue'
 import WorkingTable from '../components/working_table/WorkingTable.vue'
+import MyInfo from '../components/myinfo/MyInfo.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', redirect: '/home' },
+  { path: '/', redirect: '/myinfo' },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
   {
     path: '/home',
     component: Home,
     children: [
-      {path: '/1', component: WorkingTable}
+      {path: '/1', component: WorkingTable},
+      {path: '/myinfo', component: MyInfo}
     ]
   }
 ]

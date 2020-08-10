@@ -18,6 +18,7 @@
         <el-col :span="6">
           <div class="grid-content head-box3 bg-purple">
             <div>
+              <el-button size="medium" @click="changeInfo">修改信息</el-button>
               <el-button size="medium" @click="logout">退出</el-button>
             </div>
           </div>
@@ -88,6 +89,10 @@ export default {
     logout() {
       window.sessionStorage.clear();
       this.$router.push("/login");
+    },
+    changeInfo() {
+      window.sessionStorage.clear();
+      this.$router.push("/myinfo");
     },
   },
 };
