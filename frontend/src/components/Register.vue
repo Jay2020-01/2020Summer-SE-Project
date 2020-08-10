@@ -76,6 +76,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+import Qs from 'qs'
 export default {
   data () {
     return {
@@ -106,7 +108,7 @@ export default {
           axios.post('http://localhost:8000', data).then(
             function (resp) {
               const flag = resp.data.request.flag
-              if (flag == 'yes') { this.$router.push('/login') } else {
+              if (flag === 'yes') { this.$router.push('/login') } else {
                 alert(resp.data.request.msg)
                 this.reset()
               }
