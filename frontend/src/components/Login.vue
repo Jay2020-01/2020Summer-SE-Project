@@ -6,20 +6,25 @@
         <img src="../assets/logo.png" alt />
       </div>
       <!-- 登录表单区域 -->
-      <el-form :model="loginForm" class="login_form" label-width="0px">
+      <el-form :model="loginForm" class="login_form" ref="loginForm" label-width="0px">
         <!-- 用户名 -->
-        <el-form-item label>
+        <el-form-item label prop="username">
           <el-input v-model="loginForm.username" prefix-icon="fa fa-user" placeholder="用户名"></el-input>
         </el-form-item>
         <!-- 密码 -->
-        <el-form-item label>
-          <el-input v-model="loginForm.password" show-password prefix-icon="fa fa-lock" placeholder="密码"></el-input>
+        <el-form-item label prop="password">
+          <el-input
+            v-model="loginForm.password"
+            show-password
+            prefix-icon="fa fa-lock"
+            placeholder="密码"
+          ></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns" label>
-          <el-button type="primary" @click="tohome">登录</el-button>
+          <el-button type="primary" @click="login">登录</el-button>
           <el-button type="primary" @click="toregister">注册</el-button>
-          <el-button type="info">重置</el-button>
+          <el-button type="info" @click="reset">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -27,22 +32,47 @@
 </template>
 
 <script>
+import axios from "axios";
+import Qs from "qs";
 export default {
   data() {
     return {
       // 登录表单的数据绑定对象
       loginForm: {
         username: "",
-        password: "",
-      },
+        password: ""
+      }
     };
   },
-  methods:{
-    tohome(){
+  methods: {
+    tohome() {
       this.$router.push("/home");
     },
-    toregister(){
+    toregister() {
       this.$router.push("/register");
+    },
+    reset() {
+      this.$refs.loginForm.resetFields();
+    },
+    // 登录
+    login() {
+      this.$refs.validate((valid)=>{
+        if(valid){
+          var data=Qs.stringify({"username":this.loginForm.username,"password":this.loginForm.password})
+          // 向后端发送请求
+          axios.post("http://localhost:8000",data).then(
+            function(resp) {
+              const flag=resp.data.request['flag']
+              if(flag=='yes')
+                this.$router.push("/home")
+              else
+                alert(resp.data.request['msg'])
+            }
+          )
+        }
+        else
+          alert("出现错误，请重试")
+      })
     }
   }
 };
