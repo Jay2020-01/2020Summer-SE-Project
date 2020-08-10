@@ -6,8 +6,8 @@
         <el-col :span="6" :offset="1">
           <div class="grid-content head-box1 bg-purple">
             <!-- 头像区域 -->
-            <el-avatar :size="50">logo</el-avatar>
-            <span class="site-name">网站的名字</span>
+            <el-avatar icon="fa fa-diamond" :size="50">logo</el-avatar>
+            <span class="site-name">钻石文档</span>
           </div>
         </el-col>
         <el-col :span="5" :offset="6">
@@ -29,50 +29,55 @@
       <!-- 侧边栏 -->
       <el-aside width="200px">
         <!-- 侧边栏菜单区域 -->
-        <el-menu background-color="#fff" text-color="#535353" active-text-color="#409eff">
+        <el-menu background-color="#fff" text-color="#535353" active-text-color="#409eff" router>
+          <!-- 不分级菜单 -->
+          <el-menu-item index="1">
+            <i class="el-icon-menu"></i>
+            <span slot="title">工作台</span>
+          </el-menu-item>
+          <!-- 不分级菜单 -->
+          <el-menu-item index="2">
+            <i class="el-icon-menu"></i>
+            <span slot="title">收件箱</span>
+          </el-menu-item>
+          <!-- 分割线 -->
+          <div style="margin: 8px 20px; height: 1.5px; background-color: rgb(230, 230, 230);"></div>
+          <!-- 不分级菜单 -->
+          <el-menu-item index="3">
+            <i class="el-icon-menu"></i>
+            <span slot="title">我的桌面</span>
+          </el-menu-item>
           <!-- 一级菜单 -->
-          <el-submenu index="1">
+          <el-submenu index="4">
             <!-- 一级菜单模板区域 -->
             <template slot="title">
               <!-- 图标 -->
               <i class="el-icon-location"></i>
               <!-- 文本 -->
-              <span>导航一</span>
+              <span>团队空间</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item index="1-4-1">
+            <el-menu-item index="4-1">
               <template slot="title">
                 <!-- 图标 -->
                 <i class="el-icon-location"></i>
                 <!-- 文本 -->
-                <span>导航一</span>
+                <span>团队名称</span>
               </template>
             </el-menu-item>
           </el-submenu>
           <!-- 不分级菜单 -->
-          <el-menu-item index="1">
+          <el-menu-item index="5">
             <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
-          </el-menu-item>
-          <!-- 不分级菜单 -->
-          <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
-          </el-menu-item>
-          <!-- 不分级菜单 -->
-          <el-menu-item index="3">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
-          </el-menu-item>
-          <!-- 不分级菜单 -->
-          <el-menu-item index="4">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
+            <span slot="title">回收站</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
       <!-- 右侧内容主体 -->
-      <el-main>Main</el-main>
+      <el-main>
+        <!-- 路由占位符 -->
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -107,16 +112,18 @@ export default {
   padding-top: 40px;
   background-color: #ffffff;
   color: #333;
-  text-align: center;
+  text-align: left;
   line-height: 200px;
   border-right: 1px solid #eee;
+  .el-menu {
+    border-right: none;
+  }
 }
 
 .el-main {
   background-color: #ffffff;
   color: #333;
   text-align: center;
-  line-height: 160px;
 }
 
 body > .el-container {
