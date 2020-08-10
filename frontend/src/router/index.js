@@ -6,6 +6,7 @@ import Register from '../components/Register.vue'
 import WorkingTable from '../components/working_table/WorkingTable.vue'
 import MyInfo from '../components/myinfo/MyInfo.vue'
 import Inbox from '../components/working_table/In-box.vue'
+import Mydesktop from '../components/working_table/My-desktop.vue'
 
 Vue.use(VueRouter)
 
@@ -19,7 +20,8 @@ const routes = [
     children: [
       {path: '/1', component: WorkingTable},
       {path: '/myinfo', component: MyInfo},
-      {path: '/2', component: Inbox}
+      {path: '/2', component: Inbox},
+      {path: '/3', component: Mydesktop}
     ]
   }
 ]
