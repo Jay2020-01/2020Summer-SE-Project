@@ -4,10 +4,24 @@
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <!-- 标签内容 -->
       <el-tab-pane label="回收站" name="first">
-        <!-- 一行两个 -->
+        <!-- 清空回收站是否确认的显示 -->
+        <h6>这里是为了显示清空回收站按钮选择的哪一个，并方便以绑定事件,之后请删除</h6>
+        <h5>点击了"{{qingkong}}"</h5>
+        <!-- 清空回收站图标与弹出框 -->
         <div style="text-align:right">
-            <el-button type="primary" title="清空回收站" icon="el-icon-delete"></el-button>
+          <el-popconfirm
+          confirmButtonText='好的'
+          cancelButtonText='不用了'
+          icon="el-icon-info"
+          iconColor="red"
+          title="确定删除所有文件吗？"
+          @onConfirm="confirm"
+          >
+            <el-button slot="reference" title="清空回收站"><i class="el-icon-delete"></i></el-button>
+          </el-popconfirm>
+            <!-- <el-button type="primary" title="清空回收站" icon="el-icon-delete"></el-button> -->
         </div>
+        <!-- 一行两个 -->
         <el-row :gutter="12">
           <el-col v-for="(o) in 5" :key="o" :span="8">
             <!-- 文件卡片 -->
@@ -50,11 +64,15 @@ export default {
   data() {
     return {
       activeName: "first",
+      qingkong:"还没点",
     };
   },
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
+    },
+    confirm(){
+      this.qingkong="确定";
     },
   },
 };
