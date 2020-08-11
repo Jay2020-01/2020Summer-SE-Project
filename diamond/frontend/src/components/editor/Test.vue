@@ -1,54 +1,56 @@
 <template>
   <div>
-    <!-- 头部区域 -->
-    <el-header height="70px" direction="horizontal">
-      <el-row type="flex" class="row-bg">
-        <el-col :span="6" :offset="1">
-          <div class="grid-content head-box1 bg-purple">
-            <!-- 头像区域 -->
-            <el-avatar icon="fa fa-diamond" :size="50">logo</el-avatar>
-            <span class="site-name">钻石文档</span>
-          </div>
-        </el-col>
-        <el-col :span="5" :offset="6">
-          <div class="grid-content head-box2 bg-purple-light">
-            <el-input placeholder="搜索内容" v-model="input" clearable></el-input>
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <div class="grid-content head-box3 bg-purple">
-            <div>
-              <el-button size="medium" @click="changeInfo">修改信息</el-button>
-              <el-button size="medium" @click="logout">退出</el-button>
+    <el-container class="home-container">
+      <!-- 头部区域 -->
+      <el-header height="60px" direction="horizontal">
+        <el-row type="flex" class="row-bg">
+          <el-col :span="6" :offset="0">
+            <div class="grid-content head-box1 bg-purple">
+              <!-- 头像区域 -->
+              <el-avatar icon="fa fa-diamond" :size="40">logo</el-avatar>
+              <span class="site-name">钻石文档</span>
             </div>
-          </div>
-        </el-col>
-      </el-row>
-    </el-header>
-    <!-- 页面主体区域 -->
-    <el-container>
-      <!-- 右侧内容主体 -->
-      <el-main>
-        <editor v-model="content"></editor>
-      </el-main>
+          </el-col>
+          <el-col :span="5" :offset="7">
+            <div class="grid-content head-box2 bg-purple-light">
+              <el-input placeholder="搜索内容" v-model="input" size="small" clearable></el-input>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content head-box3 bg-purple">
+              <div>
+                <el-button size="small" @click="changeInfo">修改信息</el-button>
+                <el-button size="small" @click="logout">退出</el-button>
+                <!-- <el-button size="samll" @click="logout">退出</el-button> -->
+              </div>
+            </div>
+          </el-col>
+        </el-row>
+      </el-header>
+      <!-- 页面主体区域 -->
+      <el-container>
+        <!-- 右侧内容主体 -->
+        <el-main>
+          <!-- 路由占位符 -->
+          <router-view></router-view>
+        </el-main>
+      </el-container>
     </el-container>
-    
   </div>
-  
 </template>
 
 <script>
-import editor from './Editor';
+import editor from "./Editor";
 export default {
   components: {
-    editor
+    editor,
   },
   data() {
     return {
-      content: ''
-    }
-  }
-}
+      content: "",
+    };
+  },
+};
 </script>
 
 <style lang="less" scoped>

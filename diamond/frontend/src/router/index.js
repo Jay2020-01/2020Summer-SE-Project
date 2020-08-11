@@ -16,7 +16,7 @@ import Team2 from '../components/working_table/team2.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', redirect: '/home' },
+  { path: '/', redirect: '/Editor' },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
   { path: '/editor', component: Editor},

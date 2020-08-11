@@ -2,7 +2,7 @@ import Vue from 'vue'
 import { Button, Form, FormItem, Input, Container, Header, Aside, Main, 
     Menu, Submenu, MenuItemGroup, MenuItem, Row, Col, Avatar, Tabs, TabPane,
     Card, Dropdown, DropdownMenu,DropdownItem, Table, TableColumn, Popconfirm,
-    Upload } from 'element-ui'
+    Upload, Tooltip } from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Form)
@@ -29,3 +29,4 @@ Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Upload)
 Vue.use(Popconfirm)
+Vue.use(Tooltip)

@@ -128,7 +128,7 @@ export default {
   line-height: 60px;
   border: 1px solid #eee;
   box-shadow: 0 0 10px #ddd;
-  align-content: center;
+  align-items: center;
 }
 
 .el-aside {
@@ -156,7 +156,7 @@ body > .el-container {
 // 顶栏内容样式
 .head-box1 {
   display: flex;
-  align-content: center;
+  align-items: center;
 }
 .el-avatar {
   margin: 10px 15px 10px 30px;
@@ -167,7 +167,7 @@ body > .el-container {
 }
 .head-box3 {
   display: flex;
-  align-content: center;
+  align-items: center;
   // 居右对齐
   justify-content: flex-end;
 }
@@ -183,7 +183,7 @@ body > .el-container {
 //   max-height: 30px;
 // }
 .row-bg {
-  align-content: center;
+  align-items: center;
   // margin: 2.5px 0;
   // background-color: #f9fafc;
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="editor-container">
-    <div id="editorElem"></div>
+    <div id="editorElem" style="text-align:left;"></div>
     <!-- {{editorContent}} -->
   </div>
 </template>
@@ -9,17 +9,17 @@ import E from "wangeditor";
 export default {
   data() {
     return {
-      editorContent: ""
+      editorContent: "",
     };
   },
   methods: {
-    getContent: function() {
+    getContent: function () {
       alert(this.editorContent);
-    }
+    },
   },
   mounted() {
     var editor = new E("#editorElem");
-    editor.customConfig.onchange = html => {
+    editor.customConfig.onchange = (html) => {
       this.editorContent = html;
     };
     editor.customConfig.menus = [
@@ -42,13 +42,13 @@ export default {
       "video", // 插入视频
       "code", // 插入代码
       "undo", // 撤销
-      "redo" // 重复
+      "redo", // 重复
     ];
     editor.customConfig.zIndex = 100;
     //过滤掉复制文本中自带的样式,默认开启
     editor.customConfig.pasteFilterStyle = false;
     // 自定义处理粘贴的文本内容
-    editor.customConfig.pasteTextHandle = function(content) {
+    editor.customConfig.pasteTextHandle = function (content) {
       // content 即粘贴过来的内容（html 或 纯文本），可进行自定义处理然后返回
       return (
         "<p style='text-align:center;color:red;border-bottom:1px solid #DCDFE6;border-top:1px solid #DCDFE6;'>以下内容来源于网络,或者复制过来</p>" +
@@ -56,10 +56,10 @@ export default {
         "<p style='text-align:center;color:red;border-bottom:1px solid #DCDFE6;border-top:1px solid #DCDFE6;'>以上内容来源于网络,或者复制过来</p>"
       );
     };
-    editor.customConfig.linkImgCallback = function(url) {
+    editor.customConfig.linkImgCallback = function (url) {
       console.log(url); // url 即插入图片的地址
     };
-    editor.customConfig.linkCheck = function(text, link) {
+    editor.customConfig.linkCheck = function (text, link) {
       console.log(text); // 插入的文字
       console.log(link); // 插入的链接
 
@@ -77,7 +77,7 @@ export default {
       "#7b5ba1",
       "#46acc8",
       "#f9963b",
-      "#ffffff"
+      "#ffffff",
     ];
     // 表情面板可以有多个 tab ，因此要配置成一个数组。数组每个元素代表一个 tab 的配置
     editor.customConfig.emotions = [
@@ -91,14 +91,14 @@ export default {
           {
             alt: "[坏笑]",
             src:
-              "http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/50/pcmoren_huaixiao_org.png"
+              "http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/50/pcmoren_huaixiao_org.png",
           },
           {
             alt: "[舔屏]",
             src:
-              "http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/40/pcmoren_tian_org.png"
-          }
-        ]
+              "http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/40/pcmoren_tian_org.png",
+          },
+        ],
       },
       {
         // tab 的标题
@@ -106,8 +106,8 @@ export default {
         // type -> 'emoji' / 'image'
         type: "emoji",
         // content -> 数组
-        content: ["😀", "😃", "😄", "😁", "😆"]
-      }
+        content: ["😀", "😃", "😄", "😁", "😆"],
+      },
     ];
     // 自定义字体
     editor.customConfig.fontNames = [
@@ -115,7 +115,7 @@ export default {
       "微软雅黑",
       "Arial",
       "Tahoma",
-      "Verdana"
+      "Verdana",
     ];
     // 隐藏“网络图片”tab
     editor.customConfig.showLinkImg = false;
@@ -123,7 +123,7 @@ export default {
     editor.customConfig.uploadImgShowBase64 = true; // 使用 base64 保存图片不建议使用这种，我只是图个方便
     // editor.customConfig.uploadImgServer = '/upload'  // 上传图片到服务器
     editor.create();
-  }
+  },
 };
 </script>
 <style >
@@ -174,28 +174,39 @@ ol {
   margin: 10px 0 10px 20px;
 }
 
+/* 自定义样式 */
+/* 整体容器 */
+.editor-container {
+  align-items: center;
+  padding: 0px 0 30px 0;
 
+  /* border: 1px solid red; */
+}
+
+/* 工具栏 */
+.w-e-toolbar {
+  background-color:#f7f7f7 !important;
+  width: 826px !important;
+  margin: 0 auto;
+  /* box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1) !important; */
+  margin-bottom: 10px !important;
+  border: none !important;
+}
+
+/* 工具栏图标 */
+.w-e-menu {
+  padding: 5px 12px !important;
+}
+
+/* 输入文字框 */
 .w-e-text-container {
-        height: 1169px !important;
-        width: 826px !important;
-        margin: 0 auto;
-        overflow-y: hidden !important;
-        overflow-x: hidden !important;
-        border: 0 !important;
-        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1) !important;
-    }
-    .w-e-toolbar {
-      background-color: #fff !important;
-      width: 826px !important;
-      margin: 0 auto;
-      /* box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1) !important; */
-      margin-bottom: 10px !important;
-    }
-
-    .editor-container {
-      align-items: center;
-      padding: 30px 0 30px 0;
-      
-      /* border: 1px solid red; */
-    }
+  height: 1169px !important;
+  width: 826px !important;
+  margin: 0 auto;
+  overflow-y: hidden !important;
+  overflow-x: hidden !important;
+  border: 0 !important;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1) !important;
+  background-color: #ffffff !important;
+}
 </style>
