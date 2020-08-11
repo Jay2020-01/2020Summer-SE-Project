@@ -19,5 +19,5 @@ from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(r'', TemplateView.as_view(template_name="index.html")),  # 这里将url的根路径指向vue中的index页面
+    path(r'', TemplateView.as_view(template_name='index.html')),  # 这里将url的根路径指向vue中的index页面
 ]
