@@ -7,13 +7,16 @@ import WorkingTable from '../components/working_table/WorkingTable.vue'
 import MyInfo from '../components/myinfo/MyInfo.vue'
 import Inbox from '../components/working_table/In-box.vue'
 import Mydesktop from '../components/working_table/My-desktop.vue'
+import Editor from '../components/editor/Editor.vue'
+import Test from '../components/editor/Test.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', redirect: '/myinfo' },
+  { path: '/', redirect: '/home' },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
+  { path: '/editor', component: Editor},
   {
     path: '/home',
     component: Home,

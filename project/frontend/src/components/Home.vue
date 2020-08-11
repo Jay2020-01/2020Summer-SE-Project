@@ -1,25 +1,26 @@
 <template>
   <el-container class="home-container">
     <!-- 头部区域 -->
-    <el-header height="70px" direction="horizontal">
+    <el-header height="60px" direction="horizontal">
       <el-row type="flex" class="row-bg">
-        <el-col :span="6" :offset="1">
+        <el-col :span="6" :offset="0">
           <div class="grid-content head-box1 bg-purple">
             <!-- 头像区域 -->
-            <el-avatar icon="fa fa-diamond" :size="50">logo</el-avatar>
+            <el-avatar icon="fa fa-diamond" :size="40">logo</el-avatar>
             <span class="site-name">钻石文档</span>
           </div>
         </el-col>
-        <el-col :span="5" :offset="6">
+        <el-col :span="5" :offset="7">
           <div class="grid-content head-box2 bg-purple-light">
-            <el-input placeholder="搜索内容" v-model="input" clearable></el-input>
+            <el-input placeholder="搜索内容" v-model="input" size="small" clearable></el-input>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="grid-content head-box3 bg-purple">
             <div>
-              <el-button size="medium" @click="changeInfo">修改信息</el-button>
-              <el-button size="medium" @click="logout">退出</el-button>
+              <el-button size="small" @click="changeInfo">修改信息</el-button>
+              <el-button size="small" @click="logout">退出</el-button>
+              <!-- <el-button size="samll" @click="logout">退出</el-button> -->
             </div>
           </div>
         </el-col>
@@ -31,6 +32,10 @@
       <el-aside width="200px">
         <!-- 侧边栏菜单区域  default-active="1"没写-->
         <el-menu background-color="#fff" text-color="#535353" active-text-color="#409eff" router>
+          <!-- 新建按钮 -->
+          <el-menu-item index="0">
+            <el-button size="midium" @click="newFile" type="primary" plain>新建文档</el-button>
+          </el-menu-item>
           <!-- 不分级菜单 -->
           <el-menu-item index="1">
             <i class="fa fa-archive" style="padding: 0 10px 0 10px"></i>
@@ -94,6 +99,10 @@ export default {
       window.sessionStorage.clear();
       this.$router.push("/myinfo");
     },
+    newFile() {
+      window.sessionStorage.clear();
+      this.$router.push("/editor");
+    },
   },
 };
 </script>
@@ -111,10 +120,11 @@ export default {
   line-height: 60px;
   border: 1px solid #eee;
   box-shadow: 0 0 10px #ddd;
+  align-content: center;
 }
 
 .el-aside {
-  padding-top: 40px;
+  padding-top: 30px;
   background-color: #ffffff;
   color: #333;
   text-align: left;
@@ -138,9 +148,10 @@ body > .el-container {
 // 顶栏内容样式
 .head-box1 {
   display: flex;
+  align-content: center;
 }
 .el-avatar {
-  margin: 5px 20px 5px 0;
+  margin: 10px 15px 10px 30px;
 }
 .site-name {
   font-size: 30px;
@@ -148,6 +159,7 @@ body > .el-container {
 }
 .head-box3 {
   display: flex;
+  align-content: center;
   // 居右对齐
   justify-content: flex-end;
 }
@@ -158,12 +170,13 @@ body > .el-container {
 // .bg-purple-light {
 //   background: #e5e9f2;
 // }
-.grid-content {
-  border-radius: 4px;
-  min-height: 60px;
-}
+// .grid-content {
+//   border-radius: 4px;
+//   max-height: 30px;
+// }
 .row-bg {
-  margin: 5px 0;
+  align-content: center;
+  // margin: 2.5px 0;
   // background-color: #f9fafc;
 }
 </style>
