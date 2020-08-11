@@ -1,1 +1,2 @@
 djnagorestframework==0.3.1
+django-cors-headers==3.4.0
