@@ -35,7 +35,7 @@ class Document(models.Model):
 
     title = ""
 
-    content = ""
+    content = WangRichTextField()
 
     created_date  = ""
 
