@@ -5,7 +5,7 @@
       <!-- 标签内容 -->
       <el-tab-pane label="我的桌面" name="first">
         <!-- <el-row style="float:right;"> -->
-            <div>
+            <div style="text-align:right">
                 <i class="el-icon-menu" value="平铺" @click="topingpu"></i>
                 <i class="el-icon-s-operation" value="列表" @click="toliebiao"></i>
             </div>
@@ -49,7 +49,7 @@
 
         <el-table
             :data="tableData"
-            height="800"
+            height="520"
             border
             style="width: 100%"
             v-if="liebiao">
