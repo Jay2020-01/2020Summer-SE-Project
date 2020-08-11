@@ -7,6 +7,7 @@ import WorkingTable from '../components/working_table/WorkingTable.vue'
 import MyInfo from '../components/myinfo/MyInfo.vue'
 import Inbox from '../components/working_table/In-box.vue'
 import Mydesktop from '../components/working_table/My-desktop.vue'
+import Recyclebin from '../components/working_table/Recycle-bin.vue'
 
 Vue.use(VueRouter)
 
@@ -21,7 +22,9 @@ const routes = [
       {path: '/1', component: WorkingTable},
       {path: '/myinfo', component: MyInfo},
       {path: '/2', component: Inbox},
-      {path: '/3', component: Mydesktop}
+      {path: '/3', component: Mydesktop},
+      
+      {path: '/5', component: Recyclebin}
     ]
   }
 ]
