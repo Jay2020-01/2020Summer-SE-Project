@@ -36,6 +36,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # third-party App
+    'rest_framework',
+    'django_filters',
+    'rest_framework_swagger',
 
     # customed App
     'backend.apps.BackendConfig',

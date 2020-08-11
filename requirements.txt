@@ -1,2 +1,4 @@
-djnagorestframework==0.3.1
-django-cors-headers==3.4.0
+djnagorestframework==0.3.1  (安装依赖)
+django-rest-swagger         (API 可视化)
+django-filter==2.3.0        (过滤数据, 配合djangoframework)
+django-cors-headers==3.4.0  (django跨域使用vue)
