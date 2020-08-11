@@ -2,37 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="02e9c091-3fa9-4c62-8608-22913687d1d7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/.browserslistrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/.editorconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/.eslintrc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/babel.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/hello.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/public/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/App.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/assets/backgroud-main.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/assets/backgroud.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/assets/css/global.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/assets/js/cookie.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/assets/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Home.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Login.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Register.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/myinfo/MyInfo.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/working_table/In-box.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/working_table/My-desktop.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/working_table/WorkingTable.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/plugins/element.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/router/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/vue.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/wsgi.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,10 +34,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/backend/settings.py">
+        <entry file="file://$PROJECT_DIR$/diamond/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
+            <state relative-caret-position="210">
+              <caret line="10" column="3" lean-forward="true" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -93,11 +67,27 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="project" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="project" type="462c0819:PsiDirectoryNode" />
+              <item name="diamond" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -123,6 +113,7 @@
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="backend.settings" />
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
@@ -153,21 +144,23 @@
       <updated>1597106390681</updated>
       <workItem from="1597106392685" duration="42000" />
       <workItem from="1597107324629" duration="324000" />
+      <workItem from="1597109610078" duration="2214000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="366000" />
+    <option name="totallyTimeSpent" value="2580000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="53" y="25" width="1867" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25346646" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2579035" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32914287" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -190,10 +183,20 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/backend/urls.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/backend/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        <state relative-caret-position="310">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/diamond/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="10" column="3" lean-forward="true" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
         </state>
       </provider>
     </entry>
