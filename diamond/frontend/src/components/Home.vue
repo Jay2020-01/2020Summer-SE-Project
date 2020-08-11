@@ -63,7 +63,15 @@
                 <!-- 图标 -->
                 <!-- <i class="el-icon-location"></i> -->
                 <!-- 文本 -->
-                <span>团队名称</span>
+                <span >团队名称1</span>
+              </template>
+            </el-menu-item>
+            <el-menu-item index="4-2">
+              <template slot="title">
+                <!-- 图标 -->
+                <!-- <i class="el-icon-location"></i> -->
+                <!-- 文本 -->
+                <span>团队名称2</span>
               </template>
             </el-menu-item>
           </el-submenu>

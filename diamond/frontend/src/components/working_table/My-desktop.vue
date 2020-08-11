@@ -4,14 +4,13 @@
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <!-- 标签内容 -->
       <el-tab-pane label="我的桌面" name="first">
-        <!-- <el-row style="float:right;"> -->
+            <!-- 下面这个是选择“平铺”还是“列表”的两个按钮 -->
             <div style="text-align:right">
                 <i class="el-icon-menu" value="平铺" @click="topingpu"></i>
                 <i class="el-icon-s-operation" value="列表" @click="toliebiao"></i>
             </div>
-            
-        <!-- </el-row> -->
 
+        <!-- 如果是平铺就是下面这些 -->
         <!-- 一行两个 -->
         <el-row :gutter="12" v-if="pingpu">
           <el-col v-for="(o) in 2" :key="o" :span="8">
@@ -46,7 +45,7 @@
           </el-col>
         </el-row>
 
-
+        <!-- 如果是选择列表就展示下面这些 -->
         <el-table
             :data="tableData"
             height="520"
