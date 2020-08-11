@@ -1,56 +1,100 @@
-# from django.db import models
+from django.db import models
 
-# # Create your models here.
+class User(models.Model):
+    """
+    User
+    """
 
-# from django.db import models
-# from django.contrib.auth.models import AbstractUser
-# # Create your models here.
+    username = ""
+    
+    password = ""
+    
+    phone_number = ""
 
+    mail_address = ""
 
+    wechat = ""
 
+    class Meta:
+        verbose_name = ""
+        verbose_name_plural = "s"
 
-# class User(AbstractUser):
-#     SEX_CHOICES = (
-#         ('男', 1),
-#         ('女', 0),)
-#     id = models.CharField(max_length=64,verbose_name="id")
-#     username = models.CharField(max_length=64,verbose_name="姓名")
-#     wechat_num = models.CharField(max_length=64,blank=True,verbose_name="微信号")
-#     sex = models.CharField(max_length=1,choices=SEX_CHOICES,verbose_name='性别',default=1)
-#     phone = models.CharField(max_length=20,blank=True,verbose_name='电话')
-#     mail = models.CharField(max_length=64,blank=True,verbose_name="邮箱")
+    def __str__(self):
+        return self.name
 
-# class Team(models.Model):
-#     name = models.CharField(max_length=100,unique=True)
-#     leader_id = models.CharField(max_length=64)
-#     created_time = models.DateTimeField('创建时间', default=timezone.now)
-#     members = models.ManyToManyField(User, through='MemberShip')
-#     class Meta:
-#         verbose_name = '团队'
-#         verbose_name_plural = verbose_name
-
-#     def __str__(self):
-#         return self.name
+    def get_absolute_url(self):
+        return reverse("_detail", kwargs={"pk": self.pk})
 
 
-# class Doc(models.Model):
-#     title = models.CharField('文件名', max_length=70)
-#     body = models.TextField()
-#     created_time = models.DateTimeField('创建时间', default=timezone.now)
-#     modified_time = models.DateTimeField('修改时间')
-#     isintrash = models.BooleanField(default=True)
-#     class Meta:
-#         verbose_name = '文档'
-#         verbose_name_plural = verbose_name
-#         ordering = ['-created_time']
+class Document(models.Model):
+    """
+    Document
+    """
 
-#     def __str__(self):
-#         return self.title
+    group = ""
 
-# class Right(models.Model):
-#     right_user = models.ForeignKey(User)
-#     right_team = models.ForeignKey(Team)
-#     check_rig = models.BooleanField(default=False)
-#     discuss_rig = models.BooleanField(default=False)
-#     fix_rig = models.BooleanField(default=False)
-#     # share_rig = models.BooleanField(default=False) # ？ 此处并不需要
+    title = ""
+
+    content = ""
+
+    created_date  = ""
+
+    modified_date = ""
+
+    class Meta:
+        verbose_name = ""
+        verbose_name_plural = ""
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("_detail", kwargs={"pk": self.pk})
+
+
+class Group(models.Model):
+    """
+    Team
+    """
+
+    leader = ""
+
+    partner = ""
+
+    teamname = ""
+
+    introduction = ""
+
+    class Meta:
+        verbose_name = ""
+        verbose_name_plural = ""
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("_detail", kwargs={"pk": self.pk})
+
+class UDRight(models.Model):
+    """
+    permission
+    """
+    
+    user = ""
+    doc  = ""
+    
+    right_type = ""
+
+    visit_time = ""
+
+    isStared = ""
+
+    class Meta:
+        verbose_name = ""
+        verbose_name_plural = "s"
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("_detail", kwargs={"pk": self.pk})
