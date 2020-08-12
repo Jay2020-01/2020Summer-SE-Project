@@ -41,7 +41,7 @@ class Group(models.Model):
 
     leader = models.OneToOneField(User, verbose_name="组长", on_delete=models.CASCADE)
 
-    partner = models.ForeignKey(User, verbose_name="队员", on_delete=models)
+    partner = models.ManyToManyField(User, verbose_name="队员", on_delete=models)
 
     groupname = models.CharField(max_length=64)
 
@@ -92,7 +92,7 @@ class UDRight(models.Model):
     """
     
     user = models.ForeignKey(User, verbose_name= "", on_delete=models.CASCADE)
-    doc  = models.ForeignKey(User, verbose_name= "", on_delete=models.CASCADE)
+    doc  = models.ForeignKey(Document, verbose_name= "", on_delete=models.CASCADE)
     
     right_type = models.BigIntegerField()
 
