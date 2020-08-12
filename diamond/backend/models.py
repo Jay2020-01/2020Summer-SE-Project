@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class User(models.Model):
     """
     User
@@ -37,7 +38,7 @@ class Document(models.Model):
 
     # content = WangRichTextField()
 
-    created_date  = ""
+    created_date = ""
 
     modified_date = ""
 
@@ -75,13 +76,14 @@ class Group(models.Model):
     def get_absolute_url(self):
         return reverse("_detail", kwargs={"pk": self.pk})
 
+
 class UDRight(models.Model):
     """
     permission
     """
 
     user = ""
-    doc  = ""
+    doc = ""
 
     right_type = ""
 
