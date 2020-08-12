@@ -73,6 +73,7 @@
 <script>
 import axios from 'axios'
 import Qs from 'qs'
+// import { mapMutations } from 'vuex'
 
 export default {
   data () {
@@ -82,9 +83,11 @@ export default {
         username: '',
         password: ''
       }
+      // userToken: ' '
     }
   },
   methods: {
+    // ...mapMutations(['changeLogin']),
     tohome () {
       this.$router.push('/home')
     },
@@ -103,7 +106,7 @@ export default {
           axios.post('ajax/login/', data).then(
              (resp) => {
               const flag = resp.data.request.flag
-              if (flag == 'yes') {
+              if (flag === 'yes') {
                 this.$router.push('/home')
               } else {
                 alert(resp.data.request.msg)
@@ -111,7 +114,7 @@ export default {
             }
           )
         } else {
-          alert('出现错误，请重试')
+          alert('提交表单出现错误')
         }
       })
     }

@@ -19,18 +19,18 @@ const routes = [
   { path: '/', redirect: '/Editor' },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
-  { path: '/editor', component: Editor},
+  { path: '/editor', component: Editor },
   {
     path: '/home',
     component: Home,
     children: [
-      {path: '/1', component: WorkingTable},
-      {path: '/myinfo', component: MyInfo},
-      {path: '/2', component: Inbox},
-      {path: '/3', component: Mydesktop},
-      {path: '/4-1', component: Team1},
-      {path: '/4-2', component: Team2},
-      {path: '/5', component: Recyclebin}
+      { path: '/1', component: WorkingTable },
+      { path: '/myinfo', component: MyInfo },
+      { path: '/2', component: Inbox },
+      { path: '/3', component: Mydesktop },
+      { path: '/4-1', component: Team1 },
+      { path: '/4-2', component: Team2 },
+      { path: '/5', component: Recyclebin }
     ]
   }
 ]
@@ -38,5 +38,20 @@ const routes = [
 const router = new VueRouter({
   routes
 })
+
+// TODO
+// 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
+// router.beforeEach((to, from, next) => {
+//   if (to.path === '/login') {
+//     next()
+//   } else {
+//     const token = localStorage.getItem('Authorization')
+//     if (token === null || token === '') {
+//       next('/login')
+//     } else {
+//       next()
+//     }
+//   }
+// })
 
 export default router
