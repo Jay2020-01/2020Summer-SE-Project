@@ -12,19 +12,23 @@
         <el-button
           style="float: right; padding: 3px 0"
           type="text"
-          @click="confirm_modify"
+          @click="confirm_modify('registerForm')"
         >
           确认修改
         </el-button>
       </div>
       <div class="text item">
         <el-form
+          ref="registerForm"
           :model="registerForm"
           class="register_form"
           label-width="0px"
         >
           <!-- 用户名 -->
-          <el-form-item label>
+          <el-form-item
+            label
+            prop="username"
+          >
             <el-input
               v-model="registerForm.username"
               prefix-icon="fa fa-user"
@@ -32,7 +36,10 @@
             />
           </el-form-item>
           <!-- 密码 -->
-          <el-form-item label>
+          <el-form-item
+            label
+            prop="password"
+          >
             <el-input
               v-model="registerForm.password"
               show-password
@@ -41,7 +48,10 @@
             />
           </el-form-item>
           <!-- 手机号 -->
-          <el-form-item label>
+          <el-form-item
+            label
+            prop="phone_number"
+          >
             <el-input
               v-model="registerForm.phone_number"
               prefix-icon="fa fa-phone-square"
@@ -49,7 +59,10 @@
             />
           </el-form-item>
           <!-- 邮箱 -->
-          <el-form-item label>
+          <el-form-item
+            label
+            prop="mail_address"
+          >
             <el-input
               v-model="registerForm.mail_address"
               prefix-icon="fa fa-envelope"
@@ -57,7 +70,10 @@
             />
           </el-form-item>
           <!-- 微信号 -->
-          <el-form-item label>
+          <el-form-item
+            label
+            prop="wechat"
+          >
             <el-input
               v-model="registerForm.wechat"
               prefix-icon="fa fa-wechat"
@@ -72,6 +88,7 @@
 
 <script>
 import axios from 'axios'
+import Qs from 'qs'
 export default {
   data () {
     return {
@@ -90,9 +107,16 @@ export default {
     tologin () {
       this.$router.push('/login')
     },
-    confirm_modify () {
-      axios.post('ajax/change_info/', this.registerForm).then(res => {
-        this.$router.push('/login')
+    confirm_modify (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          var data = Qs.stringify({ username: this.registerForm.username, password: this.registerForm.password })
+          axios.post('ajax/change_info/', data).then(res => {
+            this.$router.push('/login')
+          })
+        } else {
+          alert('出现错误，请重试')
+        }
       })
     }
   }
