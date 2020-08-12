@@ -1,50 +1,31 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
-class User(models.Model):
+class User(AbstractUser):
     """
     User
     """
+    user_id = models.CharField(max_length=64, unique=True)
 
-    username = ""
+    username = models.CharField(max_length=64)
+    
+    password = models.CharField(max_length=64)
+    
+    phone_number = models.CharField(max_length=64, null=True)
 
-    password = ""
+    email = models.EmailField(null=True)
 
-    phone_number = ""
+    wechat = models.CharField(max_length=64, null=True)
 
-    mail_address = ""
+    starDoc = models.ManyToManyField(Doc, verbose_name="收藏文章")
 
-    wechat = ""
-
-    class Meta:
-        verbose_name = ""
-        verbose_name_plural = "s"
-
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse("_detail", kwargs={"pk": self.pk})
-
-
-class Document(models.Model):
-    """
-    Document
-    """
-
-    group = ""
-
-    title = ""
-
-    # content = WangRichTextField()
-
-    created_date = ""
-
-    modified_date = ""
+    # set auth mark
+    USERNAME_FIELD = 'user_id'
 
     class Meta:
-        verbose_name = ""
-        verbose_name_plural = ""
+        verbose_name = "用户"
+        verbose_name_plural = "用户集"
 
     def __str__(self):
         return self.name
@@ -58,17 +39,45 @@ class Group(models.Model):
     Team
     """
 
-    leader = ""
+    leader = models.OneToOneField(User, verbose_name="组长", on_delete=models.CASCADE)
 
-    partner = ""
+    partner = models.ManyToManyField(User, verbose_name="队员", on_delete=models)
 
-    teamname = ""
+    groupname = models.CharField(max_length=64)
 
-    introduction = ""
+    introduction = models.TextField(null=True)
 
     class Meta:
-        verbose_name = ""
-        verbose_name_plural = ""
+        verbose_name = "团队"
+        verbose_name_plural = "百团"
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("_detail", kwargs={"pk": self.pk})
+
+
+
+class Document(models.Model):
+    """
+    Document
+    """
+
+    # Many-to-one: if the group does not exist, the document belonging to it will be deleted too.
+    group = models.ForeignKey(Group, verbose_name="所属团队", on_delete=models.CASCADE)
+
+    title = models.CharField(max_length=64)
+
+    content = models.AutoField()
+
+    created_date  = models.DateTimeField(auto_now_add=True)
+
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "文档"
+        verbose_name_plural = "文档集"
 
     def __str__(self):
         return self.name
@@ -79,17 +88,15 @@ class Group(models.Model):
 
 class UDRight(models.Model):
     """
-    permission
+    User and Doc 
     """
+    
+    user = models.ForeignKey(User, verbose_name= "", on_delete=models.CASCADE)
+    doc  = models.ForeignKey(Document, verbose_name= "", on_delete=models.CASCADE)
+    
+    right_type = models.BigIntegerField()
 
-    user = ""
-    doc = ""
-
-    right_type = ""
-
-    visit_time = ""
-
-    isStared = ""
+    visit_time = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = ""
