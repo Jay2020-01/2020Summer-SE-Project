@@ -44,7 +44,6 @@ INSTALLED_APPS = [
 
     # customed App
     'backend.apps.BackendConfig',
-    'api'
 ]
 
 MIDDLEWARE = [
