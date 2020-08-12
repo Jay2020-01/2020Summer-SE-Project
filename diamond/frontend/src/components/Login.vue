@@ -71,52 +71,52 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import Qs from 'qs'
+import axios from 'axios'
+import Qs from 'qs'
 
-  export default {
-    data() {
-      return {
-        // 登录表单的数据绑定对象
-        loginForm: {
-          username: '',
-          password: ''
-        }
-      }
-    },
-    methods: {
-      tohome() {
-        this.$router.push('/home')
-      },
-      toregister() {
-        this.$router.push('/register')
-      },
-      reset() {
-        this.$refs.loginForm.resetFields()
-      },
-      // 登录
-      login(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            var data = Qs.stringify({username: this.loginForm.username, password: this.loginForm.password})
-            // 向后端发送请求
-            axios.post('ajax/login/', data).then(
-              function (resp) {
-                const flag = resp.data.request.flag
-                if (flag == 'yes') {
-                  this.$router.push('/home')
-                } else {
-                  alert(resp.data.request.msg)
-                }
-              }
-            )
-          } else {
-            alert('出现错误，请重试')
-          }
-        })
+export default {
+  data () {
+    return {
+      // 登录表单的数据绑定对象
+      loginForm: {
+        username: '',
+        password: ''
       }
     }
+  },
+  methods: {
+    tohome () {
+      this.$router.push('/home')
+    },
+    toregister () {
+      this.$router.push('/register')
+    },
+    reset () {
+      this.$refs.loginForm.resetFields()
+    },
+    // 登录
+    login (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          var data = Qs.stringify({ username: this.loginForm.username, password: this.loginForm.password })
+          // 向后端发送请求
+          axios.post('ajax/login/', data).then(
+            function (resp) {
+              const flag = resp.data.request.flag
+              if (flag == 'yes') {
+                this.$router.push('/home')
+              } else {
+                alert(resp.data.request.msg)
+              }
+            }
+          )
+        } else {
+          alert('出现错误，请重试')
+        }
+      })
+    }
   }
+}
 </script>
 
 <style lang="less" scoped>

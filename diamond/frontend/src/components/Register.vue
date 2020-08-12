@@ -1,22 +1,50 @@
 <template>
-  <div class="register_container" background>
+  <div
+    class="register_container"
+    background
+  >
     <div class="register_box">
       <!-- 头像区域 -->
       <div class="avatar_box">
-        <img src="../assets/logo.png" alt />
+        <img
+          src="../assets/logo.png"
+          alt
+        >
       </div>
       <!-- 注册表单区域 -->
-      <el-form ref="registerForm" :model="registerForm" class="register_form" label-width="0px">
+      <el-form
+        ref="registerForm"
+        :model="registerForm"
+        class="register_form"
+        label-width="0px"
+      >
         <!-- 用户名 -->
-        <el-form-item label prop="username">
-          <el-input v-model="registerForm.username" prefix-icon="fa fa-user" placeholder="用户名" />
+        <el-form-item
+          label
+          prop="username"
+        >
+          <el-input
+            v-model="registerForm.username"
+            prefix-icon="fa fa-user"
+            placeholder="用户名"
+          />
         </el-form-item>
         <!-- 邮箱 -->
-        <el-form-item label prop="email">
-          <el-input v-model="registerForm.email" prefix-icon="fa fa-envelope" placeholder="邮箱" />
+        <el-form-item
+          label
+          prop="email"
+        >
+          <el-input
+            v-model="registerForm.email"
+            prefix-icon="fa fa-envelope"
+            placeholder="邮箱"
+          />
         </el-form-item>
         <!-- 密码 -->
-        <el-form-item label prop="password">
+        <el-form-item
+          label
+          prop="password"
+        >
           <el-input
             v-model="registerForm.password"
             show-password
@@ -25,9 +53,22 @@
           />
         </el-form-item>
         <!-- 按钮区域 -->
-        <el-form-item class="btns" label>
-          <el-button type="primary" @click="register('registerForm')">注册</el-button>
-          <el-button type="info" @click="reset">重置</el-button>
+        <el-form-item
+          class="btns"
+          label
+        >
+          <el-button
+            type="primary"
+            @click="register('registerForm')"
+          >
+            注册
+          </el-button>
+          <el-button
+            type="info"
+            @click="reset"
+          >
+            重置
+          </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -35,51 +76,51 @@
 </template>
 
 <script>
-import axios from "axios";
-import Qs from "qs";
+import axios from 'axios'
+import Qs from 'qs'
 export default {
-  data() {
+  data () {
     return {
       // 注册表单的数据绑定对象
       registerForm: {
-        username: "",
-        password: "",
-        mail_address: "",
-      },
-    };
+        username: '',
+        password: '',
+        mail_address: ''
+      }
+    }
   },
   methods: {
-    tologin() {
-      this.$router.push("/login");
+    tologin () {
+      this.$router.push('/login')
     },
-    reset() {
-      this.$refs.registerForm.resetFields();
+    reset () {
+      this.$refs.registerForm.resetFields()
     },
-    register(formName) {
+    register (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           var data = Qs.stringify({
             username: this.registerForm.username,
             mail_address: this.registerForm.email,
-            password: this.registerForm.password,
-          });
+            password: this.registerForm.password
+          })
           // 向后端发送数据
-          axios.post("ajax/register/", data).then(function (resp) {
-            const flag = resp.data.request.flag;
-            if (flag === "yes") {
-              this.$router.push("/login");
+          axios.post('ajax/register/', data).then(function (resp) {
+            const flag = resp.data.request.flag
+            if (flag === 'yes') {
+              this.$router.push('/login')
             } else {
-              alert(resp.data.request.msg);
+              alert(resp.data.request.msg)
               // this.reset()
             }
-          });
+          })
         } else {
-          alert("出现错误，请重试");
+          alert('出现错误，请重试')
         }
-      });
-    },
-  },
-};
+      })
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>

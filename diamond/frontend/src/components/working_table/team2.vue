@@ -1,52 +1,71 @@
 <template>
   <div class="tabs_container">
     <!-- 标签组件 -->
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tabs
+      v-model="activeName"
+      @tab-click="handleClick"
+    >
       <!-- 标签内容 -->
-      <el-tab-pane label="团队名称2" name="first">
-          <div style="text-align:right">
-            <el-dropdown >
+      <el-tab-pane
+        label="团队名称2"
+        name="first"
+      >
+        <div style="text-align:right">
+          <el-dropdown>
             <!-- 团队的一些操作 -->
             <span class="el-dropdown-link">
-                <i class="el-icon-setting el-icon--right"></i>
-                <!-- 下拉图标 -->
+              <i class="el-icon-setting el-icon--right" />
+              <!-- 下拉图标 -->
             </span>
             <el-dropdown-menu slot="dropdown">
-                <!-- 选项 -->
-                <el-dropdown-item><i class="el-icon-magic-stick"></i>协作</el-dropdown-item>
-                <el-dropdown-item><i class="el-icon-s-tools"></i>设置</el-dropdown-item>
-                <el-divider></el-divider>
-                <el-dropdown-item style="color:red"><i class="el-icon-delete"></i>删除</el-dropdown-item>
+              <!-- 选项 -->
+              <el-dropdown-item><i class="el-icon-magic-stick" />协作</el-dropdown-item>
+              <el-dropdown-item><i class="el-icon-s-tools" />设置</el-dropdown-item>
+              <el-divider />
+              <el-dropdown-item style="color:red">
+                <i class="el-icon-delete" />删除
+              </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-          </div>
-          
+        </div>
+
         <!-- 一行两个 -->
         <el-row :gutter="12">
-          <el-col v-for="(o) in 2" :key="o" :span="8">
+          <el-col
+            v-for="(o) in 2"
+            :key="o"
+            :span="8"
+          >
             <!-- 文件卡片 -->
             <el-card shadow="hover">
               <div class="card-container">
                 <!-- 图标 -->
                 <div class="picture inline-div">
-                  <span class="fa fa-file-text-o" style="font-size:25px"></span>
+                  <span
+                    class="fa fa-file-text-o"
+                    style="font-size:25px"
+                  />
                 </div>
                 <!-- 文字 -->
                 <div class="word inline-div">
-                  <div class="tile">钻石文档</div>
-                  <div class="details">今天 10:20 我 打开</div>
+                  <div class="tile">
+                    钻石文档
+                  </div>
+                  <div class="details">
+                    今天 10:20 我 打开
+                  </div>
                 </div>
-                
+
                 <el-dropdown>
-                <!-- 后面的操作图标 -->
+                  <!-- 后面的操作图标 -->
                   <span class="el-dropdown-link">
-                    <i class="el-icon-arrow-down el-icon--right"></i>
+                    <i class="el-icon-arrow-down el-icon--right" />
                     <!-- 下拉图标 -->
                   </span>
                   <el-dropdown-menu slot="dropdown">
                     <!-- 选项 -->
-                    <el-dropdown-item><i class="el-icon-magic-stick"></i>新标签页打开</el-dropdown-item>
-                    <el-dropdown-item><i class="el-icon-delete"></i>删除</el-dropdown-item>
+                    <el-dropdown-item><i class="el-icon-magic-stick" />新标签页打开</el-dropdown-item>
+                    <el-dropdown-item><i class="el-icon-delete" />删除</el-dropdown-item>
                     <el-dropdown-item>其他操作请补充</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
@@ -61,17 +80,17 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      activeName: "first",
-    };
+      activeName: 'first'
+    }
   },
   methods: {
-    handleClick(tab, event) {
-      console.log(tab, event);
-    },
-  },
-};
+    handleClick (tab, event) {
+      console.log(tab, event)
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
