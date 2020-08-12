@@ -16,17 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
-from api.views import change_info, login, register
-
+import login.views as login_views
+import backend.views as backend_views
 urlpatterns = [
     # admin
     path('admin/', admin.site.urls),
     
     # index.html App.vue
     path('', TemplateView.as_view(template_name="index.html")),
-    path('ajax/change_info/', change_info, name='change_info'),
-    path('ajax/login/', login, name='login'),
-    path('ajax/register/', register, name='register'),
+    path('ajax/change_info/', backend_views.change_info, name='change_info'),
+    path('ajax/login/', login_views.login, name='login'),
+    path('ajax/register/', login_views.register, name='register'),
     # backend api
     
 ]
