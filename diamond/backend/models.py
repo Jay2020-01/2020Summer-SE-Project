@@ -6,7 +6,7 @@ class User(AbstractUser):
     """
     User
     """
-    user_id = models.CharField(max_length=40, unique=True)
+    user_id = models.CharField(max_length=64, unique=True)
 
     username = models.CharField(max_length=64)
     
@@ -16,7 +16,7 @@ class User(AbstractUser):
 
     email = models.EmailField(null=True)
 
-    wechat = models.CharField(max_length=64, blank=True)
+    wechat = models.CharField(max_length=64, null=True)
 
     starDoc = models.ManyToManyField(Doc, verbose_name="收藏文章")
 
