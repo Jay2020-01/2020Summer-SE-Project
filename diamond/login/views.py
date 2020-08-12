@@ -5,11 +5,8 @@ from backend.models import User
 
 # Create your views here.
 def login(request):
-    print("login")
     username = request.POST.get("username")
     password = request.POST.get("password")
-    print(username)
-    print(password)
     try:
         user = User.objects.get(username=username)
     except:
@@ -21,23 +18,31 @@ def login(request):
     else:
         date_msg = "wrong password"
         date_flag = "no"
-    date = {'flag': date_flag, 'msg': date_msg}
+    data = {'flag': date_flag, 'msg': date_msg}
 
-    return JsonResponse({'request': date})
+    return JsonResponse(data)
 
 
 def register(request):
-    print("register")
+    data = {'flag': 'no', "msg": "email existed"}
     username = request.POST.get("username")
     mail_address = request.POST.get("mail_address")
     password = request.POST.get("password")
-    print(mail_address)
-    try:
-        user = User.objects.filter(mail_address=mail_address)
-        date = {'flag': 'no', "msg": "email existed"}
-    except:
-        User.objects.create(
-            username=username, mail_address=mail_address, password=password)
-        date = {'flag': 'yes', "msg": "success"}
 
-    return JsonResponse({'request': date})
+    same_name_user = User.objects.get(username=username)
+    if same_name_user:
+        data['msg'] = '用户名已经存在'
+        return JsonResponse(data)
+    same_email_user = User.objects.get(email=mail_address)
+    if same_email_user:
+        data['msg'] = '该邮箱已经被注册了！'
+        return JsonResponse(data)
+    # 以下代码等价于 User.objects.create(username=username, email=mail_address, password=password)
+    new_user = User()
+    new_user.name = username
+    new_user.password = password
+    new_user.email = mail_address
+    new_user.save()
+    data['flag'] = 'yes'
+    data['msg'] = '成功注册！'
+    return JsonResponse(data)
