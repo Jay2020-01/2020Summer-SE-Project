@@ -102,7 +102,7 @@ export default {
           axios.post('http://localhost:8000', data).then(
             function (resp) {
               const flag = resp.data.request.flag
-              if (flag == 'yes') { this.$router.push('/home') } else { alert(resp.data.request.msg) }
+              if (flag === 'yes') { this.$router.push('/home') } else { alert(resp.data.request.msg) }
             }
           )
         } else { alert('出现错误，请重试') }

@@ -6,9 +6,9 @@ class User(models.Model):
     """
 
     username = ""
-    
+
     password = ""
-    
+
     phone_number = ""
 
     mail_address = ""
@@ -35,7 +35,7 @@ class Document(models.Model):
 
     title = ""
 
-    content = WangRichTextField()
+    # content = WangRichTextField()
 
     created_date  = ""
 
@@ -79,10 +79,10 @@ class UDRight(models.Model):
     """
     permission
     """
-    
+
     user = ""
     doc  = ""
-    
+
     right_type = ""
 
     visit_time = ""

@@ -2,55 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3256be1d-2b12-4573-bbde-dc5862a2dc55" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/.idea/backend.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/.idea/dataSources.local.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/diamond.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/diamond.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Login.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../project/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/db.sqlite3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/diamond/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/diamond/settings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/diamond/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/diamond/wsgi.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/.browserslistrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/.editorconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/.eslintrc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/babel.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/hello.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/public/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/src/App.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/src/assets/backgroud-main.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/src/assets/backgroud.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/src/assets/css/global.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/src/assets/js/cookie.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/src/assets/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/src/components/Home.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/src/components/Login.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/src/components/Register.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/src/components/myinfo/MyInfo.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/src/components/working_table/In-box.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/src/components/working_table/My-desktop.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/src/components/working_table/WorkingTable.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/src/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/src/plugins/element.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/src/router/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/frontend/vue.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/login/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/login/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/login/apps.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/login/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/login/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/login/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/login/views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project/manage.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,27 +21,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/diamond/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+            <state relative-caret-position="1602">
+              <caret line="91" lean-forward="true" selection-start-line="91" selection-end-line="91" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/diamond/urls.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/backend/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="20" column="36" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
+            <state relative-caret-position="-527">
+              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/diamond/wsgi.py">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -101,6 +54,7 @@
       <list>
         <option value="$PROJECT_DIR$/diamond/urls.py" />
         <option value="$PROJECT_DIR$/diamond/settings.py" />
+        <option value="$PROJECT_DIR$/backend/models.py" />
       </list>
     </option>
   </component>
@@ -116,7 +70,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -124,16 +77,28 @@
               <item name="diamond" type="b2602c69:ProjectViewProjectNode" />
               <item name="diamond" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="diamond" type="b2602c69:ProjectViewProjectNode" />
+              <item name="diamond" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -189,16 +154,19 @@
       <workItem from="1597114324092" duration="1633000" />
       <workItem from="1597122216388" duration="657000" />
       <workItem from="1597123003810" duration="99000" />
+      <workItem from="1597123664974" duration="3356000" />
+      <workItem from="1597196817707" duration="132000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2389000" />
+    <option name="totallyTimeSpent" value="5877000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="53" y="25" width="1867" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26067665" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26955074" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -226,12 +194,8 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/diamond/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/diamond/wsgi.py">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/diamond/urls.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -240,8 +204,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/diamond/wsgi.py">
+    <entry file="file://$PROJECT_DIR$/login/views.py">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/login/models.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/diamond/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1602">
+          <caret line="91" lean-forward="true" selection-start-line="91" selection-end-line="91" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-527">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>
