@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
-
+from api.views import change_info, login, register
 
 urlpatterns = [
     # admin
@@ -24,7 +24,9 @@ urlpatterns = [
     
     # index.html App.vue
     path('', TemplateView.as_view(template_name="index.html")),
-
+    path('ajax/change_info/', change_info, name='change_info'),
+    path('ajax/login/', login, name='login'),
+    path('ajax/register/', register, name='register'),
     # backend api
     
 ]

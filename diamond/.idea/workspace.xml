@@ -3,8 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="3256be1d-2b12-4573-bbde-dc5862a2dc55" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diamond/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/diamond/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diamond/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/diamond/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.eslintrc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Register.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/myinfo/MyInfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/myinfo/MyInfo.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,31 +26,52 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/diamond/settings.py">
+        <entry file="file://$PROJECT_DIR$/diamond/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1602">
-              <caret line="91" selection-start-line="91" selection-end-line="91" />
+            <state relative-caret-position="173">
+              <caret line="21" column="11" lean-forward="true" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
+              <folding>
+                <element signature="e#631#663#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/models.py">
+        <entry file="file://$PROJECT_DIR$/login/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
+            <state relative-caret-position="81">
+              <caret line="3" selection-start-line="3" selection-end-line="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="93">
+              <caret line="3" selection-start-line="3" selection-end-line="3" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="280">
+              <caret line="10" column="66" lean-forward="true" selection-start-line="10" selection-start-column="66" selection-end-line="10" selection-end-column="66" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/frontend/src/components/myinfo/MyInfo.vue">
+        <entry file="file://$PROJECT_DIR$/diamond/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
-              <caret line="68" column="24" lean-forward="true" selection-start-line="68" selection-start-column="24" selection-end-line="68" selection-end-column="24" />
-              <folding>
-                <element signature="n#style#0;n#el-button#0;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="300">
+              <caret line="10" column="3" lean-forward="true" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -50,20 +79,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/components/Login.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="101" column="15" selection-start-line="101" selection-start-column="10" selection-end-line="101" selection-end-column="15" />
-              <folding>
-                <element signature="e#1475#1500#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="196">
+              <caret line="102" column="49" selection-start-line="102" selection-start-column="49" selection-end-line="102" selection-end-column="49" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/views.py">
+        <entry file="file://$PROJECT_DIR$/frontend/src/components/Register.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="63">
-              <caret line="3" selection-start-line="3" selection-end-line="3" />
+            <state relative-caret-position="198">
+              <caret line="6" column="12" lean-forward="true" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/components/myinfo/MyInfo.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="7" column="21" lean-forward="true" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
+              <folding>
+                <element signature="n#style#0;n#el-button#0;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -75,6 +113,7 @@
       <find>DIRS</find>
       <find>registerForm</find>
       <find>axios</find>
+      <find>data</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -83,18 +122,22 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/diamond/urls.py" />
-        <option value="$PROJECT_DIR$/diamond/settings.py" />
         <option value="$PROJECT_DIR$/backend/models.py" />
+        <option value="$PROJECT_DIR$/diamond/settings.py" />
         <option value="$PROJECT_DIR$/frontend/src/components/myinfo/MyInfo.vue" />
+        <option value="$PROJECT_DIR$/api/models.py" />
+        <option value="$PROJECT_DIR$/diamond/urls.py" />
+        <option value="$PROJECT_DIR$/frontend/src/components/Login.vue" />
+        <option value="$PROJECT_DIR$/frontend/src/components/Register.vue" />
+        <option value="$PROJECT_DIR$/api/views.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="986" />
-    <option name="y" value="25" />
-    <option name="width" value="934" />
-    <option name="height" value="1055" />
+    <option name="x" value="99" />
+    <option name="y" value="304" />
+    <option name="width" value="1479" />
+    <option name="height" value="965" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -102,6 +145,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -112,20 +156,19 @@
             <path>
               <item name="diamond" type="b2602c69:ProjectViewProjectNode" />
               <item name="diamond" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="diamond" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/diamond" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -189,22 +232,25 @@
       <workItem from="1597123003810" duration="99000" />
       <workItem from="1597123664974" duration="3356000" />
       <workItem from="1597196817707" duration="2770000" />
+      <workItem from="1597209912379" duration="8679000" />
+      <workItem from="1597220245998" duration="242000" />
+      <workItem from="1597221253883" duration="2165000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8515000" />
+    <option name="totallyTimeSpent" value="19601000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="53" y="25" width="1867" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26955074" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2828619" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.408" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.256" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -230,25 +276,18 @@
     <entry file="file://$PROJECT_DIR$/diamond/wsgi.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/diamond/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="20" column="36" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/login/views.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/login/models.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/diamond/settings.py">
+    <entry file="file://$USER_HOME$/anaconda3/envs/django/lib/python3.7/site-packages/django/http/response.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1602">
-          <caret line="91" selection-start-line="91" selection-end-line="91" />
+        <state relative-caret-position="172">
+          <caret line="551" selection-start-line="551" selection-end-line="551" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/tests.py">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/views.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -259,28 +298,73 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/components/Login.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="101" column="15" selection-start-line="101" selection-start-column="10" selection-end-line="101" selection-end-column="15" />
+        <state relative-caret-position="196">
+          <caret line="102" column="49" selection-start-line="102" selection-start-column="49" selection-end-line="102" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/myinfo/MyInfo.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="7" column="21" lean-forward="true" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
           <folding>
-            <element signature="e#1475#1500#0" expanded="true" />
+            <element signature="n#style#0;n#el-button#0;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="93">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
+        <state relative-caret-position="63">
           <caret line="15" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/components/myinfo/MyInfo.vue">
+    <entry file="file://$PROJECT_DIR$/login/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="68" column="24" lean-forward="true" selection-start-line="68" selection-start-column="24" selection-end-line="68" selection-end-column="24" />
+        <state relative-caret-position="81">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="10" column="66" lean-forward="true" selection-start-line="10" selection-start-column="66" selection-end-line="10" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/Register.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="6" column="12" lean-forward="true" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/diamond/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="21" column="11" lean-forward="true" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
           <folding>
-            <element signature="n#style#0;n#el-button#0;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#631#663#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/diamond/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="10" column="3" lean-forward="true" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
         </state>
       </provider>
     </entry>
