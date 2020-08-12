@@ -97,7 +97,7 @@ export default {
       this.$refs.registerForm.resetFields()
     },
     register (formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate( (valid) => {
         if (valid) {
           var data = Qs.stringify({
             username: this.registerForm.username,
@@ -105,14 +105,16 @@ export default {
             password: this.registerForm.password
           })
           // 向后端发送数据
-          axios.post('ajax/register/', data).then(function (resp) {
-            const flag = resp.data.request.flag
-            if (flag === 'yes') {
-              this.$router.push('/login')
-            } else {
-              alert(resp.data.request.msg)
-              // this.reset()
-            }
+          axios.post('ajax/register/', data).then( 
+            (resp)=> {
+              const flag = resp.data.request.flag
+              if (flag == 'yes') {
+                alert(resp.data.request.msg);
+                this.$router.push('/login');
+              } else {
+                alert(resp.data.request.msg);
+                // this.reset()
+              }
           })
         } else {
           alert('出现错误，请重试')

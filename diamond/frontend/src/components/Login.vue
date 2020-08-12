@@ -101,7 +101,7 @@ export default {
           var data = Qs.stringify({ username: this.loginForm.username, password: this.loginForm.password })
           // 向后端发送请求
           axios.post('ajax/login/', data).then(
-            function (resp) {
+             (resp) => {
               const flag = resp.data.request.flag
               if (flag == 'yes') {
                 this.$router.push('/home')

@@ -11,6 +11,7 @@ class User(models.Model):
     # id = models.CharField(max_length=64,verbose_name="id")
     username = models.CharField(max_length=64, verbose_name="姓名")
     password = models.CharField(max_length=256, verbose_name="密码")
+    mail_address = models.CharField(max_length=64, verbose_name="邮箱")
 
 # class User(AbstractUser):
 #     """

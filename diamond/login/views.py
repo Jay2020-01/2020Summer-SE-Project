@@ -10,20 +10,21 @@ def login(request):
     password = request.POST.get("password")
     print(username)
     print(password)
+    print(User.objects.all())
     try:
         user = User.objects.get(username=username)
     except:
-        date = {'flag': 'no', "msg": "unregisterd"}
-        return JsonResponse({'request': date})
+        data = {'flag': 'no', "msg": "unregisterd"}
+        return JsonResponse({'request': data})
     if password == user.password:
-        date_msg = "success"
-        date_flag = "yes"
+        data_msg = "success"
+        data_flag = "yes"
     else:
-        date_msg = "wrong password"
-        date_flag = "no"
-    date = {'flag': date_flag, 'msg': date_msg}
+        data_msg = "wrong password"
+        data_flag = "no"
+    data = {'flag': data_flag, 'msg': data_msg}
 
-    return JsonResponse({'request': date})
+    return JsonResponse({'request': data})
 
 
 def register(request):
@@ -31,13 +32,20 @@ def register(request):
     username = request.POST.get("username")
     mail_address = request.POST.get("mail_address")
     password = request.POST.get("password")
+    print(username)
     print(mail_address)
+    print(password)
     try:
-        user = User.objects.filter(mail_address=mail_address)
-        date = {'flag': 'no', "msg": "email existed"}
+        if(User.objects.filter(mail_address=mail_address)):
+            data = {'flag': 'no', "msg": "email existed"}
+        else:
+            data = {'flag': 'yes', "msg": "success"}
+            user = User(username=username,
+                        mail_address=mail_address, password=password)
+            user.save()
     except:
-        User.objects.create(
-            username=username, mail_address=mail_address, password=password)
-        date = {'flag': 'yes', "msg": "success"}
+        data = {'flag': 'no', "msg": "error!"}
+        return JsonResponse({'request': data})
 
-    return JsonResponse({'request': date})
+    print(User.objects.all())
+    return JsonResponse({'request': data})
