@@ -110,12 +110,12 @@ export default {
     confirm_modify (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          var data = Qs.stringify({ username: this.registerForm.username, password: this.registerForm.password })
+          var data = Qs.stringify(this.registerForm)
           axios.post('ajax/change_info/', data).then(res => {
-            this.$router.push('/login')
+            this.$router.push('/myinfo')
           })
         } else {
-          alert('出现错误，请重试')
+          alert('表格不能为空')
         }
       })
     }
