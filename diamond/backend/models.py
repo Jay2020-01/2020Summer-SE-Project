@@ -94,7 +94,7 @@ class UDRight(models.Model):
     user = models.ForeignKey(User, verbose_name= "", on_delete=models.CASCADE)
     doc  = models.ForeignKey(User, verbose_name= "", on_delete=models.CASCADE)
     
-    right_type = models.BigIntegerField();
+    right_type = models.BigIntegerField()
 
     visit_time = models.DateTimeField(auto_now_add=True)
 
