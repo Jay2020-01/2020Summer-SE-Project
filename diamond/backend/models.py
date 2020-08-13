@@ -8,9 +8,7 @@ class UserProfile(models.Model):
     User information file
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
     phone_number = models.CharField(max_length=64, null=True)
-
     wechat = models.CharField(max_length=64, null=True)
 
     class Meta:
@@ -30,9 +28,7 @@ class GroupProfile(models.Model):
     """
 
     Group = models.OneToOneField(Group, on_delete=models.CASCADE)
-
     leader = models.ForeignKey(User, related_name='leader', verbose_name="组长", on_delete=models.CASCADE)
-
     introduction = models.TextField(null=True)
 
     class Meta:
@@ -53,11 +49,8 @@ class Document(models.Model):
 
     # Many-to-one: if the group does not exist, the document belonging to it will be deleted too.
     group = models.ForeignKey(Group, verbose_name="所属团队", on_delete=models.CASCADE, null=False)
-
     name = models.CharField(max_length=64)
-
     content = models.TextField(null=True)
-
     created_date = models.DateTimeField("创建时间", auto_now=False, auto_now_add=True, null=True, blank=True)
     modified_date = models.DateTimeField("修改时间", auto_now=True, auto_now_add=False, null=True, blank=True)
 
@@ -83,12 +76,9 @@ class UDRecord(models.Model):
     """
     User and Doc record
     """
-
     user = models.ForeignKey(User, verbose_name="", on_delete=models.CASCADE)
     doc = models.ForeignKey(Document, verbose_name="", on_delete=models.CASCADE)
-
     visit_time = models.DateTimeField(auto_now_add=True)
-
     isStared = models.BooleanField()
 
     class Meta:
