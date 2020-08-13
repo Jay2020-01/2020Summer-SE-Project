@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3256be1d-2b12-4573-bbde-dc5862a2dc55" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/backend/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diamond/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/diamond/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/login/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/login/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,8 +39,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/login/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
-              <caret line="32" column="29" lean-forward="true" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
+            <state relative-caret-position="321">
+              <caret line="40" column="19" lean-forward="true" selection-start-line="40" selection-start-column="19" selection-end-line="40" selection-end-column="19" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -113,10 +110,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-541" />
-    <option name="y" value="171" />
-    <option name="width" value="1548" />
-    <option name="height" value="846" />
+    <option name="x" value="986" />
+    <option name="y" value="25" />
+    <option name="width" value="934" />
+    <option name="height" value="1055" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -142,7 +139,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/myDesktop/rgStuForum" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -213,23 +210,23 @@
       <workItem from="1597250072705" duration="1097000" />
       <workItem from="1597320542874" duration="1115000" />
       <workItem from="1597324298574" duration="20000" />
-      <workItem from="1597325732515" duration="6442000" />
+      <workItem from="1597325732515" duration="6679000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37080000" />
+    <option name="totallyTimeSpent" value="37317000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="53" y="25" width="1867" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16306156" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16306156" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.37485716" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.37485716" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -363,8 +360,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/login/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="32" column="29" lean-forward="true" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
+        <state relative-caret-position="321">
+          <caret line="40" column="19" lean-forward="true" selection-start-line="40" selection-start-column="19" selection-end-line="40" selection-end-column="19" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>

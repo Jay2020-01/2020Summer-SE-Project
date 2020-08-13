@@ -35,9 +35,8 @@ def register(request):
     username = request.POST.get("username")
     mail_address = request.POST.get("mail_address")
     password = request.POST.get("password")
-    if User.objects.filter(email=mail_address):
-        data = {'flag': 'no'}
-    else:
+    data = {'token': None, 'user': username}
+    if not User.objects.filter(username=username):
         user = User(username=username, email=mail_address, password=password)
         user.save()
         token = Token.objects.get(user=user)
