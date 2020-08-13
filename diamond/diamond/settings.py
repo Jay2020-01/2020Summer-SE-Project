@@ -36,12 +36,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # third-party App
     'rest_framework',
     'django_filters',
     'rest_framework_swagger',
-    'guardian',
+    # 'guardian',
 
     # customed App
     'backend.apps.BackendConfig',
@@ -63,7 +63,7 @@ ROOT_URLCONF = 'diamond.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['frontend/dist'],
+        'DIRS': ['dist'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,11 +124,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "frontend/dist/static"),
+    os.path.join(BASE_DIR, "dist/static"),
 ]
-
 
 # drf 配置 包含：异常、权限
 REST_FRAMEWORK = {
@@ -148,7 +146,7 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'utils.custom_execption.custom_exception_handler',
 }
 
-AUTHENTICATION_BACKENDS = ( 
-    'django.contrib.auth.backends.ModelBackend', # 这是Django默认的
-    'guardian.backends.ObjectPermissionBackend', # 这是guardian的
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # 这是Django默认的
+    'guardian.backends.ObjectPermissionBackend',  # 这是guardian的
 )
