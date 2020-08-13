@@ -15,3 +15,9 @@ def change_info(request):
     wechat = request.POST.get("wechat")
     data = {'success': True}
     return JsonResponse(data)
+
+# def newdoc(request):
+#     title = request.POST.get("title")
+#     content = request.POST.get("content")
+#     document = Document(title=title,content=content)
+#     document.save()

@@ -79,7 +79,7 @@ class User(models.Model):
 #
 #     title = models.CharField(max_length=64)
 #
-#     content = models.AutoField()
+#     content = models.WangRichTextField()
 #
 #     created_date = models.DateTimeField(auto_now_add=True)
 #

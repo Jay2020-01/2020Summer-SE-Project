@@ -27,6 +27,7 @@ urlpatterns = [
     path('ajax/change_info/', backend_views.change_info, name='change_info'),
     path('ajax/login/', login_views.login, name='login'),
     path('ajax/register/', login_views.register, name='register'),
+    #path('ajax/???/', backend_views.newdoc, name='newdoc'),
     # backend api
     
 ]
