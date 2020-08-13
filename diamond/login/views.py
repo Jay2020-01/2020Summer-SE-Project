@@ -39,10 +39,13 @@ def register(request):
         if(User.objects.filter(mail_address=mail_address)):
             data = {'flag': 'no', "msg": "email existed"}
         else:
-            data = {'flag': 'yes', "msg": "success"}
-            user = User(username=username,
-                        mail_address=mail_address, password=password)
-            user.save()
+            if(User.objects.filter(username=username)):
+                data = {'flag': 'no', "msg": "username existed"}
+            else:
+                data = {'flag': 'yes', "msg": "success"}
+                user = User(username=username,
+                            mail_address=mail_address, password=password)
+                user.save()
     except:
         data = {'flag': 'no', "msg": "error!"}
         return JsonResponse({'request': data})

@@ -1,5 +1,5 @@
 from django.db import models
-
+from wangeditor.fields import WangRichTextField
 
 # from django.contrib.auth.models import AbstractUser
 
