@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'rest_framework_swagger',
-    # 'guardian',
+    'guardian',
 
     # customed App
     'backend.apps.BackendConfig',
