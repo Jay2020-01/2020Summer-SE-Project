@@ -41,10 +41,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'rest_framework_swagger',
-    'guardian',
-
+    'rest_framework.authtoken',
+    'guardian'
     # customed App
-    'backend.apps.BackendConfig',
+    'backend',
 ]
 
 MIDDLEWARE = [
@@ -124,15 +124,22 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "dist/static"),
 ]
 
+# 设置一个值来重写默认的用户表
+AUTH_USER_MODEL = 'backend.User'
+
 # drf 配置 包含：异常、权限
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ],
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
@@ -147,6 +154,6 @@ REST_FRAMEWORK = {
 }
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',  # 这是Django默认的
-    'guardian.backends.ObjectPermissionBackend',  # 这是guardian的
+    'django.contrib.auth.backends.ModelBackend', # 这是Django默认的
+    'guardian.backends.ObjectPermissionBackend', # 这是guardian的
 )

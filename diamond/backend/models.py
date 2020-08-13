@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User, Group
 from django.conf import settings
 
+
 class UserProfile(models.Model):
     """
     User information file
@@ -30,7 +31,7 @@ class GroupProfile(models.Model):
 
     Group = models.OneToOneField(Group, on_delete=models.CASCADE)
 
-    leader = models.ForeignKey(User,related_name='leader', verbose_name="组长", on_delete=models.CASCADE)
+    leader = models.ForeignKey(User, related_name='leader', verbose_name="组长", on_delete=models.CASCADE)
 
     introduction = models.TextField(null=True)
 
@@ -45,7 +46,6 @@ class GroupProfile(models.Model):
         return reverse("_detail", kwargs={"pk": self.pk})
 
 
-
 class Document(models.Model):
     """
     Document
@@ -58,7 +58,7 @@ class Document(models.Model):
 
     content = models.TextField(null=True)
 
-    created_date  = models.DateTimeField("创建时间", auto_now=False, auto_now_add=True, null=True, blank=True)
+    created_date = models.DateTimeField("创建时间", auto_now=False, auto_now_add=True, null=True, blank=True)
     modified_date = models.DateTimeField("修改时间", auto_now=True, auto_now_add=False, null=True, blank=True)
 
     class Meta:
@@ -69,8 +69,9 @@ class Document(models.Model):
             ('doc_create', '文档创建'),
             ('doc_modify', '文档修改'),
             ('doc_review', '文档查看'),
-            ('doc_share' , '文档分享'),
+            ('doc_share', '文档分享'),
         )
+
     def __str__(self):
         return self.name
 
@@ -82,9 +83,9 @@ class UDRecord(models.Model):
     """
     User and Doc record
     """
-    
-    user = models.ForeignKey(User, verbose_name= "", on_delete=models.CASCADE)
-    doc  = models.ForeignKey(Document, verbose_name= "", on_delete=models.CASCADE)
+
+    user = models.ForeignKey(User, verbose_name="", on_delete=models.CASCADE)
+    doc = models.ForeignKey(Document, verbose_name="", on_delete=models.CASCADE)
 
     visit_time = models.DateTimeField(auto_now_add=True)
 
