@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'rest_framework_swagger',
+    'guardian',
 
     # customed App
     'backend.apps.BackendConfig',
@@ -128,8 +129,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "frontend/dist/static"),
 ]
 
-# 设置一个值来重写默认的用户表
-# AUTH_USER_MODEL = 'backend.User'
 
 # drf 配置 包含：异常、权限
 REST_FRAMEWORK = {
@@ -148,3 +147,8 @@ REST_FRAMEWORK = {
     # 异常
     'EXCEPTION_HANDLER': 'utils.custom_execption.custom_exception_handler',
 }
+
+AUTHENTICATION_BACKENDS = ( 
+    'django.contrib.auth.backends.ModelBackend', # 这是Django默认的
+    'guardian.backends.ObjectPermissionBackend', # 这是guardian的
+)

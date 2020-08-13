@@ -1,119 +1,101 @@
 from django.db import models
+from django.contrib.auth.models import User, Group
+from django.conf import settings
+
+class UserProfile(models.Model):
+    """
+    User information file
+    """
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    phone_number = models.CharField(max_length=64, null=True)
+
+    wechat = models.CharField(max_length=64, null=True)
+
+    class Meta:
+        verbose_name = "用户信息"
+        verbose_name_plural = "用户信息集"
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("_detail", kwargs={"pk": self.pk})
 
 
-# from django.contrib.auth.models import AbstractUser
+class GroupProfile(models.Model):
+    """
+    Team profile
+    """
 
-# Create your models here.
-class User(models.Model):
-    # SEX_CHOICES = (
-    #     ('男', 1),
-    #     ('女', 0),)
-    # id = models.CharField(max_length=64,verbose_name="id")
-    username = models.CharField(max_length=64, verbose_name="姓名")
-    password = models.CharField(max_length=256, verbose_name="密码")
-    mail_address = models.CharField(max_length=64, verbose_name="邮箱")
+    Group = models.OneToOneField(Group, on_delete=models.CASCADE)
 
-# class User(AbstractUser):
-#     """
-#     User
-#     """
-#     user_id = models.CharField(max_length=64, unique=True)
-#
-#     username = models.CharField(max_length=64)
-#
-#     password = models.CharField(max_length=64)
-#
-#     phone_number = models.CharField(max_length=64, null=True)
-#
-#     email = models.EmailField(null=True)
-#
-#     wechat = models.CharField(max_length=64, null=True)
-#
-#     # starDoc = models.ManyToManyField(Doc, verbose_name="收藏文章")
-#
-#     # set auth mark
-#     USERNAME_FIELD = 'user_id'
-#
-#     class Meta:
-#         verbose_name = "用户"
-#         verbose_name_plural = "用户集"
-#
-#     def __str__(self):
-#         return self.name
-#
-#     def get_absolute_url(self):
-#         return reverse("_detail", kwargs={"pk": self.pk})
-#
+    leader = models.ForeignKey(User,related_name='leader', verbose_name="组长", on_delete=models.CASCADE)
 
-# class Group(models.Model):
-#     """
-#     Team
-#     """
-#
-#     leader = models.OneToOneField(User, verbose_name="组长", on_delete=models.CASCADE)
-#
-#     #  = models.ManyToManyField(User, verbose_name="队员", on_delete=models)
-#
-#     groupname = models.CharField(max_length=64)
-#
-#     introduction = models.TextField(null=True)
-#
-#     class Meta:
-#         verbose_name = "团队"
-#         verbose_name_plural = "百团"
-#
-#     def __str__(self):
-#         return self.name
-#
-#     def get_absolute_url(self):
-#         return reverse("_detail", kwargs={"pk": self.pk})
-#
-#
-# class Document(models.Model):
-#     """
-#     Document
-#     """
-#
-#     # Many-to-one: if the group does not exist, the document belonging to it will be deleted too.
-#     group = models.ForeignKey(Group, verbose_name="所属团队", on_delete=models.CASCADE)
-#
-#     title = models.CharField(max_length=64)
-#
-#     content = models.AutoField()
-#
-#     created_date = models.DateTimeField(auto_now_add=True)
-#
-#     modified_date = models.DateTimeField(auto_now=True)
-#
-#     class Meta:
-#         verbose_name = "文档"
-#         verbose_name_plural = "文档集"
-#
-#     def __str__(self):
-#         return self.name
-#
-#     def get_absolute_url(self):
-#         return reverse("_detail", kwargs={"pk": self.pk})
-#
-#
-# class UDRight(models.Model):
-#     """
-#     User and Doc
-#     """
-#
-#     user = models.ForeignKey(User, verbose_name="", on_delete=models.CASCADE)
-#     doc = models.ForeignKey(Document, verbose_name="", on_delete=models.CASCADE)
-#
-#     right_type = models.BigIntegerField()
-#
-#     visit_time = models.DateTimeField(auto_now_add=True)
-#
-#     class Meta:
-#         verbose_name = ""
-#         verbose_name_plural = "s"
-#
-#     def __str__(self):
-#         return self.name
-#
-#     def get_absolute_url(self):
-#         return reverse("_detail", kwargs={"pk": self.pk})
+    introduction = models.TextField(null=True)
+
+    class Meta:
+        verbose_name = "团队信息"
+        verbose_name_plural = "团队信息集"
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("_detail", kwargs={"pk": self.pk})
+
+
+
+class Document(models.Model):
+    """
+    Document
+    """
+
+    # Many-to-one: if the group does not exist, the document belonging to it will be deleted too.
+    group = models.ForeignKey(Group, verbose_name="所属团队", on_delete=models.CASCADE, null=False)
+
+    name = models.CharField(max_length=64)
+
+    content = models.TextField(null=True)
+
+    created_date  = models.DateTimeField("创建时间", auto_now=False, auto_now_add=True, null=True, blank=True)
+    modified_date = models.DateTimeField("修改时间", auto_now=True, auto_now_add=False, null=True, blank=True)
+
+    class Meta:
+        verbose_name = "文档"
+        verbose_name_plural = "文档集"
+        default_permissions = ()
+        permissions = (
+            ('doc_create', '文档创建'),
+            ('doc_modify', '文档修改'),
+            ('doc_review', '文档查看'),
+            ('doc_share' , '文档分享'),
+        )
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("_detail", kwargs={"pk": self.pk})
+
+
+class UDRecord(models.Model):
+    """
+    User and Doc record
+    """
+    
+    user = models.ForeignKey(User, verbose_name= "", on_delete=models.CASCADE)
+    doc  = models.ForeignKey(Document, verbose_name= "", on_delete=models.CASCADE)
+
+    visit_time = models.DateTimeField(auto_now_add=True)
+
+    isStared = models.BooleanField()
+
+    class Meta:
+        verbose_name = ""
+        verbose_name_plural = "s"
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("_detail", kwargs={"pk": self.pk})
