@@ -46,9 +46,12 @@ class Document(models.Model):
     """
     Document
     """
+    # Many-to-one: need to know the creater of the document
+    creater = models.ForeignKey(User, verbose_name='创建者', on_delete=models.CASCADE, null=False)
 
     # Many-to-one: if the group does not exist, the document belonging to it will be deleted too.
     group = models.ForeignKey(Group, verbose_name="所属团队", on_delete=models.CASCADE, null=False)
+    
     name = models.CharField(max_length=64)
 
     # content = models.TextField(null=True)
