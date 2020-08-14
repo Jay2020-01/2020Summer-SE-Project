@@ -47,7 +47,7 @@ def create_doc(request):
     user = User.objects.get(id=token.user_id)
     name = request.POST.get("title")
     content = request.POST.get("content")
-    Document.objects.create(creator=user, name=name, content=content)
+    Document.objects.create(creater=user, name=name, content=content)
     data = {'flag': "yes", 'msg': "create success"}
     print("success")
     return JsonResponse(data)
