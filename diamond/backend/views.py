@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.db.models import Q
 # Create your views here.
 from django.http import JsonResponse
 from .models import User, UserProfile, Document, Group, GroupProfile
@@ -58,3 +58,21 @@ def create_team(request):
     team = Group.objects.create(name=team_name)
     GroupProfile.objects.create(Group=team, leader=user)
     return JsonResponse({})
+
+
+# 文章详情页面的视图函数
+def search_user(request):
+    print('search user')
+    token_str = request.META.get("HTTP_AUTHORIZATION")
+    token = Token.objects.get(key=token_str)
+    user = User.objects.get(id=token.user_id)
+    name = request.GET.get("name")
+    print("key word", name)
+    if name == "":
+        user_list = User.objects.all()
+    else:
+        user_list = User.objects.filter(
+            Q(name__icontains=name)
+        )
+    data = {"user_list": user_list}
+    return data
