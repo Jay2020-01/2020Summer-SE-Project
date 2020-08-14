@@ -6,7 +6,7 @@ from .models import User, UserProfile, Document, Group, GroupProfile
 from rest_framework.authtoken.models import Token
 
 
-# Create your views here.
+# 修改用户信息.
 def change_info(request):
     token_str = request.META.get("HTTP_AUTHORIZATION")
     token = Token.objects.get(key=token_str)
@@ -24,6 +24,7 @@ def change_info(request):
     return JsonResponse({})
 
 
+# 拉取用户信息
 def user_info(request):
     token_str = request.META.get("HTTP_AUTHORIZATION")
     token = Token.objects.get(key=token_str)
@@ -37,6 +38,7 @@ def user_info(request):
     return JsonResponse(data)
 
 
+# 新建文档
 def create_doc(request):
     token_str = request.META.get("HTTP_AUTHORIZATION")
     token = Token.objects.get(key=token_str)
@@ -49,6 +51,7 @@ def create_doc(request):
     return JsonResponse(data)
 
 
+# 新建团队
 def create_team(request):
     print('create team')
     token_str = request.META.get("HTTP_AUTHORIZATION")
@@ -60,7 +63,7 @@ def create_team(request):
     return JsonResponse({})
 
 
-# 文章详情页面的视图函数
+# 搜索用户
 def search_user(request):
     print('search user')
     token_str = request.META.get("HTTP_AUTHORIZATION")
