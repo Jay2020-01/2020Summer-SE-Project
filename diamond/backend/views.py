@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.http import JsonResponse
-from .models import User, UserProfile, Document
+from .models import User, UserProfile, Document, Group, GroupProfile
 from rest_framework.authtoken.models import Token
 
 
@@ -37,13 +37,24 @@ def user_info(request):
     return JsonResponse(data)
 
 
-def newdoc(request):
-    print("newdoc")
+def create_doc(request):
+    token_str = request.META.get("HTTP_AUTHORIZATION")
+    token = Token.objects.get(key=token_str)
+    user = User.objects.get(id=token.user_id)
     name = request.POST.get("title")
     content = request.POST.get("content")
-    document = Document(name=name, content=content)
-    print(name)
-    print(content)
-    # document.save()
-    data = {'flag': "yes", 'msg': "some infos"}
+    Document.objects.create(creator=user, name=name, content=content)
+    data = {'flag': "yes", 'msg': "create success"}
+    print("success")
     return JsonResponse(data)
+
+
+def create_team(request):
+    print('create team')
+    token_str = request.META.get("HTTP_AUTHORIZATION")
+    token = Token.objects.get(key=token_str)
+    user = User.objects.get(id=token.user_id)
+    team_name = request.POST.get("name")
+    team = Group.objects.create(name=team_name)
+    GroupProfile.objects.create(Group=team, leader=user)
+    return JsonResponse({})

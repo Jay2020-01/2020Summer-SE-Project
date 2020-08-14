@@ -29,7 +29,7 @@ urlpatterns = [
     path('ajax/login/', login_views.login, name='login'),
     path('ajax/user_info/', backend_views.user_info, name='user_info'),
     path('ajax/register/', login_views.register, name='register'),
-    path('ajax/newdoc/', backend_views.newdoc, name='newdoc'),
+    path('ajax/newdoc/', backend_views.create_doc, name='create_doc'),
+    path('ajax/create_team/', backend_views.create_team, name='create_team')
     # backend api
-    
 ]
