@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from .models import User, UserProfile, Document
 from rest_framework.authtoken.models import Token
 
+
 # Create your views here.
 def change_info(request):
     token_str = request.META.get("HTTP_AUTHORIZATION")
@@ -35,11 +36,12 @@ def user_info(request):
             'password': user.password}
     return JsonResponse(data)
 
+
 def newdoc(request):
     print("newdoc")
     name = request.POST.get("title")
     content = request.POST.get("content")
-    document = Document(name = name, content = content)
+    document = Document(name=name, content=content)
     print(name)
     print(content)
     # document.save()
