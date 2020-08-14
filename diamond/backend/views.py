@@ -26,6 +26,7 @@ def change_info(request):
 
 # 拉取用户信息
 def user_info(request):
+    print('pull user info')
     token_str = request.META.get("HTTP_AUTHORIZATION")
     token = Token.objects.get(key=token_str)
     user = User.objects.get(id=token.user_id)
@@ -40,6 +41,7 @@ def user_info(request):
 
 # 新建文档
 def create_doc(request):
+    print('create doc')
     token_str = request.META.get("HTTP_AUTHORIZATION")
     token = Token.objects.get(key=token_str)
     user = User.objects.get(id=token.user_id)
