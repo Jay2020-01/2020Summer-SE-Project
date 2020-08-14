@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
 from django.conf import settings
-
+from wangeditor.fields import WangRichTextField
 
 class UserProfile(models.Model):
     """
@@ -56,7 +56,8 @@ class Document(models.Model):
 
     name = models.CharField(max_length=64)
 
-    content = models.TextField(null=True)
+    # content = models.TextField(null=True)
+    content = WangRichTextField()
 
     created_date = models.DateTimeField("创建时间", auto_now=False, auto_now_add=True, null=True, blank=True)
     modified_date = models.DateTimeField("修改时间", auto_now=True, auto_now_add=False, null=True, blank=True)
