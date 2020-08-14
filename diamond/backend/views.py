@@ -3,6 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import JsonResponse
 from .models import User
+from .models import Document
 
 
 # Create your views here.
@@ -16,8 +17,12 @@ def change_info(request):
     data = {'success': True}
     return JsonResponse(data)
 
-# def newdoc(request):
-#     title = request.POST.get("title")
-#     content = request.POST.get("content")
-#     document = Document(title=title,content=content)
-#     document.save()
+def newdoc(request):
+    title = request.POST.get("title")
+    content = request.POST.get("content")
+    print(title)
+    print(content)
+    document = Document(title=title,content=content)
+    # document.save()
+    data = {'flag': True}
+    return JsonResponse({'request': data})

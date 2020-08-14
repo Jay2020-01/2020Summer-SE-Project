@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    # 编辑器
+    'wangeditor',
     # third-party App
     'rest_framework',
     'django_filters',
