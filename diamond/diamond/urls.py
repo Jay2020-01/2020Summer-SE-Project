@@ -27,6 +27,7 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name="index.html")),
     path('ajax/change_info/', backend_views.change_info, name='change_info'),
     path('ajax/login/', login_views.login, name='login'),
+    path('ajax/user_info/', backend_views.user_info, name='user_info'),
     path('ajax/register/', login_views.register, name='register'),
     path('ajax/newdoc/', backend_views.newdoc, name='newdoc'),
     # backend api
