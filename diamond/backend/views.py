@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from .models import User, UserProfile, Document, Group, GroupProfile
 from rest_framework.authtoken.models import Token
+from django.core import serializers
 
 
 # 修改用户信息.
@@ -53,6 +54,22 @@ def create_doc(request):
     return JsonResponse(data)
 
 
+# 我创建的
+def my_doc(request):
+    token_str = request.META.get("HTTP_AUTHORIZATION")
+    token = Token.objects.get(key=token_str)
+    user = User.objects.get(id=token.user_id)
+    documents = Document.objects.filter(creater=user)
+    all_doc = []
+    for d in documents:
+        c_item = {
+            'name': d.name,
+            'content': d.content,
+        }
+        all_doc.append(c_item)
+    return JsonResponse({'data': all_doc})
+
+
 # 新建团队
 def create_team(request):
     print('create team')
@@ -71,13 +88,14 @@ def search_user(request):
     token_str = request.META.get("HTTP_AUTHORIZATION")
     token = Token.objects.get(key=token_str)
     user = User.objects.get(id=token.user_id)
-    name = request.GET.get("name")
+    name = request.POST.get("name")
     print("key word", name)
     if name == "":
         user_list = User.objects.all()
     else:
         user_list = User.objects.filter(
-            Q(name__icontains=name)
+            Q(username__icontains=name)
         )
-    data = {"user_list": user_list}
-    return data
+    data = {"user_list": serializers.serialize('json', user_list)}
+
+    return JsonResponse(data)
