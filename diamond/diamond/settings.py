@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'rest_framework.authtoken',
     'guardian',
+    'notifications',
+    'mptt',
+    
     # customed App
     'backend',
 ]
