@@ -48,7 +48,7 @@ def create_doc(request):
     user = User.objects.get(id=token.user_id)
     name = request.POST.get("title")
     content = request.POST.get("content")
-    Document.objects.create(creater=user, name=name, content=content)
+    Document.objects.create(creater=user, name=name, content=content, in_group = False)
     data = {'flag': "yes", 'msg': "create success"}
     print("success")
     return JsonResponse(data)
@@ -56,6 +56,7 @@ def create_doc(request):
 
 # 我创建的
 def my_doc(request):
+    print('my docs')
     token_str = request.META.get("HTTP_AUTHORIZATION")
     token = Token.objects.get(key=token_str)
     user = User.objects.get(id=token.user_id)
