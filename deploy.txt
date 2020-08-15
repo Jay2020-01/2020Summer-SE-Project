@@ -1,0 +1,26 @@
+记得在阿里云上开放80端口
+
+修改ecs 上ubuntu默认python版本的办法：https://developer.aliyun.com/article/675991（一定要先做这一步）
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7  1
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6  2
+
+# wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-5.3.1-Linux-x86_64.sh # 清华大学镜像下载anaconda, 用于创建虚拟环境
+# bash bash Anaconda3-5.3.1-Linux-x86_64.sh
+
+apt-get update
+apt-get install python-dev nginx  # 安装nginx
+apt-install python-pip           # 安装pip
+pip install --upgrade pip  # 更新pip  
+
+pip install uwsgi --upgrade  
+# 如果出错，可能是由于python版本造成 ，运行apt-get install libpython3.6-dev 安装python3.6
+# 或者运行python -m ensurepip ， python -m pip install --upgrade pip 对pip进行修复
+pip install -r requirements
+
+# uwsgi --http :8001 --chdir /path/to/project --home=/path/to/env --module project.wsgi  # 运行uwsgi，注意是否有虚拟环境
+
+# 使用supervisor来管理进程
+
+配置nginx时记得打分号
+配置uwsgi
+最后修改django settings.py 里的debug以及hosts
