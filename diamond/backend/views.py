@@ -48,7 +48,7 @@ def create_doc(request):
     user = User.objects.get(id=token.user_id)
     name = request.POST.get("title")
     content = request.POST.get("content")
-    Document.objects.create(creater=user, name=name, content=content, in_group = False)
+    Document.objects.create(creater=user, name=name, content=content, in_group=False)
     data = {'flag': "yes", 'msg': "create success"}
     print("success")
     return JsonResponse(data)
@@ -100,3 +100,10 @@ def search_user(request):
     data = {"user_list": serializers.serialize('json', user_list)}
 
     return JsonResponse(data)
+
+
+def get_my_team(request):
+    print('get my team')
+    token_str = request.META.get("HTTP_AUTHORIZATION")
+    token = Token.objects.get(key=token_str)
+    user = User.objects.get(id=token.user_id)
