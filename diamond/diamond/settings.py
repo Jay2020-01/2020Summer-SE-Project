@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework_swagger',
     'rest_framework.authtoken',
-    'guardian',
+    # 'guardian',
     'notifications',
     'imagekit',
     'mptt',
@@ -157,7 +157,7 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'utils.custom_execption.custom_exception_handler',
 }
 
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend', # 这是Django默认的
-    'guardian.backends.ObjectPermissionBackend', # 这是guardian的
-)
+# AUTHENTICATION_BACKENDS = (
+#     'django.contrib.auth.backends.ModelBackend', # 这是Django默认的
+#     'guardian.backends.ObjectPermissionBackend', # 这是guardian的
+# )
