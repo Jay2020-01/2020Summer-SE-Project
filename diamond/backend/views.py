@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.core import serializers
 # my models
-from .models import User, Document, Team, TeamUser
+from .models import User, Document, Team, TeamUser, Comment
 # third-party
 from rest_framework.authtoken.models import Token
 from notifications.signals import notify
@@ -164,4 +164,19 @@ def get_user_unread_notice(request):
 
     data = {"notice_list": unread_notice_list}
 
+    return JsonResponse(data)
+
+# 上传评论
+def post_comment(request):
+    token_str = request.META.get('HTTP_AUTHORIZATION')
+    token = Token.objects.get(key=token_str)
+    # 获取登录用户
+    user = User.object.get(id=token.user_id)
+    # 获取被评论的文档id
+    document = Document.objects.get(id=request.POST.get("doc_id"))
+    # 获取评论内容
+    body = request.POST.get("body")
+    # 存储评论
+    Comment.create(user=user,document=document,body=body)
+    data = {}
     return JsonResponse(data)
