@@ -123,3 +123,30 @@ def get_team_member(request):
         user_list.append(relation.user)
     data = {'user_list': user_list}
     return JsonResponse(data)
+
+# 发送邀请
+def send_invation(request):
+    token_str = request.META.get('HTTP_AUTHORIZATION')
+    token = Token.objects.get(key=token_str)
+    
+    actor = User.objects.get(id=request.POST.get("actor_id"))
+    recipient = User.objects.get(id=request.POST.get("recipient_id"))
+    verb = 'invate'
+    target = Team.objects.get(id=request.POST.get("team_id"))
+
+    data = {}
+
+    notify.send(actor, recipient, verb, target)
+    return JsonResponse(data)
+
+# 获取未读信息
+def get_user_unread_notice(request):
+    token_str = request.META.get('HTTP_AUTHORIZATION')
+    token = Token.objects.get(key=token_str)
+    user = User.object.get(id=token.user_id)
+
+    unread_notice_list = user.notifications.unread()
+
+    data = {"notice_list": unread_notice_list}
+
+    return JsonResponse(data)
