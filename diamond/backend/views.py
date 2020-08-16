@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.db.models import Q
 # Create your views here.
 from django.http import JsonResponse
-from .models import User, UserProfile, Document, Group, GroupProfile
+from .models import User, Document, Team, TeamUser
 from rest_framework.authtoken.models import Token
 from django.core import serializers
 
@@ -12,16 +12,13 @@ def change_info(request):
     token_str = request.META.get("HTTP_AUTHORIZATION")
     token = Token.objects.get(key=token_str)
     user = User.objects.get(id=token.user_id)
-    user_profile = UserProfile.objects.get(user=user)
 
     user.username = request.POST.get("username")
     user.email = request.POST.get("mail_address")
     user.password = request.POST.get("password")
-    user_profile.wechat = request.POST.get("wechat")
-    user_profile.phone_number = request.POST.get("phone_number")
-
+    user.wechat = request.POST.get("wechat")
+    user.phone_number = request.POST.get("phone_number")
     user.save()
-    user_profile.save()
     return JsonResponse({})
 
 
@@ -31,11 +28,10 @@ def user_info(request):
     token_str = request.META.get("HTTP_AUTHORIZATION")
     token = Token.objects.get(key=token_str)
     user = User.objects.get(id=token.user_id)
-    user_profile = UserProfile.objects.get(user=user)
     data = {'username': user.username,
             'mail_address': user.email,
-            'phone_number': user_profile.phone_number,
-            'wechat': user_profile.wechat,
+            'phone_number': user.phone_number,
+            'wechat': user.wechat,
             'password': user.password}
     return JsonResponse(data)
 
@@ -48,7 +44,7 @@ def create_doc(request):
     user = User.objects.get(id=token.user_id)
     name = request.POST.get("title")
     content = request.POST.get("content")
-    Document.objects.create(creater=user, name=name, content=content, in_group=False)
+    Document.objects.create(creator=user, name=name, content=content, in_group=False)
     data = {'flag': "yes", 'msg': "create success"}
     print("success")
     return JsonResponse(data)
@@ -78,8 +74,8 @@ def create_team(request):
     token = Token.objects.get(key=token_str)
     user = User.objects.get(id=token.user_id)
     team_name = request.POST.get("name")
-    team = Group.objects.create(name=team_name)
-    GroupProfile.objects.create(Group=team, leader=user)
+    team = Team.objects.create(team_name=team_name)
+    TeamUser.objects.create(team=team, user=user, is_leader=True)
     return JsonResponse({})
 
 
@@ -102,8 +98,15 @@ def search_user(request):
     return JsonResponse(data)
 
 
+# 拉取用户所有的团队
 def get_my_team(request):
     print('get my team')
     token_str = request.META.get("HTTP_AUTHORIZATION")
     token = Token.objects.get(key=token_str)
     user = User.objects.get(id=token.user_id)
+    team_user = TeamUser.objects.filter(user=user)
+    team_list = []
+    for relation in team_user:
+        team_list.append(relation.team)
+    data = {"team_list": team_list}
+    return JsonResponse(data)

@@ -133,7 +133,7 @@ STATICFILES_DIRS = [
 ]
 
 # 设置一个值来重写默认的用户表
-# AUTH_USER_MODEL = 'backend.User'
+AUTH_USER_MODEL = 'backend.User'
 
 # drf 配置 包含：异常、权限
 REST_FRAMEWORK = {
