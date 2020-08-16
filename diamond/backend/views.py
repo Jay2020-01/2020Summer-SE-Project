@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from django.db.models import Q
-# Create your views here.
 from django.http import JsonResponse
-from .models import User, Document, Team, TeamUser
-from rest_framework.authtoken.models import Token
 from django.core import serializers
+# my models
+from .models import User, Document, Team, TeamUser
+# third-party
+from rest_framework.authtoken.models import Token
+from notifications.signals import notify
+
+# Create your views here.
 
 
 # 修改用户信息.
