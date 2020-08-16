@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'guardian',
     'notifications',
+    'imagekit',
     'mptt',
     
     # customed App
