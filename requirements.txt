@@ -7,3 +7,4 @@ django-wangeditor==1.0.1    # 带django-js-asset==1.2.2 富文本编辑器
 django-guardian==2.3.0      # 实现对象级权限管理
 django-notifications-hq==1.6.0      # 实现站内消息提醒
 django-mptt==0.11.0                 # 实现多级评论
+django-imagekit==4.0.2              # 服务端图片处理
