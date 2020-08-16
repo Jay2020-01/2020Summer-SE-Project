@@ -43,16 +43,6 @@ class Permission(models.Model):
     share_doc_permission = models.BooleanField(verbose_name="分享文档权限", default=False)
     comment_doc_permission = models.BooleanField(verbose_name="评论文档权限", default=False)
 
-# #收藏
-# class Collection(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     doc = models.ForeignKey(Document, on_delete=models.CASCADE)
-
-#     def __str__(self):
-#         return self.name
-
-#     def get_absolute_url(self):
-#         return reverse("_detail", kwargs={"pk": self.pk})
 
 #
 # class Delete_document(models.Model):
@@ -121,6 +111,17 @@ class Document(models.Model):
 
     def is_in_group(self):
         return self.in_group
+
+#收藏
+class Collection(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    doc = models.ForeignKey(Document, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("_detail", kwargs={"pk": self.pk})
 
 
 class UDRecord(models.Model):

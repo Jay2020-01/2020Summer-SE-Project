@@ -38,8 +38,9 @@ urlpatterns = [
     path('ajax/get_my_team/', backend_views.get_my_team, name='get_my_team'),
     path('ajax/gey_team_member/', backend_views.get_team_member, name='get_team_member'),
     path('ajax/get_my_team/', backend_views.get_my_team, name='get_my_team'),
-    # path('ajax/collect_doc/', backend_views.collect_doc, name='collect_doc'),
+    path('ajax/collect_doc/', backend_views.collect_doc, name='collect_doc'),
+    path('ajax/uncollect_doc/', backend_views.uncollect_doc, name='uncollect_doc'),
     # path('ajax/delete_doc/', backend_views.delete_doc, name='delete_doc'),
-    #path('ajax/restore_doc/', backend_views.restore_doc, name='restore_doc'),
+    # path('ajax/restore_doc/', backend_views.restore_doc, name='restore_doc'),
     # backend api
 ]
