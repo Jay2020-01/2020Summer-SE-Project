@@ -22,9 +22,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '$2edkg-c-jqy5b^yg4jy#30z#lm&jjc3!%q5s*nm=c$^d5=(k0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['121.41.231.2']
+ALLOWED_HOSTS = ['121.41.231.2']
 
 # Application definition
 
@@ -43,10 +44,6 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'rest_framework.authtoken',
     'guardian',
-    'notifications',
-    'imagekit',
-    'mptt',
-    
     # customed App
     'backend',
 ]
@@ -67,7 +64,7 @@ ROOT_URLCONF = 'diamond.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'dist')],
+        'DIRS': [os.path.join(BASE_DIR, 'dist'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,14 +124,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "/dist/static")
+STATIC_ROOT = os.path.join(BASE_DIR, '/dist/static/')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "dist/static"),
 ]
 
 # 设置一个值来重写默认的用户表
-AUTH_USER_MODEL = 'backend.User'
+# AUTH_USER_MODEL = 'backend.User'
 
 # drf 配置 包含：异常、权限
 REST_FRAMEWORK = {
@@ -161,3 +158,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', # 这是Django默认的
     'guardian.backends.ObjectPermissionBackend', # 这是guardian的
 )
+
+TEMPLATE_DIRS = (
+                os.path.join(BASE_DIR, 'dist'),
+                )

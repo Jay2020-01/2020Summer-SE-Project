@@ -1,0 +1,24 @@
+server {
+    listen       80;  # 需要在阿里云开启80端口
+    server_name  121.41.231.2;  # 公网ip
+    root   /root/diamond/dist;  # vue的dist地址
+    index index.html index.htm;
+
+    #当请求来自于 121.41.231.2/的时候，直接进入以下location，然后找到vue的dist/index.html
+    location / {
+        index  index.html;
+        #这一条参数确保vue页面刷新时候，不会出现404页面
+        try_files $uri $uri/ @router;
+    }
+    location @router {
+        rewrite ^.*$ /index.html last;
+    }
+
+    location /ajax  {  #　向后端发送ajax请求
+        uwsgi_pass 127.0.0.1:8000;  # uwsgi 的listen地址
+        # include 就是一个“引入的作用“
+        include /etc/nginx/uwsgi_params;
+    }
+}
+
+

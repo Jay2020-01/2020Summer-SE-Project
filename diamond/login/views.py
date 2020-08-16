@@ -2,7 +2,7 @@ import requests
 from django.shortcuts import render
 from django.db.models.signals import post_save
 from django.http import JsonResponse
-from backend.models import User, UserProfile
+from backend.models import User
 from rest_framework.authtoken.models import Token
 from django.conf import settings
 from rest_framework.authtoken import views
@@ -14,6 +14,16 @@ from django.dispatch import receiver
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+
+
+def authentication(request):
+    token_str = request.META.get("HTTP_AUTHORIZATION")
+    try:
+        token = Token.objects.get(key=token_str)
+    except:
+        return None
+    user = User.objects.get(id=token.user_id)
+    return user
 
 
 # Create your views here.
@@ -38,7 +48,6 @@ def register(request):
     data = {'token': None, 'user': username}
     if not User.objects.filter(username=username):
         user = User.objects.create(username=username, email=mail_address, password=password)
-        UserProfile.objects.create(user=user)
         token = Token.objects.get(user=user)
         data = {'token': str(token), 'user': username}
     return JsonResponse(data)

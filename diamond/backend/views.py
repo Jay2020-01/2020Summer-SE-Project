@@ -1,41 +1,43 @@
 from django.shortcuts import render
 from django.db.models import Q
-# Create your views here.
-from django.http import JsonResponse
-from .models import User, UserProfile, Document, Group, GroupProfile
-from rest_framework.authtoken.models import Token
+from django.http import JsonResponse, HttpResponse
 from django.core import serializers
+from login.views import authentication
+# my models
+from .models import User, Document, Team, TeamUser, Comment
+# third-party
+from rest_framework.authtoken.models import Token
+from notifications.signals import notify
+
+
+# Create your views here.
 
 
 # 修改用户信息.
 def change_info(request):
-    token_str = request.META.get("HTTP_AUTHORIZATION")
-    token = Token.objects.get(key=token_str)
-    user = User.objects.get(id=token.user_id)
-    user_profile = UserProfile.objects.get(user=user)
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
 
     user.username = request.POST.get("username")
     user.email = request.POST.get("mail_address")
     user.password = request.POST.get("password")
-    user_profile.wechat = request.POST.get("wechat")
-    user_profile.phone_number = request.POST.get("phone_number")
-
+    user.wechat = request.POST.get("wechat")
+    user.phone_number = request.POST.get("phone_number")
     user.save()
-    user_profile.save()
     return JsonResponse({})
 
 
 # 拉取用户信息
 def user_info(request):
     print('pull user info')
-    token_str = request.META.get("HTTP_AUTHORIZATION")
-    token = Token.objects.get(key=token_str)
-    user = User.objects.get(id=token.user_id)
-    user_profile = UserProfile.objects.get(user=user)
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
     data = {'username': user.username,
             'mail_address': user.email,
-            'phone_number': user_profile.phone_number,
-            'wechat': user_profile.wechat,
+            'phone_number': user.phone_number,
+            'wechat': user.wechat,
             'password': user.password}
     return JsonResponse(data)
 
@@ -43,9 +45,9 @@ def user_info(request):
 # 新建文档
 def create_doc(request):
     print('create doc')
-    token_str = request.META.get("HTTP_AUTHORIZATION")
-    token = Token.objects.get(key=token_str)
-    user = User.objects.get(id=token.user_id)
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
     name = request.POST.get("title")
     # content = request.POST.get("content")
     # create_time = request.POST.get("create_time")
@@ -98,9 +100,9 @@ def get_doc(request):
 # 我创建的
 def my_doc(request):
     print('my docs')
-    token_str = request.META.get("HTTP_AUTHORIZATION")
-    token = Token.objects.get(key=token_str)
-    user = User.objects.get(id=token.user_id)
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
     documents = Document.objects.filter(creater=user)
     all_doc = []
     for d in documents:
@@ -116,21 +118,21 @@ def my_doc(request):
 # 新建团队
 def create_team(request):
     print('create team')
-    token_str = request.META.get("HTTP_AUTHORIZATION")
-    token = Token.objects.get(key=token_str)
-    user = User.objects.get(id=token.user_id)
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
     team_name = request.POST.get("name")
-    team = Group.objects.create(name=team_name)
-    GroupProfile.objects.create(Group=team, leader=user)
+    team = Team.objects.create(team_name=team_name)
+    TeamUser.objects.create(team=team, user=user, is_leader=True)
     return JsonResponse({})
 
 
 # 搜索用户
 def search_user(request):
     print('search user')
-    token_str = request.META.get("HTTP_AUTHORIZATION")
-    token = Token.objects.get(key=token_str)
-    user = User.objects.get(id=token.user_id)
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
     name = request.POST.get("name")
     print("key word", name)
     if name == "":
@@ -141,4 +143,104 @@ def search_user(request):
         )
     data = {"user_list": serializers.serialize('json', user_list)}
 
+    return JsonResponse(data)
+
+
+# 拉取用户所有的团队
+def get_my_team(request):
+    print('get my team')
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    team_user = TeamUser.objects.filter(user=user)
+    team_list = []
+    for relation in team_user:
+        team_list.append(relation.team)
+    data = {"team_list": team_list}
+    return JsonResponse(data)
+
+
+# 拉取某团队队内成员
+def get_team_member(request):
+    print("get team list")
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    team_id = request.POST.get("team_id")
+    team = Team.objects.get(id=team_id)
+    team_user = TeamUser.objects.filter(team=team)
+    user_list = []
+    for relation in team_user:
+        user_list.append(relation.user)
+    data = {'user_list': user_list}
+    return JsonResponse(data)
+
+
+# 发送邀请
+def send_invation(request):
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+
+    actor = User.objects.get(id=request.POST.get("actor_id"))
+    recipient = User.objects.get(id=request.POST.get("recipient_id"))
+    verb = 'invate'
+    target = Team.objects.get(id=request.POST.get("team_id"))
+
+    data = {}
+
+    notify.send(actor, recipient, verb, target)
+    return JsonResponse(data)
+
+
+# 接受邀请
+def accept_invation(request):
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    # 获取团队
+    team = Team.objects.get(id=request.POST.get("team_id"))
+    # User作为组员加入团队
+    TeamUser.objects.create(user=user, team=team, is_leader=False)
+    return JsonResponse({})
+
+
+# 获取未读信息
+def get_user_unread_notice(request):
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+
+    unread_notice_list = user.notifications.unread()
+
+    data = {"notice_list": unread_notice_list}
+
+    return JsonResponse(data)
+
+
+# 上传评论
+def post_comment(request):
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    # 获取被评论的文档id
+    document = Document.objects.get(id=request.POST.get("doc_id"))
+    # 获取评论内容
+    body = request.POST.get("body")
+    # 存储评论
+    Comment.create(user=user, document=document, body=body)
+    data = {}
+    return JsonResponse(data)
+
+# 文章获取评论列表
+def get_comment_list(request):
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    # 获取被评论的文档id
+    document = Document.objects.get(id=request.POST.get("doc_id"))
+    # 获取评论
+    comment_list = Comment.objects.filter(document=document)
+    # 返还评论列表
+    data = {"comment_list":comment_list}
     return JsonResponse(data)
