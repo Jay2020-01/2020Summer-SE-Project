@@ -223,9 +223,16 @@ def get_user_unread_notice(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
-
-    unread_notice_list = user.notifications.unread()
-    data = {"notice_list": unread_notice_list}
+    unread_notice = user.notifications.unread()
+    notice_list = []
+    for notice in unread_notice:
+        item = {
+            'actor': notice.User.username,
+            'verb': notice.CharField,
+            'target_id': notice.target.id,
+        }
+        notice_list.append(item)
+    data = {"notice_list": notice_list}
     return JsonResponse(data)
 
 
@@ -252,7 +259,15 @@ def get_comment_list(request):
     # 获取被评论的文档id
     document = Document.objects.get(id=request.POST.get("doc_id"))
     # 获取评论
-    comment_list = Comment.objects.filter(document=document)
+    comments = Comment.objects.filter(document=document)
     # 返还评论列表
+    comment_list = []
+    for comment in comments:
+        item = {
+            'actor': comment.user.username,
+            'body': comment.body,
+        }
+        comment_list.append(item)
+
     data = {"comment_list": comment_list}
     return JsonResponse(data)
