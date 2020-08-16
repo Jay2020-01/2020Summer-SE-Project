@@ -46,11 +46,23 @@ def user_info(request):
 #     doc_id = request.POST.get("doc_id")
 #     user = authentication(request)
 #     doc = Document.objects.get(pk=doc_id)
-#     data = {'flag': "no",  'msg': "delete failed"}
-#     if not Recyclebin.objects.filter(Q(user=user)&Q(doc=doc)):
-#         Recyclebin.create(user=user,doc=doc)
-#         data = {'flag': "yes",  'msg': "delete success"}
-    
+#     data={'flag':"no"}
+#     if user==doc.creator:
+#         delete_doc = Delete_document.objects.create(creator=doc.creator,team=doc.team,in_group=doc.in_group=doc.in_group,name=doc.name,content=doc.content,create_data=doc.create_data,modified_date=doc.modified_date)
+#         doc.delete()
+#         data={'flag':"yes",'delete_doc_id':delete_doc.pk}
+#     return JsonResponse(data)
+
+# #还原文件
+# def restore_doc(request):
+#     delete_doc_id = request.POST.get("delete_doc_id")
+#     user = authentication(request)
+#     delete_doc=Delete_document.objects.get(pk=delete_doc_id)
+#     data={'flag':"no"}
+#     if user==delete_doc.creator:
+#         doc = Document.objects.create(creator=delete_doc.creator,team=delete_doc.team,in_group=delete_doc.in_group=delete_doc.in_group,name=delete_doc.name,content=delete_doc.content,create_data=delete_doc.create_data,modified_date=delete_doc.modified_date)
+#         delete_doc.delete()
+#         data={'flag':"yes",'doc_id':doc.pk}
 #     return JsonResponse(data)
 
 # #收藏文件
@@ -60,7 +72,7 @@ def user_info(request):
 #     doc = Document.objects.get(pk=doc_id)
 #     data = {'flag': "no",  'msg': "already collect"}
 #     if not Collection.objects.filter(Q(user=user)&Q(doc=doc)):
-#         Collection.create(user=user,doc=doc)
+#         Collection.objects.create(user=user,doc=doc)
 #         data = {'flag': "yes",  'msg': "collect success"}
     
 #     return JsonResponse(data)

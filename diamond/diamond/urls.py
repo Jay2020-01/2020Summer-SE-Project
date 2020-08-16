@@ -40,5 +40,6 @@ urlpatterns = [
     path('ajax/get_my_team/', backend_views.get_my_team, name='get_my_team'),
     # path('ajax/collect_doc/', backend_views.collect_doc, name='collect_doc'),
     # path('ajax/delete_doc/', backend_views.delete_doc, name='delete_doc'),
+    #path('ajax/restore_doc/', backend_views.restore_doc, name='restore_doc'),
     # backend api
 ]

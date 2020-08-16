@@ -54,6 +54,33 @@ class Permission(models.Model):
 #     def get_absolute_url(self):
 #         return reverse("_detail", kwargs={"pk": self.pk})
 
+#
+# class Delete_document(models.Model):
+#     """
+#     Delete_document
+#     """
+#     creator = models.ForeignKey(User, related_name='created_documents', verbose_name='创建者', on_delete=models.CASCADE,
+#                                 null=False)
+
+#     team = models.ForeignKey(Team, related_name='documents', verbose_name="所属团队", on_delete=models.CASCADE, null=True,
+#                              blank=True)
+
+#     in_group = models.BooleanField(blank=False)
+#     name = models.CharField(max_length=64)
+#     content = models.TextField(null=True)
+#     created_date = models.DateTimeField("创建时间", auto_now=False, auto_now_add=True, null=True, blank=True)
+#     modified_date = models.DateTimeField("修改时间", auto_now=True, auto_now_add=False, null=True, blank=True)
+
+
+#     def __str__(self):
+#         return self.name
+
+#     def get_absolute_url(self):
+#         return reverse("_detail", kwargs={"pk": self.pk})
+
+#     def is_in_group(self):
+#         return self.in_group
+
 
 # 文档
 class Document(models.Model):
