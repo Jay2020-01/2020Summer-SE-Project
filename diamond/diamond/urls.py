@@ -33,5 +33,7 @@ urlpatterns = [
     path('ajax/my_doc/', backend_views.my_doc, name='my_doc'),
     path('ajax/create_team/', backend_views.create_team, name='create_team'),
     path('ajax/search_user/', backend_views.search_user, name='search_user'),
+    path('ajax/get_my_team/', backend_views.get_my_team, name='get_my_team'),
+    path('ajax/gey_team_member/', backend_views.get_team_member, name='get_team_member')
     # backend api
 ]

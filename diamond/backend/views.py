@@ -110,3 +110,16 @@ def get_my_team(request):
         team_list.append(relation.team)
     data = {"team_list": team_list}
     return JsonResponse(data)
+
+
+def get_team_member(request):
+    print("get team list")
+
+    team_id = request.POST.get("team_id")
+    team = Team.objects.get(id=team_id)
+    team_user = TeamUser.objects.filter(team=team)
+    user_list = []
+    for relation in team_user:
+        user_list.append(relation.user)
+    data = {'user_list': user_list}
+    return JsonResponse(data)
