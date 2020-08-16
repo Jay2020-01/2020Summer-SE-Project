@@ -157,7 +157,7 @@ def get_my_team(request):
     team_list = []
     for relation in team_user:
         item = {'team_name': relation.team.team_name, 'team_id': relation.team.id,
-                "introduction": relation.team.introduction}
+                "introduction": relation.team.introduction, "is_leader": relation.is_leader}
         team_list.append(item)
     data = {"team_list": team_list}
     return JsonResponse(data)
@@ -179,7 +179,7 @@ def get_team_member(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
-    team_id = request.POST.get("team_id")
+    team_id = request.GET.get("team_id")
     team = Team.objects.get(id=team_id)
     team_user = TeamUser.objects.filter(team=team)
     user_list = []
@@ -187,6 +187,18 @@ def get_team_member(request):
         user_list.append(relation.user)
     data = {'user_list': user_list}
     return JsonResponse(data)
+
+
+# 邀请团队成员,强制邀请 TODO 使用消息通知实现
+def add_team_member(request):
+    print("add team member")
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    team_id = request.GET.get("team_id")
+    team = Team.objects.get(id=team_id)
+    TeamUser.objects.create(team=team, user=user, is_leader=False)
+    return JsonResponse({})
 
 
 # 发送邀请
