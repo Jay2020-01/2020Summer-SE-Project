@@ -54,7 +54,7 @@ def create_doc(request):
     return JsonResponse(data)
 
 
-# 我创建的
+# 拉取用户创建的文档
 def my_doc(request):
     print('my docs')
     token_str = request.META.get("HTTP_AUTHORIZATION")
@@ -115,7 +115,7 @@ def get_my_team(request):
     data = {"team_list": team_list}
     return JsonResponse(data)
 
-
+# 拉取某团队队内成员
 def get_team_member(request):
     print("get team list")
 
@@ -143,6 +143,7 @@ def send_invation(request):
     notify.send(actor, recipient, verb, target)
     return JsonResponse(data)
 
+# 接受邀请
 def accept_invation(request):
     token_str = request.META.get('HTTP_AUTHORIZATION')
     token = Token.objects.get(key=token_str)
