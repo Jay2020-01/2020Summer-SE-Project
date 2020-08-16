@@ -47,12 +47,53 @@ def create_doc(request):
     token = Token.objects.get(key=token_str)
     user = User.objects.get(id=token.user_id)
     name = request.POST.get("title")
-    content = request.POST.get("content")
-    Document.objects.create(creater=user, name=name, content=content, in_group = False)
-    data = {'flag': "yes", 'msg': "create success"}
+    # content = request.POST.get("content")
+    # create_time = request.POST.get("create_time")
+    print(name)
+    # print(content)
+    doc = Document.objects.create(creater=user, name=name, in_group = False)
+    print(doc.name)
+    print(doc.pk)
+    data = {'flag': "yes", 'doc_id': doc.pk , 'msg': "create success"}
     print("success")
     return JsonResponse(data)
 
+
+# 保存文档内容
+def save_doc(request):
+    print('save doc')
+    token_str = request.META.get("HTTP_AUTHORIZATION")
+    token = Token.objects.get(key=token_str)
+    user = User.objects.get(id=token.user_id)
+    content = request.POST.get("content")
+    doc_id = request.POST.get("doc_id")
+    # create_time = request.POST.get("modified_time")
+    print(content)
+    print(doc_id)
+    doc = Document.objects.get(creater=user, pk=doc_id)
+    print(doc.name)
+    print(doc.content)
+    print(doc.pk)
+    doc.content = content
+    doc.save()
+    print(doc.content)
+    data = {'flag': "yes", 'msg': "modified success"}
+    # print("success")
+    return JsonResponse(data)
+
+
+# 获取文档内容
+def get_doc(request):
+    print("get doc")
+    token_str = request.META.get("HTTP_AUTHORIZATION")
+    token = Token.objects.get(key=token_str)
+    user = User.objects.get(id=token.user_id)
+    doc_id = request.POST.get("doc_id")
+    print(doc_id)
+    document = Document.objects.get(creater=user, pk=doc_id)
+    data = {'name': document.name, 'content': document.content}
+    print("success")
+    return JsonResponse(data)
 
 # 我创建的
 def my_doc(request):
@@ -65,7 +106,8 @@ def my_doc(request):
     for d in documents:
         c_item = {
             'name': d.name,
-            'content': d.content,
+            # 'content': d.content,
+            'doc_id': d.pk,
         }
         all_doc.append(c_item)
     return JsonResponse({'data': all_doc})
