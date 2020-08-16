@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-token-auth/', token_views.obtain_auth_token),
     # index.html App.vue
-    path('', TemplateView.as_view(template_name="index.html")),
+    # path('', TemplateView.as_view(template_name="index.html")),
     path('ajax/change_info/', backend_views.change_info, name='change_info'),
     path('ajax/login/', login_views.login, name='login'),
     path('ajax/user_info/', backend_views.user_info, name='user_info'),
