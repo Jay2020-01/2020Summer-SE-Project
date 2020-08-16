@@ -163,6 +163,16 @@ def get_my_team(request):
     return JsonResponse(data)
 
 
+def delete_my_team(request):
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    team_id = request.GET.get("team_id")
+    team = Team.objects.get(id=team_id)
+    team.delete()
+    return JsonResponse({})
+
+
 # 拉取某团队队内成员
 def get_team_member(request):
     print("get team list")
@@ -180,7 +190,7 @@ def get_team_member(request):
 
 
 # 发送邀请
-def send_invation(request):
+def send_invitation(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
@@ -197,7 +207,7 @@ def send_invation(request):
 
 
 # 接受邀请
-def accept_invation(request):
+def accept_invitation(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
@@ -215,9 +225,7 @@ def get_user_unread_notice(request):
         return HttpResponse('Unauthorized', status=401)
 
     unread_notice_list = user.notifications.unread()
-
     data = {"notice_list": unread_notice_list}
-
     return JsonResponse(data)
 
 
@@ -231,7 +239,7 @@ def post_comment(request):
     # 获取评论内容
     body = request.POST.get("body")
     # 存储评论
-    Comment.create(user=user, document=document, body=body)
+    Comment.objects.create(user=user, document=document, body=body)
     data = {}
     return JsonResponse(data)
 
