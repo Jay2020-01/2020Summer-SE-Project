@@ -1,5 +1,12 @@
-djnagorestframework==0.3.1  # 安装依赖
+django==2.2.3
+djangorestframework==3.11.1  # 安装依赖
 django-rest-swagger         # API 可视化
 django-filter==2.3.0        # 过滤数据, 配合djangoframework
 django-cors-headers==3.4.0  # django跨域使用vue
 django-wangeditor==1.0.1    # 带django-js-asset==1.2.2 富文本编辑器
+django-guardian==2.3.0      # 实现对象级权限管理
+django-notifications-hq==1.6.0      # 实现站内消息提醒
+django-mptt==0.11.0                 # 实现多级评论
+django-imagekit==4.0.2      # 用于头像的imageFiled
+pillow==7.1.2               # 图像
+
