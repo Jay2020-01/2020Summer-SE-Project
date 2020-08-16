@@ -259,7 +259,7 @@ def get_comment_list(request):
             'actor': comment.user.username,
             'body': comment.body,
             }
-        team_list.append(item)
+        comment_list.append(item)
     
     data = {"comment_list": comment_list}
     return JsonResponse(data)
