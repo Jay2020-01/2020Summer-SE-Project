@@ -244,7 +244,15 @@ def get_comment_list(request):
     # 获取被评论的文档id
     document = Document.objects.get(id=request.POST.get("doc_id"))
     # 获取评论
-    comment_list = Comment.objects.filter(document=document)
+    comments = Comment.objects.filter(document=document)
     # 返还评论列表
+    comment_list = []
+    for comment in comments:
+        item = {
+            'actor': comment.user.username,
+            'body': comment.body,
+            }
+        team_list.append(item)
+    data = {"team_list": team_list}
     data = {"comment_list": comment_list}
     return JsonResponse(data)
