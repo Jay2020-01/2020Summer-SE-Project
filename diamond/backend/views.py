@@ -260,6 +260,6 @@ def get_comment_list(request):
             'body': comment.body,
             }
         team_list.append(item)
-    data = {"team_list": team_list}
+    
     data = {"comment_list": comment_list}
     return JsonResponse(data)
