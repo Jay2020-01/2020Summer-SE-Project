@@ -19,6 +19,7 @@ class User(AbstractUser):
 
 # 团队
 class Team(models.Model):
+    id = models.AutoField(primary_key=True)
     team_name = models.CharField(verbose_name="团队名称", max_length=150)
     introduction = models.TextField(verbose_name="团队介绍", null=True, blank=True)
 

@@ -16,6 +16,16 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
         Token.objects.create(user=instance)
 
 
+def authentication(request):
+    token_str = request.META.get("HTTP_AUTHORIZATION")
+    try:
+        token = Token.objects.get(key=token_str)
+    except:
+        return None
+    user = User.objects.get(id=token.user_id)
+    return user
+
+
 # Create your views here.
 def login(request):
     username = request.POST.get("username")
