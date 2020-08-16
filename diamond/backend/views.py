@@ -143,6 +143,16 @@ def send_invation(request):
     notify.send(actor, recipient, verb, target)
     return JsonResponse(data)
 
+def accept_invation(request):
+    token_str = request.META.get('HTTP_AUTHORIZATION')
+    token = Token.objects.get(key=token_str)
+    user = User.object.get(id=token.user_id)
+    # 获取团队
+    team = Team.objects.get(id=request.POST.get("team_id"))
+    # User作为组员加入团队
+    TeamUser.objects.create(user=user,team=team,is_leader=False)
+    return JsonResponse({})
+
 # 获取未读信息
 def get_user_unread_notice(request):
     token_str = request.META.get('HTTP_AUTHORIZATION')
