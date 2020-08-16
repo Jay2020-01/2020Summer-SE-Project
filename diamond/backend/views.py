@@ -53,7 +53,7 @@ def create_doc(request):
     # create_time = request.POST.get("create_time")
     print(name)
     # print(content)
-    doc = Document.objects.create(creater=user, name=name, in_group = False)
+    doc = Document.objects.create(creator=user, name=name, in_group = False)
     print(doc.name)
     print(doc.pk)
     data = {'flag': "yes", 'doc_id': doc.pk , 'msg': "create success"}
@@ -63,16 +63,16 @@ def create_doc(request):
 
 # 保存文档内容
 def save_doc(request):
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
     print('save doc')
-    token_str = request.META.get("HTTP_AUTHORIZATION")
-    token = Token.objects.get(key=token_str)
-    user = User.objects.get(id=token.user_id)
     content = request.POST.get("content")
     doc_id = request.POST.get("doc_id")
     # create_time = request.POST.get("modified_time")
     print(content)
     print(doc_id)
-    doc = Document.objects.get(creater=user, pk=doc_id)
+    doc = Document.objects.get(creator=user, pk=doc_id)
     print(doc.name)
     print(doc.content)
     print(doc.pk)
@@ -86,13 +86,13 @@ def save_doc(request):
 
 # 获取文档内容
 def get_doc(request):
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
     print("get doc")
-    token_str = request.META.get("HTTP_AUTHORIZATION")
-    token = Token.objects.get(key=token_str)
-    user = User.objects.get(id=token.user_id)
     doc_id = request.POST.get("doc_id")
     print(doc_id)
-    document = Document.objects.get(creater=user, pk=doc_id)
+    document = Document.objects.get(creator=user, pk=doc_id)
     data = {'name': document.name, 'content': document.content}
     print("success")
     return JsonResponse(data)
@@ -103,7 +103,7 @@ def my_doc(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
-    documents = Document.objects.filter(creater=user)
+    documents = Document.objects.filter(creator=user)
     all_doc = []
     for d in documents:
         c_item = {
