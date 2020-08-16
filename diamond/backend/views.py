@@ -214,9 +214,16 @@ def get_user_unread_notice(request):
     if user is None:
         return HttpResponse('Unauthorized', status=401)
 
-    unread_notice_list = user.notifications.unread()
-
-    data = {"notice_list": unread_notice_list}
+    unread_notice = user.notifications.unread()
+    notice_list = []
+    for notice in unread_notice:
+        item = {
+            'actor': notice.User.username,
+            'verb': notice.CharField,
+            'target_id': notice.target.id,
+            }
+        team_list.append(item)
+    data = {"team_list": team_list}
 
     return JsonResponse(data)
 
