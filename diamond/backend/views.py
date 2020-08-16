@@ -53,10 +53,10 @@ def create_doc(request):
     # create_time = request.POST.get("create_time")
     print(name)
     # print(content)
-    doc = Document.objects.create(creator=user, name=name, in_group = False)
+    doc = Document.objects.create(creator=user, name=name, in_group=False)
     print(doc.name)
     print(doc.pk)
-    data = {'flag': "yes", 'doc_id': doc.pk , 'msg': "create success"}
+    data = {'flag': "yes", 'doc_id': doc.pk, 'msg': "create success"}
     print("success")
     return JsonResponse(data)
 
@@ -96,6 +96,7 @@ def get_doc(request):
     data = {'name': document.name, 'content': document.content}
     print("success")
     return JsonResponse(data)
+
 
 # 我创建的
 def my_doc(request):
@@ -155,7 +156,9 @@ def get_my_team(request):
     team_user = TeamUser.objects.filter(user=user)
     team_list = []
     for relation in team_user:
-        team_list.append(relation.team)
+        item = {'team_name': relation.team.team_name, 'team_id': relation.team.id,
+                "introduction": relation.team.introduction}
+        team_list.append(item)
     data = {"team_list": team_list}
     return JsonResponse(data)
 
@@ -232,6 +235,7 @@ def post_comment(request):
     data = {}
     return JsonResponse(data)
 
+
 # 文章获取评论列表
 def get_comment_list(request):
     user = authentication(request)
@@ -242,5 +246,5 @@ def get_comment_list(request):
     # 获取评论
     comment_list = Comment.objects.filter(document=document)
     # 返还评论列表
-    data = {"comment_list":comment_list}
+    data = {"comment_list": comment_list}
     return JsonResponse(data)
