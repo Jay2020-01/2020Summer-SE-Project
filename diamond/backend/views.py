@@ -231,7 +231,7 @@ def post_comment(request):
     # 获取评论内容
     body = request.POST.get("body")
     # 存储评论
-    Comment.create(user=user, document=document, body=body)
+    Comment.objects.create(user=user, document=document, body=body)
     data = {}
     return JsonResponse(data)
 
