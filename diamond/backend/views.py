@@ -158,14 +158,15 @@ def send_invitation(request):
     if user is None:
         return HttpResponse('Unauthorized', status=401)
 
-    actor = User.objects.get(id=request.POST.get("actor_id"))
-    recipient = User.objects.get(id=request.POST.get("recipient_id"))
+    actor = user
+    recipient = User.objects.get(username=request.POST.get("username"))
     verb = 'invate'
-    target = Team.objects.get(id=request.POST.get("team_id"))
+    team = Team.objects.get(id=request.POST.get("team_id"))
 
     data = {}
 
-    notify.send(actor, recipient, verb, target)
+    notify.send(actor, recipient, verb, team)
+
     return JsonResponse(data)
 
 
@@ -174,11 +175,17 @@ def accept_invitation(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
+    
+    unread = user.notifications.unread()
+
+    
     # 获取团队
     team = Team.objects.get(id=request.POST.get("team_id"))
     # User作为组员加入团队
     TeamUser.objects.create(user=user, team=team, is_leader=False)
     return JsonResponse({})
+
+
 
 
 # 获取未读信息
@@ -189,10 +196,13 @@ def get_user_unread_notice(request):
     unread_notice = user.notifications.unread()
     notice_list = []
     for notice in unread_notice:
+        team_id  = notice.target.id
+        teamname = Team.objects.get(id=team_id).team_name
         item = {
             'actor': notice.User.username,
             'verb': notice.CharField,
-            'target_id': notice.target.id,
+            'target_id': team_id,
+            'target_name': teamname,
         }
         notice_list.append(item)
     data = {"notice_list": notice_list}
