@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.http import JsonResponse, HttpResponse
 from login.views import authentication
 # my models
-from .models import User, Document, Team, TeamUser, Comment
+from .models import User, Document, Team, TeamUser, Comment, Collection
 # third-party
 from notifications.signals import notify
 
@@ -37,6 +37,34 @@ def user_info(request):
             'phone_number': user.phone_number,
             'wechat': user.wechat,
             'password': user.password}
+    return JsonResponse(data)
+
+
+#收藏文件
+def collect_doc(request):
+    print("collect doc")
+    doc_id = request.POST.get("doc_id")
+    print(doc_id)
+    user = authentication(request)
+    doc = Document.objects.get(pk=doc_id)
+    data = {'flag': "no",  'msg': "already collect"}
+    if not Collection.objects.filter(Q(user=user)&Q(doc=doc)):
+        Collection.objects.create(user=user,doc=doc)
+        data = {'flag': "yes",  'msg': "collect success"}
+    print("success")
+    return JsonResponse(data)
+
+# 取消收藏
+def uncollect_doc(request):
+    print("uncollect doc")
+    doc_id = request.POST.get("doc_id")
+    print(doc_id)
+    user = authentication(request)
+    doc = Document.objects.get(pk=doc_id)
+    collection = Collection.objects.get(Q(user=user)&Q(doc=doc))
+    collection.delete()
+    data = {'flag': "yes",  'msg': "uncollect success"}
+    print("success")
     return JsonResponse(data)
 
 
@@ -102,16 +130,26 @@ def my_doc(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
-    documents = Document.objects.filter(creator=user)
-    all_doc = []
-    for d in documents:
+    created_documents = Document.objects.filter(creator=user)
+    created_docs = []
+    collections = Collection.objects.filter(user=user)
+    collected_docs = []
+    for d in created_documents:
         c_item = {
             'name': d.name,
             # 'content': d.content,
             'doc_id': d.pk,
         }
-        all_doc.append(c_item)
-    return JsonResponse({'data': all_doc})
+        created_docs.append(c_item)
+    for d in collections:
+        c_item = {
+            'name': d.doc.name,
+            # 'content': d.content,
+            'doc_id': d.doc.pk,
+        }
+        collected_docs.append(c_item)
+    data = {'created_docs':created_docs, 'collected_docs':collected_docs}
+    return JsonResponse(data)
 
 
 # 发送邀请

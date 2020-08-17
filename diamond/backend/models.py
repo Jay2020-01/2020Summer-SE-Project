@@ -84,6 +84,17 @@ class Document(models.Model):
     def is_in_group(self):
         return self.in_group
 
+#收藏文档
+class Collection(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    doc = models.ForeignKey(Document, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("_detail", kwargs={"pk": self.pk})
+
 
 class UDRecord(models.Model):
     """
