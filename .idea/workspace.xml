@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="25f5af26-6962-4e6c-963d-c74c9c71b392" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/diamond/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/diamond/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,12 +13,8 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/diamond/backend/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="42">
-              <caret line="2" column="50" lean-forward="true" selection-start-line="2" selection-start-column="50" selection-end-line="2" selection-end-column="50" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/diamond/diamond/urls.py">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -57,9 +53,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="117" />
-    <option name="y" value="139" />
-    <option name="width" value="1669" />
+    <option name="x" value="53" />
+    <option name="y" value="117" />
+    <option name="width" value="1867" />
     <option name="height" value="941" />
   </component>
   <component name="ProjectView">
@@ -67,7 +63,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -86,10 +81,17 @@
               <item name="diamond" type="462c0819:PsiDirectoryNode" />
               <item name="backend" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="2020Summer-SE-Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="2020Summer-SE-Project" type="462c0819:PsiDirectoryNode" />
+              <item name="diamond" type="462c0819:PsiDirectoryNode" />
+              <item name="diamond" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -136,16 +138,17 @@
       <workItem from="1597325443315" duration="70000" />
       <workItem from="1597393963619" duration="30000" />
       <workItem from="1597643042278" duration="16000" />
+      <workItem from="1597665706997" duration="15000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5166000" />
+    <option name="totallyTimeSpent" value="5181000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="53" y="25" width="1867" height="1055" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2756517" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20022185" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -187,12 +190,9 @@
     <entry file="file://$PROJECT_DIR$/backend/manage.py" />
     <entry file="file://$PROJECT_DIR$/backend/backend/urls.py" />
     <entry file="file://$PROJECT_DIR$/backend/backend/settings.py" />
-    <entry file="file://$PROJECT_DIR$/diamond/backend/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="50" lean-forward="true" selection-start-line="2" selection-start-column="50" selection-end-line="2" selection-end-column="50" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/diamond/backend/views.py" />
+    <entry file="file://$PROJECT_DIR$/diamond/diamond/urls.py">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>

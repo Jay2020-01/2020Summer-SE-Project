@@ -9,9 +9,48 @@ from .models import User, Document, Team, TeamUser, Comment, Collection, Delete_
 # third-party
 from notifications.models import Notification
 from notifications.signals import notify
+from diamond import settings
+from diamond.settings import MEDIA_URL
+import os
+
+ABSOLUTE_URL = "http://127.0.0.1:8000"
 
 
 # Create your views here.
+def writeFile(file_path, file):
+    with open(file_path, "wb") as f:
+        if file.multiple_chunks():
+            for content in file.chunks():
+                f.write(content)
+        else:
+            data = file.read()
+            f.write(data)
+
+
+def user_avatar_upload(request):
+    print()
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    if request.method == "POST":
+        fileDict = request.FILES.items()
+        # 获取上传的文件，如果没有文件，则默认为None
+        if not fileDict:
+            return JsonResponse({'msg': 'no file upload'})
+        for (k, v) in fileDict:
+            print("dic[%s]=%s" % (k, v))
+            fileData = request.FILES.getlist(k)
+            for file in fileData:
+                fileName = file._get_name()
+                filePath = os.path.join(settings.MEDIA_ROOT, "user_avatar", fileName)
+                print('filepath = [%s]' % filePath)
+                try:
+                    user.avatar = "user_avatar/" + fileName
+                    user.save()
+                    writeFile(filePath, file)
+                except:
+                    return JsonResponse({'msg': 'file write failed'})
+        return JsonResponse({'msg': 'success'})
 
 
 # 修改用户信息.
@@ -35,12 +74,15 @@ def user_info(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
+    print(user.avatar.url)
     data = {'username': user.username,
             'mail_address': user.email,
             'phone_number': user.phone_number,
             'wechat': user.wechat,
-            'password': user.password}
+            'password': user.password,
+            'url': ABSOLUTE_URL + user.avatar.url}
     return JsonResponse(data)
+
 
 # 删除文档
 def delete_doc(request):
@@ -51,13 +93,15 @@ def delete_doc(request):
         doc = Document.objects.get(pk=doc_id)
         if user == doc.creator:
             delete_doc = Delete_document.objects.create(creator=doc.creator, team=doc.team, in_group=doc.in_group,
-                                                        name=doc.name, content=doc.content, created_date=doc.created_date, modified_date=doc.modified_date)
+                                                        name=doc.name, content=doc.content,
+                                                        created_date=doc.created_date, modified_date=doc.modified_date)
             doc.delete()
             data = {'flag': "yes", 'delete_doc_id': delete_doc.pk}
             print("success")
     except expression as identifier:
         data = {'flag': "no"}
     return JsonResponse(data)
+
 
 # 拉取已被删除在回收站的文档
 def get_deleted_docs(request):
@@ -73,8 +117,9 @@ def get_deleted_docs(request):
             'doc_id': doc.pk,
         }
         deleted_docs.append(item)
-    data = {'deleted_docs':deleted_docs}
+    data = {'deleted_docs': deleted_docs}
     return JsonResponse(data)
+
 
 # 还原文件
 def restore_doc(request):
@@ -84,11 +129,14 @@ def restore_doc(request):
     delete_doc = Delete_document.objects.get(pk=delete_doc_id)
     data = {'flag': "no"}
     if user == delete_doc.creator:
-        doc = Document.objects.create(creator=delete_doc.creator, team=delete_doc.team, in_group=delete_doc.in_group, name=delete_doc.name,
-                                      content=delete_doc.content, created_date=delete_doc.created_date, modified_date=delete_doc.modified_date)
+        doc = Document.objects.create(creator=delete_doc.creator, team=delete_doc.team, in_group=delete_doc.in_group,
+                                      name=delete_doc.name,
+                                      content=delete_doc.content, created_date=delete_doc.created_date,
+                                      modified_date=delete_doc.modified_date)
         delete_doc.delete()
         data = {'flag': "yes", 'doc_id': doc.pk}
     return JsonResponse(data)
+
 
 # 彻底删除文件
 def delete_doc_completely(request):
@@ -102,6 +150,7 @@ def delete_doc_completely(request):
         data = {'flag': "yes"}
     return JsonResponse(data)
 
+
 # 收藏文件
 def collect_doc(request):
     print("collect doc")
@@ -109,12 +158,13 @@ def collect_doc(request):
     # print(doc_id)
     user = authentication(request)
     doc = Document.objects.get(pk=doc_id)
-    data = {'flag': "no",  'msg': "already collected"}
+    data = {'flag': "no", 'msg': "already collected"}
     if not Collection.objects.filter(Q(user=user) & Q(doc=doc)):
         Collection.objects.create(user=user, doc=doc)
-        data = {'flag': "yes",  'msg': "collect success"}
+        data = {'flag': "yes", 'msg': "collect success"}
     # print("success")
     return JsonResponse(data)
+
 
 # 取消收藏
 def uncollect_doc(request):
@@ -123,9 +173,9 @@ def uncollect_doc(request):
     print(doc_id)
     user = authentication(request)
     doc = Document.objects.get(pk=doc_id)
-    collection = Collection.objects.get(Q(user=user)&Q(doc=doc))
+    collection = Collection.objects.get(Q(user=user) & Q(doc=doc))
     collection.delete()
-    data = {'flag': "yes",  'msg': "uncollect success"}
+    data = {'flag': "yes", 'msg': "uncollect success"}
     print("success")
     return JsonResponse(data)
 
@@ -184,7 +234,7 @@ def get_doc(request):
     islike = True
     if not Collection.objects.filter(Q(user=user) & Q(doc=doc)):
         islike = False
-    data = {'name': doc.name, 'content': doc.content, 'islike':islike}
+    data = {'name': doc.name, 'content': doc.content, 'islike': islike}
     # print("success")
     return JsonResponse(data)
 
@@ -225,7 +275,7 @@ def invite_user(request):
     actor = user
     recipient = User.objects.get(username=request.POST.get("username"))
     print(request.POST.get("username"))
-    verb = 'invite '+recipient.username+" to"
+    verb = 'invite ' + recipient.username + " to"
     team = Team.objects.get(id=request.POST.get("team_id"))
     print(team)
     data = {}
@@ -239,24 +289,22 @@ def response_invitation(request):
     if user is None:
         return HttpResponse('Unauthorized', status=401)
     notice_id = request.POST.get("notice_id")
-    if request.POST.get("answer")=='Yes':
+    if request.POST.get("answer") == 'Yes':
         # 用户接受邀请
         # 获取团队
         team = Team.objects.get(id=request.POST.get("team_id"))
         # User作为组员加入团队
         TeamUser.objects.create(user=user, team=team, is_leader=False)
         print('Success')
-    elif request.POST.get("answer")=='No':
+    elif request.POST.get("answer") == 'No':
         # 用户拒绝邀请
         print('Refuse')
     else:
         print('There must be something wrong with the data!')
-        
+
     Notification.objects.get(id=notice_id).delete()
-    
+
     return JsonResponse({})
-
-
 
 
 # 获取未读信息
@@ -267,12 +315,12 @@ def get_user_notice(request):
     unread_notice = user.notifications.unread()
     notice_list = []
     for notice in unread_notice:
-        team  = notice.target
+        team = notice.target
         actor = notice.actor
         item = {
             'notice_id': notice.id,
             'actor_id': actor.id,
-            'actor_name':actor.username,
+            'actor_name': actor.username,
             'verb': notice.verb,
             'target_id': team.id,
             'target_name': team.team_name,
