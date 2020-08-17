@@ -41,6 +41,7 @@ urlpatterns = [
     path('ajax/delete_my_team/', team_views.delete_my_team, name='delete_my_team'),
     path('ajax/collect_doc/', backend_views.collect_doc, name='collect_doc'),
     path('ajax/uncollect_doc/', backend_views.uncollect_doc, name='uncollect_doc'),
-    path('ajax/invite_user/',backend_views.invite_user, name='invite_user')
+    path('ajax/invite_user/',backend_views.invite_user, name='invite_user'),
+    path('ajax/get_user_notice/',backend_views.get_user_notice, name='get_user_notice')
     # backend api
 ]

@@ -212,7 +212,7 @@ def get_user_notice(request):
             'verb': notice.CharField,
             'target_id': team.id,
             'target_name': teamname,
-            'sent_time': datetime.strftime(notice.timestamp, '%Y-%m-%d-%H-%M-%S-%A'),
+            'sent_time': datetime.strftime(notice.timestamp, '%Y-%m-%d %H-%M'),
         }
         notice_list.append(item)
     data = {"notice_list": notice_list}
