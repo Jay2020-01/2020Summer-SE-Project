@@ -185,6 +185,12 @@ def accept_invitation(request):
     TeamUser.objects.create(user=user, team=team, is_leader=False)
     return JsonResponse({})
 
+# # 标记已读信息
+# def mark_as_read(request):
+#     user = authentication(request)
+#     if user is None:
+#         return HttpResponse('Unauthorized', status=401)
+#     # get unread
 
 
 
