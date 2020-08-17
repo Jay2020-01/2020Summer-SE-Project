@@ -6,6 +6,7 @@
 dist/
 # django migrations
 migrations/
+media/
 # django database
 *.sqlite3
 
