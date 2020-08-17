@@ -47,6 +47,7 @@ urlpatterns = [
     path('ajax/restore_doc/', backend_views.restore_doc, name='restore_doc'),
     path('ajax/get_deleted_docs/', backend_views.get_deleted_docs, name='get_deleted_docs'),
     path('ajax/invite_user/',backend_views.invite_user, name='invite_user'),
-    path('ajax/get_user_notice/',backend_views.get_user_notice, name='get_user_notice')
+    path('ajax/get_user_notice/',backend_views.get_user_notice, name='get_user_notice'),
+    path('ajax/response_invitation/',backend_views.response_invitation, name='response_invitation')
     # backend api
 ]
