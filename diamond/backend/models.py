@@ -11,8 +11,8 @@ class User(AbstractUser):
     # username 继承
     # password 继承
     # 头像
-    # avatar = ProcessedImageField(verbose_name='头像', upload_to='user_avatar/', blank=True, null=False,
-    #                              default='avatar.png', processors=[ResizeToFill(150, 150)])
+    avatar = ProcessedImageField(verbose_name='头像', upload_to='user_avatar/', blank=True, null=False,
+                                 default='avatar.jpeg', processors=[ResizeToFill(150, 150)])
     phone_number = models.CharField(verbose_name='电话', max_length=64, null=True, blank=True)
     wechat = models.CharField(verbose_name='微信', max_length=64, null=True, blank=True)
 
@@ -38,38 +38,14 @@ class TeamUser(models.Model):
 class Permission(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    view_doc_permission = models.BooleanField(verbose_name="查看文档权限", default=False)
-    change_doc_permission = models.BooleanField(verbose_name="修改文档权限", default=False)
-    share_doc_permission = models.BooleanField(verbose_name="分享文档权限", default=False)
-    comment_doc_permission = models.BooleanField(verbose_name="评论文档权限", default=False)
-
-
-#
-# class Delete_document(models.Model):
-#     """
-#     Delete_document
-#     """
-#     creator = models.ForeignKey(User, related_name='created_documents', verbose_name='创建者', on_delete=models.CASCADE,
-#                                 null=False)
-
-#     team = models.ForeignKey(Team, related_name='documents', verbose_name="所属团队", on_delete=models.CASCADE, null=True,
-#                              blank=True)
-
-#     in_group = models.BooleanField(blank=False)
-#     name = models.CharField(max_length=64)
-#     content = models.TextField(null=True)
-#     created_date = models.DateTimeField("创建时间", auto_now=False, auto_now_add=True, null=True, blank=True)
-#     modified_date = models.DateTimeField("修改时间", auto_now=True, auto_now_add=False, null=True, blank=True)
-
-
-#     def __str__(self):
-#         return self.name
-
-#     def get_absolute_url(self):
-#         return reverse("_detail", kwargs={"pk": self.pk})
-
-#     def is_in_group(self):
-#         return self.in_group
+    permission_level = models.IntegerField(verbose_name="权限等级")
+    '''
+    permission_level:
+    1 : 禁止访问
+    2 : 可以查看
+    3 : 可以评论
+    4 : 可以修改
+    '''
 
 
 # 文档
@@ -112,7 +88,19 @@ class Document(models.Model):
     def is_in_group(self):
         return self.in_group
 
-#收藏
+
+# #浏览记录
+# class Browsing(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     doc = models.ForeignKey(Document, on_delete=models.CASCADE)
+#     browsing_date = models.DateTimeField("浏览时间",auto_now_add=True)
+#     def __str__(self):
+#         return self.name
+
+#     def get_absolute_url(self):
+#         return reverse("_detail", kwargs={"pk": self.pk})
+
+# 收藏文档
 class Collection(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     doc = models.ForeignKey(Document, on_delete=models.CASCADE)
@@ -122,6 +110,33 @@ class Collection(models.Model):
 
     def get_absolute_url(self):
         return reverse("_detail", kwargs={"pk": self.pk})
+
+# 删除文档
+class Delete_document(models.Model):
+    """
+    Delete_document
+    """
+    creator = models.ForeignKey(User, related_name='_created_documents', verbose_name='创建者', on_delete=models.CASCADE,
+                                null=False)
+
+    team = models.ForeignKey(Team, related_name='_documents', verbose_name="所属团队", on_delete=models.CASCADE, null=True,
+                             blank=True)
+
+    in_group = models.BooleanField(blank=False)
+    name = models.CharField(max_length=64)
+    content = models.TextField(null=True)
+    created_date = models.DateTimeField("创建时间", auto_now=False, auto_now_add=True, null=True, blank=True)
+    modified_date = models.DateTimeField("修改时间", auto_now=True, auto_now_add=False, null=True, blank=True)
+
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("_detail", kwargs={"pk": self.pk})
+
+    def is_in_group(self):
+        return self.in_group
 
 
 class UDRecord(models.Model):
@@ -199,3 +214,5 @@ class Comment(MPTTModel):
 
     class MMTTMeta:
         order_insertion_by = ['created_time']
+
+

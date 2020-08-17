@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponse
-from django.core import serializers
 from login.views import authentication
+from datetime import datetime
+
 # my models
-from .models import User, Document, Team, TeamUser, Comment, Collection
+from .models import User, Document, Team, TeamUser, Comment, Collection, Delete_document
 # third-party
-from rest_framework.authtoken.models import Token
+from notifications.models import Notification
 from notifications.signals import notify
 
 
@@ -41,42 +42,78 @@ def user_info(request):
             'password': user.password}
     return JsonResponse(data)
 
-# #删除文件
-# def delete_doc(request):
-#     doc_id = request.POST.get("doc_id")
-#     user = authentication(request)
-#     doc = Document.objects.get(pk=doc_id)
-#     data={'flag':"no"}
-#     if user==doc.creator:
-#         delete_doc = Delete_document.objects.create(creator=doc.creator,team=doc.team,in_group=doc.in_group=doc.in_group,name=doc.name,content=doc.content,create_data=doc.create_data,modified_date=doc.modified_date)
-#         doc.delete()
-#         data={'flag':"yes",'delete_doc_id':delete_doc.pk}
-#     return JsonResponse(data)
+# 删除文档
+def delete_doc(request):
+    print("delete doc")
+    doc_id = request.POST.get("doc_id")
+    user = authentication(request)
+    try:
+        doc = Document.objects.get(pk=doc_id)
+        if user == doc.creator:
+            delete_doc = Delete_document.objects.create(creator=doc.creator, team=doc.team, in_group=doc.in_group,
+                                                        name=doc.name, content=doc.content, created_date=doc.created_date, modified_date=doc.modified_date)
+            doc.delete()
+            data = {'flag': "yes", 'delete_doc_id': delete_doc.pk}
+            print("success")
+    except expression as identifier:
+        data = {'flag': "no"}
+    return JsonResponse(data)
 
-# #还原文件
-# def restore_doc(request):
-#     delete_doc_id = request.POST.get("delete_doc_id")
-#     user = authentication(request)
-#     delete_doc=Delete_document.objects.get(pk=delete_doc_id)
-#     data={'flag':"no"}
-#     if user==delete_doc.creator:
-#         doc = Document.objects.create(creator=delete_doc.creator,team=delete_doc.team,in_group=delete_doc.in_group=delete_doc.in_group,name=delete_doc.name,content=delete_doc.content,create_data=delete_doc.create_data,modified_date=delete_doc.modified_date)
-#         delete_doc.delete()
-#         data={'flag':"yes",'doc_id':doc.pk}
-#     return JsonResponse(data)
+# 拉取已被删除在回收站的文档
+def get_deleted_docs(request):
+    print("get deleted docs")
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    deleted_documents = Delete_document.objects.filter(creator=user)
+    deleted_docs = []
+    for doc in deleted_documents:
+        item = {
+            'name': doc.name,
+            'doc_id': doc.pk,
+        }
+        deleted_docs.append(item)
+    data = {'deleted_docs':deleted_docs}
+    return JsonResponse(data)
 
-#收藏文件
+# 还原文件
+def restore_doc(request):
+    print("restore")
+    delete_doc_id = request.POST.get("doc_id")
+    user = authentication(request)
+    delete_doc = Delete_document.objects.get(pk=delete_doc_id)
+    data = {'flag': "no"}
+    if user == delete_doc.creator:
+        doc = Document.objects.create(creator=delete_doc.creator, team=delete_doc.team, in_group=delete_doc.in_group, name=delete_doc.name,
+                                      content=delete_doc.content, created_date=delete_doc.created_date, modified_date=delete_doc.modified_date)
+        delete_doc.delete()
+        data = {'flag': "yes", 'doc_id': doc.pk}
+    return JsonResponse(data)
+
+# 彻底删除文件
+def delete_doc_completely(request):
+    print("delete doc completely")
+    delete_doc_id = request.POST.get("doc_id")
+    user = authentication(request)
+    delete_doc = Delete_document.objects.get(pk=delete_doc_id)
+    data = {'flag': "no"}
+    if user == delete_doc.creator:
+        delete_doc.delete()
+        data = {'flag': "yes"}
+    return JsonResponse(data)
+
+# 收藏文件
 def collect_doc(request):
     print("collect doc")
     doc_id = request.POST.get("doc_id")
-    print(doc_id)
+    # print(doc_id)
     user = authentication(request)
     doc = Document.objects.get(pk=doc_id)
-    data = {'flag': "no",  'msg': "already collect"}
-    if not Collection.objects.filter(Q(user=user)&Q(doc=doc)):
-        Collection.objects.create(user=user,doc=doc)
+    data = {'flag': "no",  'msg': "already collected"}
+    if not Collection.objects.filter(Q(user=user) & Q(doc=doc)):
+        Collection.objects.create(user=user, doc=doc)
         data = {'flag': "yes",  'msg': "collect success"}
-    print("success")
+    # print("success")
     return JsonResponse(data)
 
 # 取消收藏
@@ -91,7 +128,8 @@ def uncollect_doc(request):
     data = {'flag': "yes",  'msg': "uncollect success"}
     print("success")
     return JsonResponse(data)
-    
+
+
 # 新建文档
 def create_doc(request):
     print('create doc')
@@ -103,10 +141,10 @@ def create_doc(request):
     # create_time = request.POST.get("create_time")
     print(name)
     # print(content)
-    doc = Document.objects.create(creator=user, name=name, in_group = False)
+    doc = Document.objects.create(creator=user, name=name, in_group=False)
     print(doc.name)
     print(doc.pk)
-    data = {'flag': "yes", 'doc_id': doc.pk , 'msg': "create success"}
+    data = {'flag': "yes", 'doc_id': doc.pk, 'msg': "create success"}
     print("success")
     return JsonResponse(data)
 
@@ -134,20 +172,24 @@ def save_doc(request):
     return JsonResponse(data)
 
 
-# 获取文档内容
+# 获取文档内容及收藏状态
 def get_doc(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
     print("get doc")
     doc_id = request.POST.get("doc_id")
-    print(doc_id)
-    document = Document.objects.get(creator=user, pk=doc_id)
-    data = {'name': document.name, 'content': document.content}
-    print("success")
+    # print(doc_id)
+    doc = Document.objects.get(pk=doc_id)
+    islike = True
+    if not Collection.objects.filter(Q(user=user) & Q(doc=doc)):
+        islike = False
+    data = {'name': doc.name, 'content': doc.content, 'islike':islike}
+    # print("success")
     return JsonResponse(data)
 
-# 拉取我的文件信息（创建、收藏）
+
+# 我创建和收藏的文档信息
 def my_doc(request):
     print('my docs')
     user = authentication(request)
@@ -171,110 +213,102 @@ def my_doc(request):
             'doc_id': d.doc.pk,
         }
         collected_docs.append(c_item)
-    data = {'created_docs':created_docs, 'collected_docs':collected_docs}
+    data = {'created_docs': created_docs, 'collected_docs': collected_docs}
     return JsonResponse(data)
 
+# #最近浏览的文档信息
+# def my_browse_doc(request):
+#     print('my browse docs')
+#     user = authentication(request)
+#     if user is None:
+#         return HttpResponse('Unauthorized', status=401)
+#     browsing = Browsing.objects.filter(user=user)
+#     browsing_docs = []
+#     for d in browsing:
+#         c_item = {
+#             'name': d.doc.name,
+#             # 'content': d.content,
+#             'doc_id': d.doc.pk,
+#         }
+#         browsing_docs.append(c_item)
+#     data = {'browsing_docs':browsing_docs}
+#     return JsonResponse(data)
 
-# 新建团队
-def create_team(request):
-    print('create team')
-    user = authentication(request)
-    if user is None:
-        return HttpResponse('Unauthorized', status=401)
-    team_name = request.POST.get("name")
-    team = Team.objects.create(team_name=team_name)
-    TeamUser.objects.create(team=team, user=user, is_leader=True)
-    return JsonResponse({})
-
-
-# 搜索用户
-def search_user(request):
-    print('search user')
-    user = authentication(request)
-    if user is None:
-        return HttpResponse('Unauthorized', status=401)
-    name = request.POST.get("name")
-    print("key word", name)
-    if name == "":
-        user_list = User.objects.all()
-    else:
-        user_list = User.objects.filter(
-            Q(username__icontains=name)
-        )
-    data = {"user_list": serializers.serialize('json', user_list)}
-
-    return JsonResponse(data)
-
-
-# 拉取用户所有的团队
-def get_my_team(request):
-    print('get my team')
-    user = authentication(request)
-    if user is None:
-        return HttpResponse('Unauthorized', status=401)
-    team_user = TeamUser.objects.filter(user=user)
-    team_list = []
-    for relation in team_user:
-        team_list.append(relation.team)
-    data = {"team_list": team_list}
-    return JsonResponse(data)
-
-
-# 拉取某团队队内成员
-def get_team_member(request):
-    print("get team list")
-    user = authentication(request)
-    if user is None:
-        return HttpResponse('Unauthorized', status=401)
-    team_id = request.POST.get("team_id")
-    team = Team.objects.get(id=team_id)
-    team_user = TeamUser.objects.filter(team=team)
-    user_list = []
-    for relation in team_user:
-        user_list.append(relation.user)
-    data = {'user_list': user_list}
-    return JsonResponse(data)
-
+# #新建、更新浏览记录
+# def update_browsing(request):
+#     user = authentication(request)
+#     doc_id = request.POST.get("doc_id")
+#     doc = Document.objects.get(pk=doc_id)
+#     if user is None:
+#         return HttpResponse('Unauthorized', status=401)
+#     oldb = Browsing.objects.filter(Q(user=user) & Q(doc=doc))
+#     if oldb:
+#         oldb.delete()
+#     newb = Browsing.objects.create(user=user,doc=doc)
+#     data = {"message": 1}
+#     return JsonResponse(data)
 
 # 发送邀请
-def send_invation(request):
+def invite_user(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
-
-    actor = User.objects.get(id=request.POST.get("actor_id"))
-    recipient = User.objects.get(id=request.POST.get("recipient_id"))
-    verb = 'invate'
-    target = Team.objects.get(id=request.POST.get("team_id"))
-
+    actor = user
+    recipient = User.objects.get(username=request.POST.get("username"))
+    print(request.POST.get("username"))
+    verb = 'invite'
+    team = Team.objects.get(id=request.POST.get("team_id"))
+    print(team)
     data = {}
-
-    notify.send(actor, recipient, verb, target)
+    notify.send(actor, recipient=recipient, verb=verb, target=team)
     return JsonResponse(data)
 
 
-# 接受邀请
-def accept_invation(request):
+# 回复邀请
+def response_invitation(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
-    # 获取团队
-    team = Team.objects.get(id=request.POST.get("team_id"))
-    # User作为组员加入团队
-    TeamUser.objects.create(user=user, team=team, is_leader=False)
+    notice_id = request.POST.get("notice_id")
+    if request.POST.get("answer")=='Yes':
+        # 用户接受邀请
+        # 获取团队
+        team = Team.objects.get(id=request.POST.get("team_id"))
+        # User作为组员加入团队
+        TeamUser.objects.create(user=user, team=team, is_leader=False)
+    elif request.POST.get("answer")=='No':
+        # 用户拒绝邀请
+        Notification.objects.get(notice_id).delete()
+    else:
+        print('There must be something wrong with the data!')
+
+    
     return JsonResponse({})
+
+
 
 
 # 获取未读信息
-def get_user_unread_notice(request):
+def get_user_notice(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
-
-    unread_notice_list = user.notifications.unread()
-
-    data = {"notice_list": unread_notice_list}
-
+    unread_notice = user.notifications.unread()
+    notice_list = []
+    for notice in unread_notice:
+        team  = notice.target
+        actor = notice.actor
+        item = {
+            'notice_id': notice.id,
+            'actor_id': actor.id,
+            'actor_name':actor.username,
+            'verb': notice.CharField,
+            'target_id': team.id,
+            'target_name': teamname,
+            'sent_time': datetime.strftime(notice.timestamp, '%Y-%m-%d %H-%M'),
+        }
+        notice_list.append(item)
+    data = {"notice_list": notice_list}
     return JsonResponse(data)
 
 
@@ -288,9 +322,10 @@ def post_comment(request):
     # 获取评论内容
     body = request.POST.get("body")
     # 存储评论
-    Comment.create(user=user, document=document, body=body)
+    Comment.objects.create(user=user, document=document, body=body)
     data = {}
     return JsonResponse(data)
+
 
 # 文章获取评论列表
 def get_comment_list(request):
@@ -300,7 +335,37 @@ def get_comment_list(request):
     # 获取被评论的文档id
     document = Document.objects.get(id=request.POST.get("doc_id"))
     # 获取评论
-    comment_list = Comment.objects.filter(document=document)
+    comments = Comment.objects.filter(document=document)
     # 返还评论列表
-    data = {"comment_list":comment_list}
+    comment_list = []
+    for comment in comments:
+        item = {
+            'actor': comment.user.username,
+            'body': comment.body,
+        }
+        comment_list.append(item)
+
+    data = {"comment_list": comment_list}
     return JsonResponse(data)
+
+# #搜索文档
+# def search(request):
+#     user = authentication(request)
+#     if user is None:
+#         return HttpResponse('Unauthorized', status=401)
+#     keyword = request.POST.get("keyword")
+#     if not keyword:
+#         return Response({'flag': 0, 'message': '输入不能为空'})
+#     search_doc = Document.objects.filter(name__icontains=keyword)
+#     if not search_doc:
+#         return Response({'flag': 0, 'message': '输入不存在'})
+#     sdoc = []
+#     for d in search_doc:
+#         c_item = {
+#             'name': d.doc.name,
+#             # 'content': d.content,
+#             'doc_id': d.doc.pk,
+#         }
+#         sdoc.append(c_item)
+#     return Response({'code': 1, 'message': '','sdoc':sdoc})
+
