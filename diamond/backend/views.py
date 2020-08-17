@@ -248,11 +248,11 @@ def response_invitation(request):
         print('Success')
     elif request.POST.get("answer")=='No':
         # 用户拒绝邀请
-        Notification.objects.get(notice_id).delete()
         print('Refuse')
     else:
         print('There must be something wrong with the data!')
-
+        
+    Notification.objects.get(id=notice_id).delete()
     
     return JsonResponse({})
 
