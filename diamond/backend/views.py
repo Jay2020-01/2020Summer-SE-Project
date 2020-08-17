@@ -2,9 +2,12 @@ from django.shortcuts import render
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponse
 from login.views import authentication
+from datetime import datetime
+
 # my models
 from .models import User, Document, Team, TeamUser, Comment, Collection
 # third-party
+from notifications.models import Notification
 from notifications.signals import notify
 
 
@@ -157,58 +160,59 @@ def invite_user(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
-
     actor = user
     recipient = User.objects.get(username=request.POST.get("username"))
+    print(request.POST.get("username"))
     verb = 'invite'
     team = Team.objects.get(id=request.POST.get("team_id"))
-
+    print(team)
     data = {}
-
     notify.send(actor, recipient=recipient, verb=verb, target=team)
-
     return JsonResponse(data)
 
 
-# 接受邀请
-def accept_invitation(request):
+# 回复邀请
+def response_invitation(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
-    
-    unread = user.notifications.unread()
+    notice_id = request.POST.get("notice_id")
+    if request.POST.get("answer")=='Yes':
+        # 用户接受邀请
+        # 获取团队
+        team = Team.objects.get(id=request.POST.get("team_id"))
+        # User作为组员加入团队
+        TeamUser.objects.create(user=user, team=team, is_leader=False)
+    elif request.POST.get("answer")=='No':
+        # 用户拒绝邀请
+        Notification.objects.get(notice_id).delete()
+    else:
+        print('There must be something wrong with the data!')
 
     
-    # 获取团队
-    team = Team.objects.get(id=request.POST.get("team_id"))
-    # User作为组员加入团队
-    TeamUser.objects.create(user=user, team=team, is_leader=False)
     return JsonResponse({})
 
-# # 标记已读信息
-# def mark_as_read(request):
-#     user = authentication(request)
-#     if user is None:
-#         return HttpResponse('Unauthorized', status=401)
-#     # get unread
 
 
 
 # 获取未读信息
-def get_user_unread_notice(request):
+def get_user_notice(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
     unread_notice = user.notifications.unread()
     notice_list = []
     for notice in unread_notice:
-        team_id  = notice.target.id
-        teamname = Team.objects.get(id=team_id).team_name
+        team  = notice.target
+        actor = notice.actor
         item = {
-            'actor': notice.User.username,
+            'notice_id': notice.id,
+            'actor_id': actor.id,
+            'actor_name':actor.username,
             'verb': notice.CharField,
-            'target_id': team_id,
+            'target_id': team.id,
             'target_name': teamname,
+            'sent_time': datetime.strftime(notice.timestamp, '%Y-%m-%d-%H-%M-%S-%A'),
         }
         notice_list.append(item)
     data = {"notice_list": notice_list}

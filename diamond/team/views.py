@@ -45,7 +45,7 @@ def search_user(request):
         except:
             is_join = False
         item = {"username": user.username, "password": user.password, "wechat": user.wechat,
-                "phone_number": user.phone_number, "email": user.email, "is_join": True}
+                "phone_number": user.phone_number, "email": user.email, "is_join": is_join}
         user_list.append(item)
     data = {"user_list": user_list}
 
