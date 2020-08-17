@@ -55,6 +55,8 @@ urlpatterns = [
     path('ajax/get_comment_list/', backend_views.get_comment_list, name="get_comment_list"),
     path('ajax/post_comment/', backend_views.post_comment, name="post_comment"),
     path('ajax/delete_comment/', backend_views.delete_comment, name="delete_comment"),
+    path('ajax/delete_team_member/', team_views.delete_team_member, name="delete_team_member"),
+    path('ajax/exit_team/', team_views.exit_team, name="delete_team_member"),
     # backend api
 ]
 

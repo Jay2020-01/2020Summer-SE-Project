@@ -113,6 +113,34 @@ def add_team_member(request):
     return JsonResponse({})
 
 
+# 退出团队
+def exit_team(request):
+    print("exit team")
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    team_id = request.POST.get("team_id")
+    team = Team.objects.get(id=team_id)
+    team_user = TeamUser.objects.get(team=team, user=user)
+    team_user.delete()
+    return JsonResponse({})
+
+
+# 删除团队成员
+def delete_team_member(request):
+    print("delete team member")
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    team_id = request.POST.get("team_id")
+    team = Team.objects.get(id=team_id)
+    target_username = request.POST.get("username")
+    user = User.objects.get(username=target_username)
+    team_user = TeamUser.objects.get(team=team, user=user)
+    team_user.delete()
+    return JsonResponse({})
+
+
 # modify permission
 def modify_permission(request):
     user = authentication(request)
