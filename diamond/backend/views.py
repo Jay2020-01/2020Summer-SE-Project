@@ -137,12 +137,17 @@ def search_user(request):
     name = request.POST.get("name")
     print("key word", name)
     if name == "":
-        user_list = User.objects.all()
+        users = User.objects.all()
     else:
-        user_list = User.objects.filter(
+        users = User.objects.filter(
             Q(username__icontains=name)
         )
-    data = {"user_list": serializers.serialize('json', user_list)}
+    user_list = []
+    for user in users:
+        item = {"username": user.username, "password": user.password, "wechat": user.wechat,
+                "phone_number": user.phone_number, "email": user.email}
+        user_list.append(item)
+    data = {"user_list": user_list}
 
     return JsonResponse(data)
 
@@ -167,7 +172,8 @@ def delete_my_team(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
-    team_id = request.GET.get("team_id")
+    team_id = request.POST.get("team_id")
+    print(team_id)
     team = Team.objects.get(id=team_id)
     team.delete()
     return JsonResponse({})
