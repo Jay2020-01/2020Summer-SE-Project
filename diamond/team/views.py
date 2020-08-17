@@ -3,7 +3,7 @@ from django.db.models import Q
 from backend.models import User, Team, TeamUser
 from login.views import authentication
 from django.http import JsonResponse, HttpResponse
-
+from backend.models import Permission
 
 # Create your views here.
 # 新建团队
@@ -103,4 +103,19 @@ def add_team_member(request):
     team_id = request.GET.get("team_id")
     team = Team.objects.get(id=team_id)
     TeamUser.objects.create(team=team, user=user, is_leader=False)
+    return JsonResponse({})
+
+
+# modify permission
+def modify_permission(request):
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    team_id = request.POST.get("team_id")
+    team = Team.objects.get(id=team_id)
+    target_user = request.POST.get("target_user")
+    permission_level = request.POST.get("permission_level")
+    permission = Permission.objects.get(user=target_user, team=team)
+    permission.permission_level = permission_level
+    permission.save()
     return JsonResponse({})

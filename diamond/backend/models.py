@@ -38,10 +38,14 @@ class TeamUser(models.Model):
 class Permission(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    view_doc_permission = models.BooleanField(verbose_name="查看文档权限", default=False)
-    change_doc_permission = models.BooleanField(verbose_name="修改文档权限", default=False)
-    share_doc_permission = models.BooleanField(verbose_name="分享文档权限", default=False)
-    comment_doc_permission = models.BooleanField(verbose_name="评论文档权限", default=False)
+    permission_level = models.IntegerField(verbose_name="权限等级")
+    '''
+    permission_level:
+    1 : 禁止访问
+    2 : 可以查看
+    3 : 可以评论
+    4 : 可以修改
+    '''
 
 
 # 文档
@@ -84,7 +88,8 @@ class Document(models.Model):
     def is_in_group(self):
         return self.in_group
 
-#收藏文档
+
+# 收藏文档
 class Collection(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     doc = models.ForeignKey(Document, on_delete=models.CASCADE)
