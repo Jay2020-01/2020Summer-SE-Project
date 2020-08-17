@@ -20,6 +20,8 @@ from rest_framework.authtoken import views as token_views
 import login.views as login_views
 import backend.views as backend_views
 import team.views as team_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # admin
@@ -48,6 +50,9 @@ urlpatterns = [
     path('ajax/get_deleted_docs/', backend_views.get_deleted_docs, name='get_deleted_docs'),
     path('ajax/invite_user/',backend_views.invite_user, name='invite_user'),
     path('ajax/get_user_notice/',backend_views.get_user_notice, name='get_user_notice'),
-    path('ajax/response_invitation/',backend_views.response_invitation, name='response_invitation')
+    path('ajax/response_invitation/',backend_views.response_invitation, name='response_invitation'),
+    path('ajax/image_upload/', backend_views.user_avatar_upload, name="user avatar upload"),
     # backend api
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # 图片相关
