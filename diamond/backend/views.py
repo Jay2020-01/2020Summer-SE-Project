@@ -245,9 +245,11 @@ def response_invitation(request):
         team = Team.objects.get(id=request.POST.get("team_id"))
         # User作为组员加入团队
         TeamUser.objects.create(user=user, team=team, is_leader=False)
+        print('Success')
     elif request.POST.get("answer")=='No':
         # 用户拒绝邀请
         Notification.objects.get(notice_id).delete()
+        print('Refuse')
     else:
         print('There must be something wrong with the data!')
 
@@ -271,9 +273,9 @@ def get_user_notice(request):
             'notice_id': notice.id,
             'actor_id': actor.id,
             'actor_name':actor.username,
-            'verb': notice.CharField,
+            'verb': notice.verb,
             'target_id': team.id,
-            'target_name': teamname,
+            'target_name': team.team_name,
             'sent_time': datetime.strftime(notice.timestamp, '%Y-%m-%d %H-%M'),
         }
         notice_list.append(item)
