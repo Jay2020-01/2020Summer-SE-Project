@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.http import JsonResponse, HttpResponse
 from login.views import authentication
 # my models
-from .models import User, Document, Team, TeamUser, Comment, Collection
+from .models import User, Document, Team, TeamUser, Comment, Collection, Delete_document
 # third-party
 from notifications.signals import notify
 
@@ -39,19 +39,78 @@ def user_info(request):
             'password': user.password}
     return JsonResponse(data)
 
+# 删除文档
+def delete_doc(request):
+    print("delete doc")
+    doc_id = request.POST.get("doc_id")
+    user = authentication(request)
+    try:
+        doc = Document.objects.get(pk=doc_id)
+        if user == doc.creator:
+            delete_doc = Delete_document.objects.create(creator=doc.creator, team=doc.team, in_group=doc.in_group,
+                                                        name=doc.name, content=doc.content, created_date=doc.created_date, modified_date=doc.modified_date)
+            doc.delete()
+            data = {'flag': "yes", 'delete_doc_id': delete_doc.pk}
+            print("success")
+    except expression as identifier:
+        data = {'flag': "no"}
+    return JsonResponse(data)
 
-#收藏文件
+# 拉取已被删除在回收站的文档
+def get_deleted_docs(request):
+    print("get deleted docs")
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    deleted_documents = Delete_document.objects.filter(creator=user)
+    deleted_docs = []
+    for doc in deleted_documents:
+        item = {
+            'name': doc.name,
+            'doc_id': doc.pk,
+        }
+        deleted_docs.append(item)
+    data = {'deleted_docs':deleted_docs}
+    return JsonResponse(data)
+
+# 还原文件
+def restore_doc(request):
+    print("restore")
+    delete_doc_id = request.POST.get("doc_id")
+    user = authentication(request)
+    delete_doc = Delete_document.objects.get(pk=delete_doc_id)
+    data = {'flag': "no"}
+    if user == delete_doc.creator:
+        doc = Document.objects.create(creator=delete_doc.creator, team=delete_doc.team, in_group=delete_doc.in_group, name=delete_doc.name,
+                                      content=delete_doc.content, created_date=delete_doc.created_date, modified_date=delete_doc.modified_date)
+        delete_doc.delete()
+        data = {'flag': "yes", 'doc_id': doc.pk}
+    return JsonResponse(data)
+
+# 彻底删除文件
+def delete_doc_completely(request):
+    print("delete doc completely")
+    delete_doc_id = request.POST.get("doc_id")
+    user = authentication(request)
+    delete_doc = Delete_document.objects.get(pk=delete_doc_id)
+    data = {'flag': "no"}
+    if user == delete_doc.creator:
+        delete_doc.delete()
+        data = {'flag': "yes"}
+    return JsonResponse(data)
+
+# 收藏文件
 def collect_doc(request):
     print("collect doc")
     doc_id = request.POST.get("doc_id")
-    print(doc_id)
+    # print(doc_id)
     user = authentication(request)
     doc = Document.objects.get(pk=doc_id)
-    data = {'flag': "no",  'msg': "already collect"}
-    if not Collection.objects.filter(Q(user=user)&Q(doc=doc)):
-        Collection.objects.create(user=user,doc=doc)
+    data = {'flag': "no",  'msg': "already collected"}
+    if not Collection.objects.filter(Q(user=user) & Q(doc=doc)):
+        Collection.objects.create(user=user, doc=doc)
         data = {'flag': "yes",  'msg': "collect success"}
-    print("success")
+    # print("success")
     return JsonResponse(data)
 
 # 取消收藏
@@ -110,21 +169,24 @@ def save_doc(request):
     return JsonResponse(data)
 
 
-# 获取文档内容
+# 获取文档内容及收藏状态
 def get_doc(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
     print("get doc")
     doc_id = request.POST.get("doc_id")
-    print(doc_id)
-    document = Document.objects.get(creator=user, pk=doc_id)
-    data = {'name': document.name, 'content': document.content}
-    print("success")
+    # print(doc_id)
+    doc = Document.objects.get(pk=doc_id)
+    islike = True
+    if not Collection.objects.filter(Q(user=user) & Q(doc=doc)):
+        islike = False
+    data = {'name': doc.name, 'content': doc.content, 'islike':islike}
+    # print("success")
     return JsonResponse(data)
 
 
-# 我创建的
+# 我创建和收藏的文档信息
 def my_doc(request):
     print('my docs')
     user = authentication(request)
@@ -148,7 +210,7 @@ def my_doc(request):
             'doc_id': d.doc.pk,
         }
         collected_docs.append(c_item)
-    data = {'created_docs':created_docs, 'collected_docs':collected_docs}
+    data = {'created_docs': created_docs, 'collected_docs': collected_docs}
     return JsonResponse(data)
 
 

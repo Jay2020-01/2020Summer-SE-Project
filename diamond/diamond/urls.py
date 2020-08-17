@@ -20,6 +20,7 @@ from rest_framework.authtoken import views as token_views
 import login.views as login_views
 import backend.views as backend_views
 import team.views as team_views
+
 urlpatterns = [
     # admin
     path('admin/', admin.site.urls),
@@ -41,5 +42,9 @@ urlpatterns = [
     path('ajax/delete_my_team/', team_views.delete_my_team, name='delete_my_team'),
     path('ajax/collect_doc/', backend_views.collect_doc, name='collect_doc'),
     path('ajax/uncollect_doc/', backend_views.uncollect_doc, name='uncollect_doc'),
+    path('ajax/delete_doc/', backend_views.delete_doc, name='delete_doc'),
+    path('ajax/delete_doc_completely/', backend_views.delete_doc_completely, name='delete_doc_completely'),
+    path('ajax/restore_doc/', backend_views.restore_doc, name='restore_doc'),
+    path('ajax/get_deleted_docs/', backend_views.get_deleted_docs, name='get_deleted_docs'),
     # backend api
 ]
