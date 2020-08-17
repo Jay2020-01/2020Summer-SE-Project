@@ -52,6 +52,9 @@ urlpatterns = [
     path('ajax/get_user_notice/',backend_views.get_user_notice, name='get_user_notice'),
     path('ajax/response_invitation/',backend_views.response_invitation, name='response_invitation'),
     path('ajax/image_upload/', backend_views.user_avatar_upload, name="user avatar upload"),
+    path('ajax/get_comment_list/', backend_views.get_comment_list, name="get_comment_list"),
+    path('ajax/post_comment/', backend_views.post_comment, name="post_comment"),
+    path('ajax/delete_comment/', backend_views.delete_comment, name="delete_comment"),
     # backend api
 ]
 
