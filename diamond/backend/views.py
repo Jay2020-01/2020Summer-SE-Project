@@ -225,7 +225,7 @@ def invite_user(request):
     actor = user
     recipient = User.objects.get(username=request.POST.get("username"))
     print(request.POST.get("username"))
-    verb = 'invite'
+    verb = 'invite '+recipient.username+" to"
     team = Team.objects.get(id=request.POST.get("team_id"))
     print(team)
     data = {}
