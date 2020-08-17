@@ -25,6 +25,8 @@ def search_user(request):
     if user is None:
         return HttpResponse('Unauthorized', status=401)
     name = request.POST.get("name")
+    team_id = request.POST.get("team_id")
+    team = Team.objects.get(id=team_id)
     print("key word", name)
     if name == "":
         users = User.objects.all()
@@ -34,8 +36,15 @@ def search_user(request):
         )
     user_list = []
     for user in users:
+        try:
+            relation = TeamUser.objects.get(user=user, id=team_id)
+            if relation.is_leader:
+                continue
+            is_join = True
+        except:
+            is_join = False
         item = {"username": user.username, "password": user.password, "wechat": user.wechat,
-                "phone_number": user.phone_number, "email": user.email}
+                "phone_number": user.phone_number, "email": user.email, "is_join": is_join}
         user_list.append(item)
     data = {"user_list": user_list}
 
