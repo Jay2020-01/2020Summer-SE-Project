@@ -187,11 +187,15 @@ def create_doc(request):
     if user is None:
         return HttpResponse('Unauthorized', status=401)
     name = request.POST.get("title")
+    team_id = request.POST.get("team_id")
+    in_group = True
+    if (team_id == -1):
+        in_group = False
     # content = request.POST.get("content")
     # create_time = request.POST.get("create_time")
     print(name)
     # print(content)
-    doc = Document.objects.create(creator=user, name=name, in_group=False)
+    doc = Document.objects.create(creator=user, name=name, in_group=in_group)
     print(doc.name)
     print(doc.pk)
     data = {'flag': "yes", 'doc_id': doc.pk, 'msg': "create success"}
