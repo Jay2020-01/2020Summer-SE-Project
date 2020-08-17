@@ -339,7 +339,7 @@ def post_comment(request):
     # 获取被评论的文档id
     document = Document.objects.get(id=request.POST.get("doc_id"))
     # 获取评论内容
-    body = request.POST.get("body")
+    body = request.POST.get("content")
     # 存储评论
     Comment.objects.create(user=user, document=document, body=body)
     data = {}
@@ -359,10 +359,20 @@ def get_comment_list(request):
     comment_list = []
     for comment in comments:
         item = {
-            'actor': comment.user.username,
-            'body': comment.body,
+            'comment_id':comment.id,
+            'user': comment.user.username,
+            'content': comment.body,
+            'post_time':datetime.strftime(comment.created_time, '%Y-%m-%d %H-%M'),
         }
         comment_list.append(item)
 
     data = {"comment_list": comment_list}
     return JsonResponse(data)
+
+def delete_comment(request):
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    # 获取评论id
+    comment_id = request.POST.get("comment_id")
+    Notification.objects.get(id=comment_id).delete()
