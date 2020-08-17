@@ -153,19 +153,19 @@ def my_doc(request):
 
 
 # 发送邀请
-def send_invitation(request):
+def invite_user(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
 
     actor = user
     recipient = User.objects.get(username=request.POST.get("username"))
-    verb = 'invate'
+    verb = 'invite'
     team = Team.objects.get(id=request.POST.get("team_id"))
 
     data = {}
 
-    notify.send(actor, recipient, verb, team)
+    notify.send(actor, recipient=recipient, verb=verb, target=team)
 
     return JsonResponse(data)
 
