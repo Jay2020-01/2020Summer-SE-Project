@@ -11,8 +11,8 @@ class User(AbstractUser):
     # username 继承
     # password 继承
     # 头像
-    # avatar = ProcessedImageField(verbose_name='头像', upload_to='user_avatar/', blank=True, null=False,
-    #                              default='avatar.png', processors=[ResizeToFill(150, 150)])
+    avatar = ProcessedImageField(verbose_name='头像', upload_to='user_avatar/', blank=True, null=False,
+                                 default='avatar.jpeg', processors=[ResizeToFill(150, 150)])
     phone_number = models.CharField(verbose_name='电话', max_length=64, null=True, blank=True)
     wechat = models.CharField(verbose_name='微信', max_length=64, null=True, blank=True)
 

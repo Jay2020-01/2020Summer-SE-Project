@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="25f5af26-6962-4e6c-963d-c74c9c71b392" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/diamond/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/diamond/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diamond/backend/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/diamond/backend/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,15 +11,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/diamond/backend/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="727">
-              <caret line="43" column="21" selection-start-line="43" selection-start-column="21" selection-end-line="43" selection-end-column="21" />
-              <folding>
-                <element signature="e#0#35#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="42">
+              <caret line="2" column="50" lean-forward="true" selection-start-line="2" selection-start-column="50" selection-end-line="2" selection-end-column="50" />
             </state>
           </provider>
         </entry>
@@ -61,17 +56,18 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="372" />
-    <option name="y" value="234" />
-    <option name="width" value="1548" />
-    <option name="height" value="846" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="117" />
+    <option name="y" value="139" />
+    <option name="width" value="1669" />
+    <option name="height" value="941" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -94,14 +90,13 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/diamond" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -140,17 +135,17 @@
       <workItem from="1597106435858" duration="887000" />
       <workItem from="1597325443315" duration="70000" />
       <workItem from="1597393963619" duration="30000" />
+      <workItem from="1597643042278" duration="16000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5150000" />
+    <option name="totallyTimeSpent" value="5166000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="53" y="25" width="1867" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27121463" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2756517" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -194,11 +189,8 @@
     <entry file="file://$PROJECT_DIR$/backend/backend/settings.py" />
     <entry file="file://$PROJECT_DIR$/diamond/backend/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="727">
-          <caret line="43" column="21" selection-start-line="43" selection-start-column="21" selection-end-line="43" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="42">
+          <caret line="2" column="50" lean-forward="true" selection-start-line="2" selection-start-column="50" selection-end-line="2" selection-end-column="50" />
         </state>
       </provider>
     </entry>
