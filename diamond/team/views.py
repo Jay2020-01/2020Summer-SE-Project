@@ -14,7 +14,7 @@ def create_team(request):
         return HttpResponse('Unauthorized', status=401)
     team_name = request.POST.get("name")
     team = Team.objects.create(team_name=team_name)
-    TeamUser.objects.create(team=team, user=user, is_leader=True)
+    TeamUser.objects.create(team=team, user=user, is_leader=True, permission_level=4)
     return JsonResponse({})
 
 
@@ -48,6 +48,18 @@ def search_user(request):
         user_list.append(item)
     data = {"user_list": user_list}
 
+    return JsonResponse(data)
+
+
+def is_leader(request):
+    print("current user is leader?")
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    team_id = request.POST.get("team_id")
+    team = Team.objects.get(id=team_id)
+    team_user = TeamUser.objects.get(team=team)
+    data = {"is_leader": team_user.is_leader, "level": team_user.permission_level}
     return JsonResponse(data)
 
 
