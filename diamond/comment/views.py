@@ -5,7 +5,7 @@ from login.views import authentication
 from datetime import datetime
 
 # my models
-from .models import User, Document, Team, TeamUser, Comment, Collection, Delete_document, Template
+from backend.models import User, Document, Team, TeamUser, Comment, Collection, Delete_document, Template
 
 # Create your views here.
 # 上传评论
