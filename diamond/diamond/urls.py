@@ -58,6 +58,7 @@ urlpatterns = [
     path('ajax/delete_team_member/', team_views.delete_team_member, name="delete_team_member"),
     path('ajax/exit_team/', team_views.exit_team, name="delete_team_member"),
     path('ajax/get_team_docs/', team_views.get_team_docs, name="get_team_docs"),
+    path('ajax/is_leader/', team_views.is_leader, name="is_leader"),
     # backend api
 ]
 
