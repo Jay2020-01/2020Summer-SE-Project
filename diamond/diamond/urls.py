@@ -54,13 +54,12 @@ urlpatterns = [
     # invite api
     path('ajax/invite_user/',notify_views.invite_user, name='invite_user'),
     path('ajax/get_user_notice/',notify_views.get_user_notice, name='get_user_notice'),
-    path('ajax/response_invitation/',notify.response_invitation, name='response_invitation'),
+    path('ajax/response_invitation/',notify_views.response_invitation, name='response_invitation'),
     # comment api
     path('ajax/get_comment_list/', comment_views.get_comment_list, name="get_comment_list"),
     path('ajax/post_comment/', comment_views.post_comment, name="post_comment"),
     path('ajax/delete_comment/', comment_views.delete_comment, name="delete_comment"),
-
-    # team vies
+    # team api
     path('ajax/delete_team_member/', team_views.delete_team_member, name="delete_team_member"),
     path('ajax/exit_team/', team_views.exit_team, name="delete_team_member"),
     path('ajax/is_leader/', team_views.is_leader, name="is_leader"),
