@@ -126,13 +126,13 @@ def create_doc(request):
     # print(content)
 
     # 生成独特的原始码
-    raw_code = user.username+name+str(datetime.now())
+    raw_code = user.username + name + str(datetime.now())
     raw_code = raw_code.encode('utf-8')
     # 生成哈希加密后的identifier
     md = hashlib.md5()
     md.update(raw_code)
     key = md.hexdigest()
-    
+
     # 创建一个新文档
     doc = Document.objects.create(creator=user, name=name, in_group=in_group, team=team, key=key)
 
@@ -140,6 +140,7 @@ def create_doc(request):
     data = {'flag': "yes", 'doc_id': doc.pk, 'msg': "create success"}
     # print("success")
     return JsonResponse(data)
+
 
 # 用模板新建文件
 def create_doc_with_temp(request):
@@ -164,6 +165,7 @@ def create_doc_with_temp(request):
     doc.save()
     data = {'flag': "yes", 'doc_id': doc.pk, 'msg': "create success"}
     return JsonResponse(data)
+
 
 # 保存文档内容
 def save_doc(request):
@@ -234,8 +236,6 @@ def my_doc(request):
             collected_docs.append(c_item)
     data = {'created_docs': created_docs, 'collected_docs': collected_docs}
     return JsonResponse(data)
-
-
 
 # #最近浏览的文档信息
 # def my_browse_doc(request):

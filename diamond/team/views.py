@@ -12,7 +12,12 @@ def create_team(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
-    team_name = request.POST.get("name")
+    if request.method == "POST":
+        team_name = request.POST.get("name")
+    elif request.method == "OPTIONS":
+        team_name = request.OPTIONS.get("name")
+    else:
+        print('error')
     team = Team.objects.create(team_name=team_name)
     TeamUser.objects.create(team=team, user=user, is_leader=True, permission_level=4)
     return JsonResponse({})
@@ -83,6 +88,17 @@ def get_my_team(request):
         team_list.append(item)
     data = {"team_list": team_list}
     return JsonResponse(data)
+
+
+def get_team_name(request):
+    if request.method == 'POST':
+        team_id = request.POST.get("team_id")
+        team = Team.objects.get(id=team_id)
+        data = {"team_name": team.team_name}
+        return JsonResponse(data)
+    else:
+        print("get team name 不是 POST 请求")
+        return JsonResponse({})
 
 
 def delete_my_team(request):
@@ -195,3 +211,16 @@ def get_team_docs(request):
         docs.append(item)
     data = {'team_docs': docs}
     return JsonResponse(data)
+
+
+def edit_team_name(request):
+    if request.method == "POST":
+        team_name = request.POST.get("name")
+        team_id = request.POST.get("team_id")
+        team = Team.objects.get(id=team_id)
+        team.team_name = team_name
+        team.save()
+        return JsonResponse({})
+    else:
+        print("edit team name 不是POST请求")
+        return JsonResponse({})

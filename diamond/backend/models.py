@@ -44,7 +44,7 @@ class Document(models.Model):
     """
     # Many-to-one: need to know the creator of the document
     key = models.CharField(max_length=128, blank=False)
-    
+
     creator = models.ForeignKey(User, related_name='created_documents', verbose_name='创建者', on_delete=models.CASCADE,
                                 null=False)
 
@@ -55,14 +55,13 @@ class Document(models.Model):
     is_share_editable = models.BooleanField(default=False)
 
     is_locked = models.BooleanField(default=False)
-    
+
     in_group = models.BooleanField(blank=False)
-    
+
     name = models.CharField(max_length=64)
     content = models.TextField(null=True)
     created_date = models.DateTimeField("创建时间", auto_now=False, auto_now_add=True, null=True, blank=True)
     modified_date = models.DateTimeField("修改时间", auto_now=True, auto_now_add=False, null=True, blank=True)
-
 
     # class Meta:
     #     verbose_name = "文档"
@@ -97,6 +96,7 @@ class Collection(models.Model):
     def get_absolute_url(self):
         return reverse("_detail", kwargs={"pk": self.pk})
 
+
 # 删除文档
 class Delete_document(models.Model):
     """
@@ -113,7 +113,6 @@ class Delete_document(models.Model):
     content = models.TextField(null=True)
     created_date = models.DateTimeField("创建时间", auto_now=False, auto_now_add=True, null=True, blank=True)
     modified_date = models.DateTimeField("修改时间", auto_now=True, auto_now_add=False, null=True, blank=True)
-
 
     def __str__(self):
         return self.name
@@ -202,12 +201,10 @@ class Comment(MPTTModel):
         order_insertion_by = ['created_time']
 
 
-
-#模板
+# 模板
 class Template(models.Model):
     name = models.CharField(max_length=64)
     content = models.TextField(null=True)
-
 
 # #浏览记录
 # class Browsing(models.Model):
@@ -219,5 +216,3 @@ class Template(models.Model):
 
 #     def get_absolute_url(self):
 #         return reverse("_detail", kwargs={"pk": self.pk})
-
-    

@@ -31,14 +31,12 @@ urlpatterns = [
     path('api-token-auth/', token_views.obtain_auth_token),
     # index.html App.vue
     # path('', TemplateView.as_view(template_name="index.html")),
-
     # login views
     path('ajax/change_info/', login_views.change_info, name='change_info'),
     path('ajax/login/', login_views.login, name='login'),
     path('ajax/user_info/', login_views.user_info, name='user_info'),
     path('ajax/image_upload/', login_views.user_avatar_upload, name="user avatar upload"),
     path('ajax/register/', login_views.register, name='register'),
-
     # backend document views
     path('ajax/create_doc/', backend_views.create_doc, name='create_doc'),
     path('ajax/create_doc_with_temp/', backend_views.create_doc_with_temp, name="create_doc_with_temp"),
@@ -52,9 +50,9 @@ urlpatterns = [
     path('ajax/restore_doc/', backend_views.restore_doc, name='restore_doc'),
     path('ajax/get_deleted_docs/', backend_views.get_deleted_docs, name='get_deleted_docs'),
     # invite api
-    path('ajax/invite_user/',notify_views.invite_user, name='invite_user'),
-    path('ajax/get_user_notice/',notify_views.get_user_notice, name='get_user_notice'),
-    path('ajax/response_invitation/',notify_views.response_invitation, name='response_invitation'),
+    path('ajax/invite_user/', notify_views.invite_user, name='invite_user'),
+    path('ajax/get_user_notice/', notify_views.get_user_notice, name='get_user_notice'),
+    path('ajax/response_invitation/', notify_views.response_invitation, name='response_invitation'),
     # comment api
     path('ajax/get_comment_list/', comment_views.get_comment_list, name="get_comment_list"),
     path('ajax/post_comment/', comment_views.post_comment, name="post_comment"),
@@ -71,6 +69,8 @@ urlpatterns = [
     path('ajax/get_my_team/', team_views.get_my_team, name='get_my_team'),
     path('ajax/get_team_member/', team_views.get_team_member, name='get_team_member'),
     path('ajax/delete_my_team/', team_views.delete_my_team, name='delete_my_team'),
+    path('ajax/get_team_name/', team_views.get_team_name, name='delete_my_team'),
+    path('ajax/edit_team_name/', team_views.edit_team_name, name='delete_my_team'),
     # backend api
 ]
 
