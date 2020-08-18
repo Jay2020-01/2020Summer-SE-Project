@@ -3,7 +3,6 @@ from django.db.models import Q
 from backend.models import User, Team, TeamUser, Document
 from login.views import authentication
 from django.http import JsonResponse, HttpResponse
-from backend.models import Permission
 
 
 # Create your views here.
@@ -15,7 +14,7 @@ def create_team(request):
         return HttpResponse('Unauthorized', status=401)
     team_name = request.POST.get("name")
     team = Team.objects.create(team_name=team_name)
-    TeamUser.objects.create(team=team, user=user, is_leader=True)
+    TeamUser.objects.create(team=team, user=user, is_leader=True, permission_level=4)
     return JsonResponse({})
 
 
@@ -49,6 +48,18 @@ def search_user(request):
         user_list.append(item)
     data = {"user_list": user_list}
 
+    return JsonResponse(data)
+
+
+def is_leader(request):
+    print("current user is leader?")
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    team_id = request.POST.get("team_id")
+    team = Team.objects.get(id=team_id)
+    team_user = TeamUser.objects.get(team=team)
+    data = {"is_leader": team_user.is_leader, "level": team_user.permission_level}
     return JsonResponse(data)
 
 
@@ -93,8 +104,8 @@ def get_team_member(request):
         if relation.is_leader:
             continue
         target_user = relation.user
-        permission = Permission.objects.get(user=target_user, team=team)
-        item = {'username': target_user.username, "level": str(permission.permission_level)}
+        team_user = TeamUser.objects.get(user=target_user, team=team)
+        item = {'username': target_user.username, "level": str(team_user.permission_level)}
         user_list.append(item)
     # fake_list = [{'username': "aa", "level": "1"}, {'username': "bb", "level": "2"}, {'username': "cc", "level": "3"}]
     data = {'user_list': user_list}
@@ -150,9 +161,9 @@ def modify_permission(request):
     team = Team.objects.get(id=team_id)
     target_user = request.POST.get("target_user")
     permission_level = request.POST.get("permission_level")
-    permission = Permission.objects.get(user=target_user, team=team)
-    permission.permission_level = permission_level
-    permission.save()
+    team_user = TeamUser.objects.get(user=target_user, team=team)
+    team_user.permission_level = permission_level
+    team_user.save()
     return JsonResponse({})
 
 # 拉取团队的文档信息

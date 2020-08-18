@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User,Team,TeamUser,Permission
+from .models import User,Team,TeamUser
 from .models import Document,Collection,Delete_document,UDRecord,Favorite
 from .models import Recyclebin,Comment,Templet
 # from django.contrib.auth.admin import UserAdmin
@@ -8,7 +8,6 @@ from .models import Recyclebin,Comment,Templet
 admin.site.register(User)
 admin.site.register(Team)
 admin.site.register(TeamUser)
-admin.site.register(Permission)
 admin.site.register(Document)
 admin.site.register(Collection)
 admin.site.register(Delete_document)
