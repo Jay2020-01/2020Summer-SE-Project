@@ -43,6 +43,8 @@ class Document(models.Model):
     Document
     """
     # Many-to-one: need to know the creator of the document
+    key = models.CharField(max_length=128, blank=False)
+    
     creator = models.ForeignKey(User, related_name='created_documents', verbose_name='创建者', on_delete=models.CASCADE,
                                 null=False)
 
@@ -50,11 +52,17 @@ class Document(models.Model):
     team = models.ForeignKey(Team, related_name='documents', verbose_name="所属团队", on_delete=models.CASCADE, null=True,
                              blank=True)
 
+    is_share_editable = models.BooleanField(default=False)
+
+    is_locked = models.BooleanField(default=False)
+    
     in_group = models.BooleanField(blank=False)
+    
     name = models.CharField(max_length=64)
     content = models.TextField(null=True)
     created_date = models.DateTimeField("创建时间", auto_now=False, auto_now_add=True, null=True, blank=True)
     modified_date = models.DateTimeField("修改时间", auto_now=True, auto_now_add=False, null=True, blank=True)
+
 
     # class Meta:
     #     verbose_name = "文档"
@@ -211,3 +219,5 @@ class Templet(models.Model):
 
 #     def get_absolute_url(self):
 #         return reverse("_detail", kwargs={"pk": self.pk})
+
+    

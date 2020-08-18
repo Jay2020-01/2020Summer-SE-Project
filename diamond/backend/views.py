@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.http import JsonResponse, HttpResponse
 from login.views import authentication
 from datetime import datetime
+import hashlib
 
 # my models
 from .models import User, Document, Team, TeamUser, Comment, Collection, Delete_document
@@ -123,7 +124,18 @@ def create_doc(request):
     # content = request.POST.get("content")
     # create_time = request.POST.get("create_time")
     # print(content)
-    doc = Document.objects.create(creator=user, name=name, in_group=in_group, team=team)
+
+    # 生成独特的原始码
+    raw_code = user.username+name+str(datetime.now())
+    raw_code = raw_code.encode('utf-8')
+    # 生成哈希加密后的identifier
+    md = hashlib.md5()
+    md.update(raw_code)
+    key = md.hexdigest()
+    
+    # 创建一个新文档
+    doc = Document.objects.create(creator=user, name=name, in_group=in_group, team=team, key=key)
+
     # print(doc.pk)
     data = {'flag': "yes", 'doc_id': doc.pk, 'msg': "create success"}
     # print("success")
