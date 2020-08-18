@@ -10,10 +10,13 @@ from .models import User, Document, Team, TeamUser, Comment, Collection, Delete_
 from notifications.models import Notification
 from notifications.signals import notify
 from diamond import settings
-from diamond.settings import MEDIA_URL
+from diamond.settings import DEPLOY
 import os
 
-ABSOLUTE_URL = "http://127.0.0.1:8000"
+if DEPLOY:
+    ABSOLUTE_URL = "121.41.231.2"
+else:
+    ABSOLUTE_URL = "http://127.0.0.1:8000"
 
 
 # Create your views here.
