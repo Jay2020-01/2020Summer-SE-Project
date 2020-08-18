@@ -52,9 +52,9 @@ class Document(models.Model):
     team = models.ForeignKey(Team, related_name='documents', verbose_name="所属团队", on_delete=models.CASCADE, null=True,
                              blank=True)
 
-    is_share_editable = models.BooleanField(default=False, blank=True)
+    share_level = models.IntegerField(default=1)
 
-    is_locked = models.BooleanField(default=False, blank=True)
+    is_locked = models.BooleanField(default=False)
 
     in_group = models.BooleanField(blank=False)
 

@@ -3,6 +3,8 @@ from django.db.models import Q
 from django.http import JsonResponse, HttpResponse
 from login.views import authentication
 from datetime import datetime
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 import hashlib
 
 # my models
@@ -10,6 +12,19 @@ from .models import User, Document, Team, TeamUser, Comment, Collection, Delete_
 # third-party
 from notifications.models import Notification
 from notifications.signals import notify
+
+
+# 会在文档类被创建的时候触发
+@receiver(post_save, sender=Document)
+def hash_document_key(sender, instance=None, created=False, **kwargs):
+    if created:
+        print("hash document !")
+        raw_code = instance.key.encode('utf-8')
+        # 生成哈希加密后的identifier
+        md = hashlib.md5()
+        md.update(raw_code)
+        instance.key = md.hexdigest()
+        instance.save()
 
 
 # 删除文档
@@ -85,6 +100,8 @@ def collect_doc(request):
     doc_id = request.POST.get("doc_id")
     # print(doc_id)
     user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
     doc = Document.objects.get(pk=doc_id)
     data = {'flag': "no", 'msg': "already collected"}
     if not Collection.objects.filter(Q(user=user) & Q(doc=doc)):
@@ -100,6 +117,8 @@ def uncollect_doc(request):
     doc_id = request.POST.get("doc_id")
     # print(doc_id)
     user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
     doc = Document.objects.get(pk=doc_id)
     collection = Collection.objects.get(Q(user=user) & Q(doc=doc))
     collection.delete()
@@ -118,7 +137,7 @@ def create_doc(request):
     team_id = request.POST.get("team_id")
     in_group = False
     team = None
-    if (int(team_id) >= 0):
+    if int(team_id) >= 0:
         in_group = True
         team = Team.objects.get(id=team_id)
     # content = request.POST.get("content")
@@ -126,14 +145,8 @@ def create_doc(request):
     # print(content)
 
     # 生成独特的原始码
-    raw_code = user.username + name + str(datetime.now())
-    raw_code = raw_code.encode('utf-8')
-    # 生成哈希加密后的identifier
-    md = hashlib.md5()
-    md.update(raw_code)
-    key = md.hexdigest()
-
-    # 创建一个新文档
+    key = user.username + name + str(datetime.now())
+    # 创建一个新文档, 并且保存时触发trigger，生成hash code
     doc = Document.objects.create(creator=user, name=name, in_group=in_group, team=team, key=key)
 
     # print(doc.pk)
@@ -158,7 +171,9 @@ def create_doc_with_temp(request):
         in_group = True
         team = Team.objects.get(id=team_id)
     # create_time = request.POST.get("create_time")
-    doc = Document.objects.create(creator=user, name=name, in_group=in_group, team=team)
+    key = user.username + name + str(datetime.now())
+    # 保存时会调用signal生成hash
+    doc = Document.objects.create(creator=user, name=name, in_group=in_group, team=team, key=key)
     temp = Template.objects.get(pk=temp_id)
     temp_content = temp.content
     doc.content = temp_content
@@ -184,7 +199,7 @@ def save_doc(request):
     return JsonResponse(data)
 
 
-# 获取文档内容及收藏状态
+# 获取文档内容及收藏状态 TODO: is like
 def get_doc(request):
     user = authentication(request)
     if user is None:
@@ -192,18 +207,41 @@ def get_doc(request):
     # 还需判断该用户权限
     print("get doc")
     doc_id = request.POST.get("doc_id")
+    team_id = request.POST.get("team_id")
+    team = Team.objects.get(id=team_id)
+    doc = Document.objects.get(creator=user, pk=doc_id)
+    in_group = doc.in_group
+    if not Collection.objects.filter(Q(user=user) & Q(doc=doc)):
+        islike = False
+    else:
+        islike = True
+
+    if in_group:  # 如果是团队文档， 团队文档不能分享
+        try:  # 如果访问者是团队成员
+            team_user = TeamUser.objects.get(user=user, team=team)
+            level = team_user.permission_level
+            data = {'name': doc.name, 'content': doc.content, 'islike': islike, 'level': level}
+            return JsonResponse(data)
+        except:
+            return HttpResponse('Unauthorized', status=401)
+    else:  # 如果是个人文档
+        if Document.creator == user:  # 如果访问者是创建者
+            data = {'name': doc.name, 'content': doc.content, 'islike': islike, 'level': 4}
+            return JsonResponse(data)
+        else:  # 如果访问者是其他人，获取文档的share level
+            level = doc.share_level
+            if level == 1:  # 如果share level为1，禁止访问
+                return HttpResponse('Unauthorized', status=401)
+            data = {'name': doc.name, 'content': doc.content, 'islike': islike, 'level': level}
+            return JsonResponse(data)
+
     # team_id = request.POST.get("team_id")
     # print(doc_id)
-    doc = Document.objects.get(pk=doc_id)
     # team = None
     # if team_id != -1:
     # team = Team.objects.get(pk=team_id)
-    islike = True
-    if not Collection.objects.filter(Q(user=user) & Q(doc=doc)):
-        islike = False
-    data = {'name': doc.name, 'content': doc.content, 'islike': islike}
+    # islike = True
     # print("success")
-    return JsonResponse(data)
 
 
 # 我创建和收藏的文档信息
@@ -237,6 +275,24 @@ def my_doc(request):
     data = {'created_docs': created_docs, 'collected_docs': collected_docs}
     return JsonResponse(data)
 
+
+def edit_share_level(request):
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    key = request.POST.get('key')
+    level = request.POST.get('level')
+    doc = Document.objects.get(key=key)
+    doc.share_level = level
+    doc.save()
+    return JsonResponse({})
+
+
+def get_doc_key(request):
+    doc_id = request.POST.get('doc_id')
+    doc = Document.objects.get(id=doc_id)
+    data = {"share_level": doc.share_level, 'key': doc.key}
+    return JsonResponse(data)
 # #最近浏览的文档信息
 # def my_browse_doc(request):
 #     print('my browse docs')
