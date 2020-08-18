@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Q
-from backend.models import User, Team, TeamUser
+from backend.models import User, Team, TeamUser, Document
 from login.views import authentication
 from django.http import JsonResponse, HttpResponse
 from backend.models import Permission
@@ -154,3 +154,23 @@ def modify_permission(request):
     permission.permission_level = permission_level
     permission.save()
     return JsonResponse({})
+
+# 拉取团队的文档信息
+def get_team_docs(request):
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    team_id = request.POST.get("team_id")
+    print(team_id)
+    team = Team.objects.get(pk=team_id)
+    documents = Document.objects.filter(team=team)
+    docs = []
+    for doc in documents:
+        item = {
+            'name': doc.name,
+            # 'content': d.content,
+            'doc_id': doc.pk,
+        }
+        docs.append(item)
+    data = {'team_docs':docs}
+    return JsonResponse(data)

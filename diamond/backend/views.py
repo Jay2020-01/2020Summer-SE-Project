@@ -196,7 +196,7 @@ def create_doc(request):
     # print(content)
     doc = Document.objects.create(creator=user, name=name, in_group=in_group)
     print(doc.pk)
-    data = {'flag': "yes", 'doc_id': doc.pk, 'team_id': team_id, 'msg': "create success"}
+    data = {'flag': "yes", 'doc_id': doc.pk, 'msg': "create success"}
     print("success")
     return JsonResponse(data)
 
@@ -229,10 +229,15 @@ def get_doc(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
+    # 还需判断该用户权限
     print("get doc")
     doc_id = request.POST.get("doc_id")
+    # team_id = request.POST.get("team_id")
     # print(doc_id)
     doc = Document.objects.get(pk=doc_id)
+    # team = None
+    # if team_id != -1:
+        # team = Team.objects.get(pk=team_id)
     islike = True
     if not Collection.objects.filter(Q(user=user) & Q(doc=doc)):
         islike = False
@@ -249,25 +254,26 @@ def my_doc(request):
         return HttpResponse('Unauthorized', status=401)
     # 还需修改：
     # 只显示个人创建的，不显示团队文档
-    # 增加team_id字段
     created_documents = Document.objects.filter(creator=user)
     created_docs = []
     collections = Collection.objects.filter(user=user)
     collected_docs = []
     for d in created_documents:
-        c_item = {
-            'name': d.name,
-            # 'content': d.content,
-            'doc_id': d.pk,
-        }
-        created_docs.append(c_item)
+        if not d.in_group:
+            c_item = {
+                'name': d.name,
+                # 'content': d.content,
+                'doc_id': d.pk,
+            }
+            created_docs.append(c_item)
     for d in collections:
-        c_item = {
-            'name': d.doc.name,
-            # 'content': d.content,
-            'doc_id': d.doc.pk,
-        }
-        collected_docs.append(c_item)
+        if not d.doc.in_group:
+            c_item = {
+                'name': d.doc.name,
+                # 'content': d.content,
+                'doc_id': d.doc.pk,
+            }
+            collected_docs.append(c_item)
     data = {'created_docs': created_docs, 'collected_docs': collected_docs}
     return JsonResponse(data)
 
