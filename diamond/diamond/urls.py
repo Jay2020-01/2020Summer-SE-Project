@@ -20,6 +20,8 @@ from rest_framework.authtoken import views as token_views
 import login.views as login_views
 import backend.views as backend_views
 import team.views as team_views
+import notify.views as notify_views
+import comment.views as comment_views
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -49,12 +51,14 @@ urlpatterns = [
     path('ajax/delete_doc_completely/', backend_views.delete_doc_completely, name='delete_doc_completely'),
     path('ajax/restore_doc/', backend_views.restore_doc, name='restore_doc'),
     path('ajax/get_deleted_docs/', backend_views.get_deleted_docs, name='get_deleted_docs'),
-    path('ajax/invite_user/',backend_views.invite_user, name='invite_user'),
-    path('ajax/get_user_notice/',backend_views.get_user_notice, name='get_user_notice'),
-    path('ajax/response_invitation/',backend_views.response_invitation, name='response_invitation'),
-    path('ajax/get_comment_list/', backend_views.get_comment_list, name="get_comment_list"),
-    path('ajax/post_comment/', backend_views.post_comment, name="post_comment"),
-    path('ajax/delete_comment/', backend_views.delete_comment, name="delete_comment"),
+    # invite api
+    path('ajax/invite_user/',notify_views.invite_user, name='invite_user'),
+    path('ajax/get_user_notice/',notify_views.get_user_notice, name='get_user_notice'),
+    path('ajax/response_invitation/',notify.response_invitation, name='response_invitation'),
+    # comment api
+    path('ajax/get_comment_list/', comment_views.get_comment_list, name="get_comment_list"),
+    path('ajax/post_comment/', comment_views.post_comment, name="post_comment"),
+    path('ajax/delete_comment/', comment_views.delete_comment, name="delete_comment"),
 
     # team vies
     path('ajax/delete_team_member/', team_views.delete_team_member, name="delete_team_member"),
