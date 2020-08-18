@@ -4,6 +4,12 @@ from django.http import JsonResponse, HttpResponse
 from login.views import authentication
 from datetime import datetime
 
+# my models
+from .models import User, Document, Team, TeamUser, Comment, Collection, Delete_document, Template
+# third-party
+from notifications.models import Notification
+from notifications.signals import notify
+
 # Create your views here.
 
 # 发送邀请

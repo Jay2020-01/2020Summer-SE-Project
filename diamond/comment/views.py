@@ -4,6 +4,9 @@ from django.http import JsonResponse, HttpResponse
 from login.views import authentication
 from datetime import datetime
 
+# my models
+from .models import User, Document, Team, TeamUser, Comment, Collection, Delete_document, Template
+
 # Create your views here.
 # 上传评论
 def post_comment(request):
