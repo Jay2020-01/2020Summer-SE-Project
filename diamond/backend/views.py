@@ -9,83 +9,6 @@ from .models import User, Document, Team, TeamUser, Comment, Collection, Delete_
 # third-party
 from notifications.models import Notification
 from notifications.signals import notify
-from diamond import settings
-from diamond.settings import DEPLOY
-import os
-
-if DEPLOY:
-    ABSOLUTE_URL = "http://121.41.231.2:80"
-else:
-    ABSOLUTE_URL = "http://127.0.0.1:8000"
-
-
-# Create your views here.
-def writeFile(file_path, file):
-    with open(file_path, "wb") as f:
-        if file.multiple_chunks():
-            for content in file.chunks():
-                f.write(content)
-        else:
-            data = file.read()
-            f.write(data)
-
-
-def user_avatar_upload(request):
-    user = authentication(request)
-    if user is None:
-        print("user is NOne")
-        return HttpResponse('Unauthorized', status=401)
-    print(str(user.username) + "is uploading avatar image")
-    if request.method == "POST":
-        fileDict = request.FILES.items()
-        # 获取上传的文件，如果没有文件，则默认为None
-        if not fileDict:
-            return JsonResponse({'msg': 'no file upload'})
-        for (k, v) in fileDict:
-            print("dic[%s]=%s" % (k, v))
-            fileData = request.FILES.getlist(k)
-            for file in fileData:
-                fileName = str(user.username) + "_" + file._get_name()
-                filePath = os.path.join(settings.MEDIA_ROOT, "user_avatar", fileName)
-                print('filepath = [%s]' % filePath)
-                try:
-                    user.avatar = "user_avatar/" + fileName
-                    user.save()
-                    writeFile(filePath, file)
-                except:
-                    return JsonResponse({'msg': 'file write failed'})
-        return JsonResponse({'msg': 'success'})
-
-
-# 修改用户信息.
-def change_info(request):
-    user = authentication(request)
-    if user is None:
-        return HttpResponse('Unauthorized', status=401)
-
-    user.username = request.POST.get("username")
-    user.email = request.POST.get("mail_address")
-    user.password = request.POST.get("password")
-    user.wechat = request.POST.get("wechat")
-    user.phone_number = request.POST.get("phone_number")
-    user.save()
-    return JsonResponse({})
-
-
-# 拉取用户信息
-def user_info(request):
-    # print('pull user info')
-    user = authentication(request)
-    if user is None:
-        return HttpResponse('Unauthorized', status=401)
-    # print(user.avatar.url)
-    data = {'username': user.username,
-            'mail_address': user.email,
-            'phone_number': user.phone_number,
-            'wechat': user.wechat,
-            'password': user.password,
-            'url': ABSOLUTE_URL + user.avatar.url}
-    return JsonResponse(data)
 
 
 # 删除文档
@@ -237,7 +160,7 @@ def get_doc(request):
     doc = Document.objects.get(pk=doc_id)
     # team = None
     # if team_id != -1:
-        # team = Team.objects.get(pk=team_id)
+    # team = Team.objects.get(pk=team_id)
     islike = True
     if not Collection.objects.filter(Q(user=user) & Q(doc=doc)):
         islike = False
@@ -370,10 +293,10 @@ def get_comment_list(request):
     comment_list = []
     for comment in comments:
         item = {
-            'comment_id':comment.id,
+            'comment_id': comment.id,
             'user': comment.user.username,
             'content': comment.body,
-            'post_time':datetime.strftime(comment.created_time, '%Y-%m-%d %H-%M'),
+            'post_time': datetime.strftime(comment.created_time, '%Y-%m-%d %H-%M'),
         }
         comment_list.append(item)
 
@@ -390,8 +313,6 @@ def delete_comment(request):
     comment_id = request.POST.get("comment_id")
     Comment.objects.get(id=comment_id).delete()
     return JsonResponse({})
-
-
 
 # #最近浏览的文档信息
 # def my_browse_doc(request):
