@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3256be1d-2b12-4573-bbde-dc5862a2dc55" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diamond/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/diamond/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,11 +35,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/backend/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+            <state relative-caret-position="202">
+              <caret line="78" column="38" lean-forward="true" selection-start-line="78" selection-start-column="38" selection-end-line="78" selection-end-column="38" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -50,7 +50,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="798">
+            <state relative-caret-position="56">
               <caret line="38" selection-start-line="38" selection-end-line="38" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
@@ -59,20 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/diamond/settings.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
-              <caret line="172" lean-forward="true" selection-start-line="172" selection-end-line="172" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/team/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1071">
-              <caret line="51" selection-start-line="51" selection-end-line="51" />
+            <state relative-caret-position="-315">
+              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -88,6 +79,15 @@
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/diamond/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="504">
+              <caret line="26" column="11" lean-forward="true" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -141,6 +141,7 @@
         <option value="$PROJECT_DIR$/backend/admin.py" />
         <option value="$PROJECT_DIR$/team/views.py" />
         <option value="$PROJECT_DIR$/diamond/settings.py" />
+        <option value="$PROJECT_DIR$/backend/views.py" />
       </list>
     </option>
   </component>
@@ -163,6 +164,16 @@
           <expand>
             <path>
               <item name="diamond" type="b2602c69:ProjectViewProjectNode" />
+              <item name="diamond" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="diamond" type="b2602c69:ProjectViewProjectNode" />
+              <item name="diamond" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="diamond" type="b2602c69:ProjectViewProjectNode" />
+              <item name="diamond" type="462c0819:PsiDirectoryNode" />
               <item name="diamond" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -274,23 +285,23 @@
       <workItem from="1597643056643" duration="4274000" />
       <workItem from="1597665722841" duration="1635000" />
       <workItem from="1597717510843" duration="3756000" />
-      <workItem from="1597734153326" duration="617000" />
+      <workItem from="1597734153326" duration="2090000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="116213000" />
+    <option name="totallyTimeSpent" value="117686000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="53" y="25" width="1867" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14919579" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14919579" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.36571428" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3165714" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -331,33 +342,10 @@
     <entry file="file://$PROJECT_DIR$/team/tests.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/views.py">
+    <entry file="file://$PROJECT_DIR$/diamond/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="798">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/team/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1071">
-          <caret line="51" selection-start-line="51" selection-end-line="51" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="900">
+          <caret line="154" column="6" selection-start-line="154" selection-start-column="6" selection-end-line="154" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -371,10 +359,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/diamond/settings.py">
+    <entry file="file://$PROJECT_DIR$/team/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="172" lean-forward="true" selection-start-line="172" selection-end-line="172" />
+        <state relative-caret-position="-315">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="38" selection-start-line="38" selection-end-line="38" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/diamond/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="26" column="11" lean-forward="true" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="78" column="38" lean-forward="true" selection-start-line="78" selection-start-column="38" selection-end-line="78" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
