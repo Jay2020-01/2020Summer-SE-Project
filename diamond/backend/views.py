@@ -188,13 +188,15 @@ def create_doc(request):
         return HttpResponse('Unauthorized', status=401)
     name = request.POST.get("title")
     team_id = request.POST.get("team_id")
-    in_group = True
-    if (team_id == -1):
-        in_group = False
+    in_group = False
+    team = None
+    if (team_id != -1):
+        in_group = True
+        team = Team.objects.get(id=team_id)
     # content = request.POST.get("content")
     # create_time = request.POST.get("create_time")
     # print(content)
-    doc = Document.objects.create(creator=user, name=name, in_group=in_group)
+    doc = Document.objects.create(creator=user, name=name, in_group=in_group, team=team)
     print(doc.pk)
     data = {'flag': "yes", 'doc_id': doc.pk, 'msg': "create success"}
     print("success")
@@ -210,15 +212,9 @@ def save_doc(request):
     content = request.POST.get("content")
     doc_id = request.POST.get("doc_id")
     # create_time = request.POST.get("modified_time")
-    print(content)
-    print(doc_id)
     doc = Document.objects.get(creator=user, pk=doc_id)
-    print(doc.name)
-    print(doc.content)
-    print(doc.pk)
     doc.content = content
     doc.save()
-    print(doc.content)
     data = {'flag': "yes", 'msg': "modified success"}
     # print("success")
     return JsonResponse(data)

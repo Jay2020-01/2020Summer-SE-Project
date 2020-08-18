@@ -73,7 +73,8 @@ def get_my_team(request):
     team_list = []
     for relation in team_user:
         item = {'team_name': relation.team.team_name, 'team_id': relation.team.id,
-                "introduction": relation.team.introduction, "is_leader": relation.is_leader}
+                "introduction": relation.team.introduction, "is_leader": relation.is_leader, 
+                "level": relation.permission_level}
         team_list.append(item)
     data = {"team_list": team_list}
     return JsonResponse(data)
@@ -168,13 +169,16 @@ def modify_permission(request):
 
 # 拉取团队的文档信息
 def get_team_docs(request):
+    print("get team docs")
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
     team_id = request.POST.get("team_id")
     print(team_id)
     team = Team.objects.get(pk=team_id)
+    print(team)
     documents = Document.objects.filter(team=team)
+    print(documents)
     docs = []
     for doc in documents:
         item = {
