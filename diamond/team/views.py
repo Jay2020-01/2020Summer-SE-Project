@@ -60,8 +60,11 @@ def is_leader(request):
     team = Team.objects.get(id=team_id)
     # print("team id")
     # print(team_id)
-    team_user = TeamUser.objects.get(team=team, user=user)
-    data = {"is_leader": team_user.is_leader, "level": team_user.permission_level}
+    try:
+        team_user = TeamUser.objects.get(team=team, user=user)
+        data = {"is_leader": team_user.is_leader, "level": team_user.permission_level}
+    except:
+        data = {}
     return JsonResponse(data)
 
 

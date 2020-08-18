@@ -74,7 +74,7 @@ def change_info(request):
 
 # 拉取用户信息
 def user_info(request):
-    print('pull user info')
+    # print('pull user info')
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
@@ -248,7 +248,7 @@ def get_doc(request):
 
 # 我创建和收藏的文档信息
 def my_doc(request):
-    print('my docs')
+    # print('my docs')
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
