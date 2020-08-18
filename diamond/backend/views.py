@@ -383,3 +383,37 @@ def delete_comment(request):
     comment_id = request.POST.get("comment_id")
     Comment.objects.get(id=comment_id).delete()
     return JsonResponse({})
+
+
+
+# #最近浏览的文档信息
+# def my_browse_doc(request):
+#     print('my browse docs')
+#     user = authentication(request)
+#     if user is None:
+#         return HttpResponse('Unauthorized', status=401)
+#     browsing = Browsing.objects.filter(user=user)
+#     browsing_docs = []
+#     for d in browsing:
+#         c_item = {
+#             'name': d.doc.name,
+#             # 'content': d.content,
+#             'doc_id': d.doc.pk,
+#         }
+#         browsing_docs.append(c_item)
+#     data = {'browsing_docs':browsing_docs}
+#     return JsonResponse(data)
+
+# #新建、更新浏览记录
+# def update_browsing(request):
+#     user = authentication(request)
+#     doc_id = request.POST.get("doc_id")
+#     doc = Document.objects.get(pk=doc_id)
+#     if user is None:
+#         return HttpResponse('Unauthorized', status=401)
+#     oldb = Browsing.objects.filter(Q(user=user) & Q(doc=doc))
+#     if oldb:
+#         oldb.delete()
+#     newb = Browsing.objects.create(user=user,doc=doc)
+#     data = {"message": 1}
+#     return JsonResponse(data)
