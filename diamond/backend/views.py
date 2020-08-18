@@ -193,12 +193,10 @@ def create_doc(request):
         in_group = False
     # content = request.POST.get("content")
     # create_time = request.POST.get("create_time")
-    print(name)
     # print(content)
     doc = Document.objects.create(creator=user, name=name, in_group=in_group)
-    print(doc.name)
     print(doc.pk)
-    data = {'flag': "yes", 'doc_id': doc.pk, 'msg': "create success"}
+    data = {'flag': "yes", 'doc_id': doc.pk, 'team_id': team_id, 'msg': "create success"}
     print("success")
     return JsonResponse(data)
 
@@ -249,6 +247,9 @@ def my_doc(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
+    # 还需修改：
+    # 只显示个人创建的，不显示团队文档
+    # 增加team_id字段
     created_documents = Document.objects.filter(creator=user)
     created_docs = []
     collections = Collection.objects.filter(user=user)
