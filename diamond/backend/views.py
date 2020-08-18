@@ -190,7 +190,7 @@ def create_doc(request):
     team_id = request.POST.get("team_id")
     in_group = False
     team = None
-    if (team_id != -1):
+    if (int(team_id) >= 0):
         in_group = True
         team = Team.objects.get(id=team_id)
     # content = request.POST.get("content")
