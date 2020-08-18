@@ -3,7 +3,6 @@ from django.db.models import Q
 from backend.models import User, Team, TeamUser
 from login.views import authentication
 from django.http import JsonResponse, HttpResponse
-from backend.models import Permission
 
 
 # Create your views here.
@@ -93,8 +92,8 @@ def get_team_member(request):
         if relation.is_leader:
             continue
         target_user = relation.user
-        permission = Permission.objects.get(user=target_user, team=team)
-        item = {'username': target_user.username, "level": str(permission.permission_level)}
+        team_user = TeamUser.objects.get(user=target_user, team=team)
+        item = {'username': target_user.username, "level": str(team_user.permission_level)}
         user_list.append(item)
     # fake_list = [{'username': "aa", "level": "1"}, {'username': "bb", "level": "2"}, {'username': "cc", "level": "3"}]
     data = {'user_list': user_list}
@@ -150,7 +149,7 @@ def modify_permission(request):
     team = Team.objects.get(id=team_id)
     target_user = request.POST.get("target_user")
     permission_level = request.POST.get("permission_level")
-    permission = Permission.objects.get(user=target_user, team=team)
-    permission.permission_level = permission_level
-    permission.save()
+    team_user = TeamUser.objects.get(user=target_user, team=team)
+    team_user.permission_level = permission_level
+    team_user.save()
     return JsonResponse({})

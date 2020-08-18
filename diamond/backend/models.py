@@ -34,20 +34,7 @@ class TeamUser(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     is_leader = models.BooleanField(verbose_name="是否是队长", default=False)
-
-
-# 权限表， 用户-团队 的权限是一个多对多关系
-class Permission(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    permission_level = models.IntegerField(verbose_name="权限等级")
-    '''
-    permission_level:
-    1 : 禁止访问
-    2 : 可以查看
-    3 : 可以评论
-    4 : 可以修改
-    '''
+    permission_level = models.IntegerField(verbose_name="权限等级", default=3)
 
 
 # 文档
