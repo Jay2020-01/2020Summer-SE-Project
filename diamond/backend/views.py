@@ -14,7 +14,7 @@ from diamond.settings import DEPLOY
 import os
 
 if DEPLOY:
-    ABSOLUTE_URL = "121.41.231.2"
+    ABSOLUTE_URL = "http://121.41.231.2:80"
 else:
     ABSOLUTE_URL = "http://127.0.0.1:8000"
 
@@ -45,7 +45,7 @@ def user_avatar_upload(request):
             print("dic[%s]=%s" % (k, v))
             fileData = request.FILES.getlist(k)
             for file in fileData:
-                fileName = str(user.username) + "_avatar"
+                fileName = str(user.username) + "_" + file._get_name()
                 filePath = os.path.join(settings.MEDIA_ROOT, "user_avatar", fileName)
                 print('filepath = [%s]' % filePath)
                 try:
