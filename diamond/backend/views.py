@@ -78,7 +78,7 @@ def user_info(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
-    print(user.avatar.url)
+    # print(user.avatar.url)
     data = {'username': user.username,
             'mail_address': user.email,
             'phone_number': user.phone_number,
@@ -174,13 +174,13 @@ def collect_doc(request):
 def uncollect_doc(request):
     print("uncollect doc")
     doc_id = request.POST.get("doc_id")
-    print(doc_id)
+    # print(doc_id)
     user = authentication(request)
     doc = Document.objects.get(pk=doc_id)
     collection = Collection.objects.get(Q(user=user) & Q(doc=doc))
     collection.delete()
     data = {'flag': "yes", 'msg': "uncollect success"}
-    print("success")
+    # print("success")
     return JsonResponse(data)
 
 
@@ -201,9 +201,9 @@ def create_doc(request):
     # create_time = request.POST.get("create_time")
     # print(content)
     doc = Document.objects.create(creator=user, name=name, in_group=in_group, team=team)
-    print(doc.pk)
+    # print(doc.pk)
     data = {'flag': "yes", 'doc_id': doc.pk, 'msg': "create success"}
-    print("success")
+    # print("success")
     return JsonResponse(data)
 
 
@@ -285,10 +285,10 @@ def invite_user(request):
         return HttpResponse('Unauthorized', status=401)
     actor = user
     recipient = User.objects.get(username=request.POST.get("username"))
-    print(request.POST.get("username"))
+    # print(request.POST.get("username"))
     verb = 'invite ' + recipient.username + " to"
     team = Team.objects.get(id=request.POST.get("team_id"))
-    print(team)
+    # print(team)
     data = {}
     notify.send(actor, recipient=recipient, verb=verb, target=team)
     return JsonResponse(data)

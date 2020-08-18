@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3256be1d-2b12-4573-bbde-dc5862a2dc55" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/backend/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diamond/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/diamond/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/team/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/team/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,10 +39,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+            <state relative-caret-position="528">
+              <caret line="258" column="1" selection-start-line="258" selection-start-column="1" selection-end-line="258" selection-end-column="1" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="129">
+              <caret line="32" column="6" selection-start-line="32" selection-start-column="6" selection-end-line="32" selection-end-column="6" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -50,7 +64,7 @@
         <entry file="file://$PROJECT_DIR$/backend/admin.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="297">
-              <caret line="11" column="31" lean-forward="true" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+              <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -59,10 +73,34 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/team/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="217">
+              <caret line="62" column="57" selection-start-line="62" selection-start-column="57" selection-end-line="62" selection-end-column="57" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/diamond/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+            <state relative-caret-position="132">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/diamond/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="149">
+              <caret line="60" column="47" lean-forward="true" selection-start-line="60" selection-start-column="43" selection-end-line="60" selection-end-column="56" />
+              <folding>
+                <element signature="e#631#663#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -71,12 +109,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>confirm_modify</find>
-      <find>item</find>
-      <find>Qs</find>
-      <find>api</find>
-      <find>front</find>
-      <find>AUTH</find>
       <find>install</find>
       <find>guardian</find>
       <find>AUTH_U</find>
@@ -101,6 +133,12 @@
       <find>comment</find>
       <find>create</find>
       <find>info</find>
+      <find>modify</find>
+      <find>permi</find>
+      <find>modify_permission</find>
+      <find>is_leader</find>
+      <find>print</find>
+      <find>get_team_docs</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -114,17 +152,18 @@
       <list>
         <option value="$PROJECT_DIR$/backend/models.py" />
         <option value="$PROJECT_DIR$/backend/admin.py" />
-        <option value="$PROJECT_DIR$/team/views.py" />
         <option value="$PROJECT_DIR$/diamond/settings.py" />
+        <option value="$PROJECT_DIR$/diamond/urls.py" />
         <option value="$PROJECT_DIR$/backend/views.py" />
+        <option value="$PROJECT_DIR$/team/views.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="986" />
-    <option name="y" value="25" />
-    <option name="width" value="934" />
-    <option name="height" value="1055" />
+    <option name="x" value="374" />
+    <option name="y" value="315" />
+    <option name="width" value="1458" />
+    <option name="height" value="951" />
   </component>
   <component name="ProjectId" id="1gFj1fx077IB1ymhmkKe7yPbEyz" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -150,11 +189,6 @@
               <item name="diamond" type="b2602c69:ProjectViewProjectNode" />
               <item name="diamond" type="462c0819:PsiDirectoryNode" />
               <item name="diamond" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="diamond" type="b2602c69:ProjectViewProjectNode" />
-              <item name="diamond" type="462c0819:PsiDirectoryNode" />
-              <item name="media" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="diamond" type="b2602c69:ProjectViewProjectNode" />
@@ -270,23 +304,23 @@
       <workItem from="1597643056643" duration="4274000" />
       <workItem from="1597665722841" duration="1635000" />
       <workItem from="1597717510843" duration="3756000" />
-      <workItem from="1597734153326" duration="5976000" />
+      <workItem from="1597734153326" duration="9032000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="121572000" />
+    <option name="totallyTimeSpent" value="124628000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="53" y="25" width="1867" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14919579" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.14919579" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3165714" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.45714286" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -304,6 +338,30 @@
       <window_info anchor="right" id="SciView" order="4" />
       <window_info anchor="right" id="Database" order="5" weight="0.3294509" />
     </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14919579" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.42857143" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="11" />
+      <window_info anchor="bottom" id="Python Console" order="12" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Remote Host" order="3" />
+      <window_info anchor="right" id="SciView" order="4" />
+      <window_info anchor="right" id="Database" order="5" weight="0.3294509" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -327,20 +385,27 @@
     <entry file="file://$PROJECT_DIR$/team/tests.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/team/views.py">
+    <entry file="file://$PROJECT_DIR$/diamond/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-315">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        <state relative-caret-position="132">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#0#32#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/diamond/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="14" column="3" lean-forward="true" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
+        <state relative-caret-position="149">
+          <caret line="60" column="47" lean-forward="true" selection-start-line="60" selection-start-column="43" selection-end-line="60" selection-end-column="56" />
           <folding>
             <element signature="e#631#663#0" expanded="true" />
           </folding>
@@ -349,38 +414,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
+        <state relative-caret-position="129">
+          <caret line="32" column="6" selection-start-line="32" selection-start-column="6" selection-end-line="32" selection-end-column="6" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="11" column="31" lean-forward="true" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        <state relative-caret-position="528">
+          <caret line="258" column="1" selection-start-line="258" selection-start-column="1" selection-end-line="258" selection-end-column="1" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/diamond/settings.py">
+    <entry file="file://$PROJECT_DIR$/team/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+        <state relative-caret-position="217">
+          <caret line="62" column="57" selection-start-line="62" selection-start-column="57" selection-end-line="62" selection-end-column="57" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
