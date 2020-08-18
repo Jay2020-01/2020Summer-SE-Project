@@ -27,7 +27,7 @@ def search_user(request):
     name = request.POST.get("name")
     team_id = request.POST.get("team_id")
     team = Team.objects.get(id=team_id)
-    print("key word", name)
+    # print("key word", name)
     if name == "":
         users = User.objects.all()
     else:
@@ -58,14 +58,19 @@ def is_leader(request):
         return HttpResponse('Unauthorized', status=401)
     team_id = request.POST.get("team_id")
     team = Team.objects.get(id=team_id)
-    team_user = TeamUser.objects.get(team=team)
-    data = {"is_leader": team_user.is_leader, "level": team_user.permission_level}
+    # print("team id")
+    # print(team_id)
+    try:
+        team_user = TeamUser.objects.get(team=team, user=user)
+        data = {"is_leader": team_user.is_leader, "level": team_user.permission_level}
+    except:
+        data = {}
     return JsonResponse(data)
 
 
 # 拉取用户所有的团队
 def get_my_team(request):
-    print('get my team')
+    # print('get my team')
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
@@ -73,7 +78,7 @@ def get_my_team(request):
     team_list = []
     for relation in team_user:
         item = {'team_name': relation.team.team_name, 'team_id': relation.team.id,
-                "introduction": relation.team.introduction, "is_leader": relation.is_leader, 
+                "introduction": relation.team.introduction, "is_leader": relation.is_leader,
                 "level": relation.permission_level}
         team_list.append(item)
     data = {"team_list": team_list}
@@ -167,6 +172,7 @@ def modify_permission(request):
     team_user.save()
     return JsonResponse({})
 
+
 # 拉取团队的文档信息
 def get_team_docs(request):
     print("get team docs")
@@ -174,11 +180,11 @@ def get_team_docs(request):
     if user is None:
         return HttpResponse('Unauthorized', status=401)
     team_id = request.POST.get("team_id")
-    print(team_id)
+    # print(team_id)
     team = Team.objects.get(pk=team_id)
-    print(team)
+    # print(team)
     documents = Document.objects.filter(team=team)
-    print(documents)
+    # print(documents)
     docs = []
     for doc in documents:
         item = {
@@ -187,5 +193,5 @@ def get_team_docs(request):
             'doc_id': doc.pk,
         }
         docs.append(item)
-    data = {'team_docs':docs}
+    data = {'team_docs': docs}
     return JsonResponse(data)

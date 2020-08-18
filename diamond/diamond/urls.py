@@ -29,19 +29,20 @@ urlpatterns = [
     path('api-token-auth/', token_views.obtain_auth_token),
     # index.html App.vue
     # path('', TemplateView.as_view(template_name="index.html")),
-    path('ajax/change_info/', backend_views.change_info, name='change_info'),
+
+    # login views
+    path('ajax/change_info/', login_views.change_info, name='change_info'),
     path('ajax/login/', login_views.login, name='login'),
-    path('ajax/user_info/', backend_views.user_info, name='user_info'),
+    path('ajax/user_info/', login_views.user_info, name='user_info'),
+    path('ajax/image_upload/', login_views.user_avatar_upload, name="user avatar upload"),
     path('ajax/register/', login_views.register, name='register'),
+
+    # backend document views
     path('ajax/create_doc/', backend_views.create_doc, name='create_doc'),
+    path('ajax/create_doc_with_temp/', backend_views.create_doc_with_temp, name="create_doc_with_temp"),
     path('ajax/save_doc/', backend_views.save_doc, name='save_doc'),
     path('ajax/my_doc/', backend_views.my_doc, name='my_doc'),
     path('ajax/get_doc/', backend_views.get_doc, name='get_doc'),
-    path('ajax/create_team/', team_views.create_team, name='create_team'),
-    path('ajax/search_user/', team_views.search_user, name='search_user'),
-    path('ajax/get_my_team/', team_views.get_my_team, name='get_my_team'),
-    path('ajax/get_team_member/', team_views.get_team_member, name='get_team_member'),
-    path('ajax/delete_my_team/', team_views.delete_my_team, name='delete_my_team'),
     path('ajax/collect_doc/', backend_views.collect_doc, name='collect_doc'),
     path('ajax/uncollect_doc/', backend_views.uncollect_doc, name='uncollect_doc'),
     path('ajax/delete_doc/', backend_views.delete_doc, name='delete_doc'),
@@ -51,16 +52,22 @@ urlpatterns = [
     path('ajax/invite_user/',backend_views.invite_user, name='invite_user'),
     path('ajax/get_user_notice/',backend_views.get_user_notice, name='get_user_notice'),
     path('ajax/response_invitation/',backend_views.response_invitation, name='response_invitation'),
-    path('ajax/image_upload/', backend_views.user_avatar_upload, name="user avatar upload"),
     path('ajax/get_comment_list/', backend_views.get_comment_list, name="get_comment_list"),
     path('ajax/post_comment/', backend_views.post_comment, name="post_comment"),
     path('ajax/delete_comment/', backend_views.delete_comment, name="delete_comment"),
+
+    # team vies
     path('ajax/delete_team_member/', team_views.delete_team_member, name="delete_team_member"),
     path('ajax/exit_team/', team_views.exit_team, name="delete_team_member"),
     path('ajax/is_leader/', team_views.is_leader, name="is_leader"),
     path('ajax/get_team_docs/', team_views.get_team_docs, name="get_team_docs"),
     path('ajax/is_leader/', team_views.is_leader, name="is_leader"),
-    path('ajax/create_doc_with_temp/', backend_views.create_doc_with_temp, name="create_doc_with_temp"),
+    path('ajax/set_level/', team_views.modify_permission, name='set_permission_level'),
+    path('ajax/create_team/', team_views.create_team, name='create_team'),
+    path('ajax/search_user/', team_views.search_user, name='search_user'),
+    path('ajax/get_my_team/', team_views.get_my_team, name='get_my_team'),
+    path('ajax/get_team_member/', team_views.get_team_member, name='get_team_member'),
+    path('ajax/delete_my_team/', team_views.delete_my_team, name='delete_my_team'),
     # backend api
 ]
 

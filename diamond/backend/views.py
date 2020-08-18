@@ -3,88 +3,13 @@ from django.db.models import Q
 from django.http import JsonResponse, HttpResponse
 from login.views import authentication
 from datetime import datetime
+import hashlib
 
 # my models
 from .models import User, Document, Team, TeamUser, Comment, Collection, Delete_document, Template
 # third-party
 from notifications.models import Notification
 from notifications.signals import notify
-from diamond import settings
-from diamond.settings import DEPLOY
-import os
-
-if DEPLOY:
-    ABSOLUTE_URL = "121.41.231.2"
-else:
-    ABSOLUTE_URL = "http://127.0.0.1:8000"
-
-
-# Create your views here.
-def writeFile(file_path, file):
-    with open(file_path, "wb") as f:
-        if file.multiple_chunks():
-            for content in file.chunks():
-                f.write(content)
-        else:
-            data = file.read()
-            f.write(data)
-
-
-def user_avatar_upload(request):
-    print()
-    user = authentication(request)
-    if user is None:
-        return HttpResponse('Unauthorized', status=401)
-    if request.method == "POST":
-        fileDict = request.FILES.items()
-        # 获取上传的文件，如果没有文件，则默认为None
-        if not fileDict:
-            return JsonResponse({'msg': 'no file upload'})
-        for (k, v) in fileDict:
-            print("dic[%s]=%s" % (k, v))
-            fileData = request.FILES.getlist(k)
-            for file in fileData:
-                fileName = file._get_name()
-                filePath = os.path.join(settings.MEDIA_ROOT, "user_avatar", fileName)
-                print('filepath = [%s]' % filePath)
-                try:
-                    user.avatar = "user_avatar/" + fileName
-                    user.save()
-                    writeFile(filePath, file)
-                except:
-                    return JsonResponse({'msg': 'file write failed'})
-        return JsonResponse({'msg': 'success'})
-
-
-# 修改用户信息.
-def change_info(request):
-    user = authentication(request)
-    if user is None:
-        return HttpResponse('Unauthorized', status=401)
-
-    user.username = request.POST.get("username")
-    user.email = request.POST.get("mail_address")
-    user.password = request.POST.get("password")
-    user.wechat = request.POST.get("wechat")
-    user.phone_number = request.POST.get("phone_number")
-    user.save()
-    return JsonResponse({})
-
-
-# 拉取用户信息
-def user_info(request):
-    print('pull user info')
-    user = authentication(request)
-    if user is None:
-        return HttpResponse('Unauthorized', status=401)
-    print(user.avatar.url)
-    data = {'username': user.username,
-            'mail_address': user.email,
-            'phone_number': user.phone_number,
-            'wechat': user.wechat,
-            'password': user.password,
-            'url': ABSOLUTE_URL + user.avatar.url}
-    return JsonResponse(data)
 
 
 # 删除文档
@@ -173,13 +98,13 @@ def collect_doc(request):
 def uncollect_doc(request):
     print("uncollect doc")
     doc_id = request.POST.get("doc_id")
-    print(doc_id)
+    # print(doc_id)
     user = authentication(request)
     doc = Document.objects.get(pk=doc_id)
     collection = Collection.objects.get(Q(user=user) & Q(doc=doc))
     collection.delete()
     data = {'flag': "yes", 'msg': "uncollect success"}
-    print("success")
+    # print("success")
     return JsonResponse(data)
 
 
@@ -199,10 +124,21 @@ def create_doc(request):
     # content = request.POST.get("content")
     # create_time = request.POST.get("create_time")
     # print(content)
-    doc = Document.objects.create(creator=user, name=name, in_group=in_group, team=team)
-    print(doc.pk)
+
+    # 生成独特的原始码
+    raw_code = user.username+name+str(datetime.now())
+    raw_code = raw_code.encode('utf-8')
+    # 生成哈希加密后的identifier
+    md = hashlib.md5()
+    md.update(raw_code)
+    key = md.hexdigest()
+    
+    # 创建一个新文档
+    doc = Document.objects.create(creator=user, name=name, in_group=in_group, team=team, key=key)
+
+    # print(doc.pk)
     data = {'flag': "yes", 'doc_id': doc.pk, 'msg': "create success"}
-    print("success")
+    # print("success")
     return JsonResponse(data)
 
 # 用模板新建文件
@@ -259,7 +195,7 @@ def get_doc(request):
     doc = Document.objects.get(pk=doc_id)
     # team = None
     # if team_id != -1:
-        # team = Team.objects.get(pk=team_id)
+    # team = Team.objects.get(pk=team_id)
     islike = True
     if not Collection.objects.filter(Q(user=user) & Q(doc=doc)):
         islike = False
@@ -270,7 +206,7 @@ def get_doc(request):
 
 # 我创建和收藏的文档信息
 def my_doc(request):
-    print('my docs')
+    # print('my docs')
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
@@ -307,10 +243,10 @@ def invite_user(request):
         return HttpResponse('Unauthorized', status=401)
     actor = user
     recipient = User.objects.get(username=request.POST.get("username"))
-    print(request.POST.get("username"))
+    # print(request.POST.get("username"))
     verb = 'invite ' + recipient.username + " to"
     team = Team.objects.get(id=request.POST.get("team_id"))
-    print(team)
+    # print(team)
     data = {}
     notify.send(actor, recipient=recipient, verb=verb, target=team)
     return JsonResponse(data)
@@ -392,10 +328,10 @@ def get_comment_list(request):
     comment_list = []
     for comment in comments:
         item = {
-            'comment_id':comment.id,
+            'comment_id': comment.id,
             'user': comment.user.username,
             'content': comment.body,
-            'post_time':datetime.strftime(comment.created_time, '%Y-%m-%d %H-%M'),
+            'post_time': datetime.strftime(comment.created_time, '%Y-%m-%d %H-%M'),
         }
         comment_list.append(item)
 
@@ -412,8 +348,6 @@ def delete_comment(request):
     comment_id = request.POST.get("comment_id")
     Comment.objects.get(id=comment_id).delete()
     return JsonResponse({})
-
-
 
 # #最近浏览的文档信息
 # def my_browse_doc(request):
