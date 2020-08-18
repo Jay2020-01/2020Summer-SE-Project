@@ -5,7 +5,7 @@ from login.views import authentication
 from datetime import datetime
 
 # my models
-from .models import User, Document, Team, TeamUser, Comment, Collection, Delete_document
+from .models import User, Document, Team, TeamUser, Comment, Collection, Delete_document, Template
 # third-party
 from notifications.models import Notification
 from notifications.signals import notify
@@ -205,6 +205,29 @@ def create_doc(request):
     print("success")
     return JsonResponse(data)
 
+# 用模板新建文件
+def create_doc_with_temp(request):
+    print('create doc with template')
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    name = request.POST.get("title")
+    team_id = request.POST.get("team_id")
+    temp_id = request.POST.get("temp_id")
+    print(temp_id)
+    in_group = False
+    team = None
+    if (int(team_id) >= 0):
+        in_group = True
+        team = Team.objects.get(id=team_id)
+    # create_time = request.POST.get("create_time")
+    doc = Document.objects.create(creator=user, name=name, in_group=in_group, team=team)
+    temp = Template.objects.get(pk=temp_id)
+    temp_content = temp.content
+    doc.content = temp_content
+    doc.save()
+    data = {'flag': "yes", 'doc_id': doc.pk, 'msg': "create success"}
+    return JsonResponse(data)
 
 # 保存文档内容
 def save_doc(request):

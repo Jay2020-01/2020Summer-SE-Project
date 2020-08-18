@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import User,Team,TeamUser
 from .models import Document,Collection,Delete_document,UDRecord,Favorite
-from .models import Recyclebin,Comment,Templet
+from .models import Recyclebin,Comment,Template
 # from django.contrib.auth.admin import UserAdmin
 
 # Register your models here.
@@ -15,4 +15,4 @@ admin.site.register(UDRecord)
 admin.site.register(Favorite)
 admin.site.register(Recyclebin)
 admin.site.register(Comment)
-admin.site.register(Templet)
+admin.site.register(Template)

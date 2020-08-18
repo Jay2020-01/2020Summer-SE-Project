@@ -60,6 +60,7 @@ urlpatterns = [
     path('ajax/is_leader/', team_views.is_leader, name="is_leader"),
     path('ajax/get_team_docs/', team_views.get_team_docs, name="get_team_docs"),
     path('ajax/is_leader/', team_views.is_leader, name="is_leader"),
+    path('ajax/create_doc_with_temp/', backend_views.create_doc_with_temp, name="create_doc_with_temp"),
     # backend api
 ]
 

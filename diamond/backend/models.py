@@ -196,7 +196,7 @@ class Comment(MPTTModel):
 
 
 #模板
-class Templet(models.Model):
+class Template(models.Model):
     name = models.CharField(max_length=64)
     content = models.TextField(null=True)
 
