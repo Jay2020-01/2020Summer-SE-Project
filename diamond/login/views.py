@@ -11,6 +11,7 @@ from django.dispatch import receiver
 from diamond import settings
 from diamond.settings import DEPLOY
 import os
+import re
 
 if DEPLOY:
     ABSOLUTE_URL = "http://121.41.231.2:80"
@@ -55,6 +56,9 @@ def register(request):
     mail_address = request.POST.get("mail_address")
     password = request.POST.get("password")
     data = {'token': None, 'user': username}
+    if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", mail_address) == None:
+        data = {'token': None, 'message': "email wrong"}
+        return JsonResponse(data)
     if not User.objects.filter(username=username):
         user = User.objects.create(username=username, email=mail_address, password=password)
         token = Token.objects.get(user=user)
