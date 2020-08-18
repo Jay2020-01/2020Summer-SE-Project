@@ -31,10 +31,11 @@ def writeFile(file_path, file):
 
 
 def user_avatar_upload(request):
-    print()
     user = authentication(request)
     if user is None:
+        print("user is NOne")
         return HttpResponse('Unauthorized', status=401)
+    print(str(user.username) + "is uploading avatar image")
     if request.method == "POST":
         fileDict = request.FILES.items()
         # 获取上传的文件，如果没有文件，则默认为None
@@ -44,7 +45,7 @@ def user_avatar_upload(request):
             print("dic[%s]=%s" % (k, v))
             fileData = request.FILES.getlist(k)
             for file in fileData:
-                fileName = file._get_name()
+                fileName = str(user.username) + "_avatar"
                 filePath = os.path.join(settings.MEDIA_ROOT, "user_avatar", fileName)
                 print('filepath = [%s]' % filePath)
                 try:
