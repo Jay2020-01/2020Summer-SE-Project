@@ -77,7 +77,7 @@ def get_user_notice(request):
             'verb': notice.verb,
             'target_id': team.id,
             'target_name': team.team_name,
-            'sent_time': datetime.strftime(notice.timestamp, '%Y-%m-%d %H-%M'),
+            'sent_time': datetime.strftime(notice.timestamp, '%Y-%m-%d %H:%M'),
         }
         notice_list.append(item)
     data = {"notice_list": notice_list}
