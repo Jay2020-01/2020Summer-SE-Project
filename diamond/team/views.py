@@ -70,6 +70,7 @@ def is_leader(request):
     try:
         team_user = TeamUser.objects.get(team=team, user=user)
         data = {"is_leader": team_user.is_leader, "level": team_user.permission_level}
+        print(team_user.permission_level)
     except:
         data = {}
     return JsonResponse(data)
@@ -197,12 +198,13 @@ def modify_permission(request):
         return HttpResponse('Unauthorized', status=401)
     team_id = request.POST.get("team_id")
     team = Team.objects.get(id=team_id)
-    target_user = request.POST.get("target_user")
-    permission_level = request.POST.get("permission_level")
-    team_user = TeamUser.objects.filter(team=team, user=target_user)
+    username = request.POST.get("username")
+    target_user = User.objects.get(username=username)
+    permission_level = request.POST.get("level")
+    team_user = TeamUser.objects.get(team=team, user=target_user)
     if team_user:
-        team_user = team_user[0]
         team_user.permission_level = permission_level
+        print("权限被设置为", permission_level)
         team_user.save()
         print("modify_permission success")
     else:
@@ -213,7 +215,7 @@ def modify_permission(request):
 
 # 拉取团队的文档信息
 def get_team_docs(request):
-    print("get team docs")
+    # print("get team docs")
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)

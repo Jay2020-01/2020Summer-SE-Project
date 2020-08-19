@@ -268,6 +268,7 @@ def get_doc(request):
         else:  # 如果访问者是其他人，获取文档的share level
             print("访问者是其他人")
             level = doc.share_level
+            print("share level", level)
             if level == 1:  # 如果share level为1，禁止访问
                 return HttpResponse('Unauthorized', status=401)
             data = {'name': doc.name, 'content': doc.content, 'islike': islike, 'level': level}
@@ -284,7 +285,7 @@ def get_doc(request):
 
 # 拉取最近浏览，我创建和收藏的文档信息
 def my_doc(request):
-    print('my docs')
+    # print('my docs')
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
@@ -348,8 +349,7 @@ def edit_share_level(request):
     key = request.POST.get('doc_id')
     doc_id = transfer(key)
     level = request.POST.get('level')
-    print("edit share level")
-    print(level)
+    print("edit share level", level)
     doc = Document.objects.get(id=doc_id)
     doc.share_level = level
     doc.save()

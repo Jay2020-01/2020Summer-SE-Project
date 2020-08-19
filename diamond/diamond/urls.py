@@ -71,7 +71,6 @@ urlpatterns = [
     path('ajax/exit_team/', team_views.exit_team, name="delete_team_member"),
     path('ajax/is_leader/', team_views.is_leader, name="is_leader"),
     path('ajax/get_team_docs/', team_views.get_team_docs, name="get_team_docs"),
-    path('ajax/is_leader/', team_views.is_leader, name="is_leader"),
     path('ajax/set_level/', team_views.modify_permission, name='set_permission_level'),
     path('ajax/create_team/', team_views.create_team, name='create_team'),
     path('ajax/search_user/', team_views.search_user, name='search_user'),
