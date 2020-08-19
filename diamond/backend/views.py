@@ -414,7 +414,7 @@ def get_lock(request):
     return JsonResponse(data)
 
 
-def un_lock(request):
+def unlock(request):
     key = request.POST.get('doc_id')
     doc_id = transfer(key)
     doc = Document.objects.get(id=doc_id)
