@@ -55,7 +55,7 @@ urlpatterns = [
     path('ajax/get_doc_key/', backend_views.get_doc_key, name='get_doc_key'),
     path('ajax/edit_share_level/', backend_views.edit_share_level, name='edit_share_level'),
     path('ajax/doc_search/', backend_views.doc_search, name='person doc search'),
-    path('ajax/get_lock/', backend_views.get_doc, name='get lock'),
+    path('ajax/get_lock/', backend_views.get_lock, name='get lock'),
     path('ajax/unlock/', backend_views.unlock, name='unlock'),
     # path('ajax/team_doc_search/', backend_views.team_doc_search, name='team doc search'),
     # invite api
