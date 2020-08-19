@@ -207,16 +207,15 @@ def get_doc(request):
     # 还需判断该用户权限
     print("get doc")
     doc_id = request.POST.get("doc_id")
-    team_id = request.POST.get("team_id")
-    team = Team.objects.get(id=team_id)
+    team_id = int(request.POST.get("team_id"))
     doc = Document.objects.get(creator=user, pk=doc_id)
-    in_group = doc.in_group
     if not Collection.objects.filter(Q(user=user) & Q(doc=doc)):
         islike = False
     else:
         islike = True
 
-    if in_group:  # 如果是团队文档， 团队文档不能分享
+    if team_id != -1:  # 如果是团队文档， 团队文档不能分享
+        team = Team.objects.get(id=team_id)
         try:  # 如果访问者是团队成员
             team_user = TeamUser.objects.get(user=user, team=team)
             level = team_user.permission_level
@@ -225,7 +224,7 @@ def get_doc(request):
         except:
             return HttpResponse('Unauthorized', status=401)
     else:  # 如果是个人文档
-        if Document.creator == user:  # 如果访问者是创建者
+        if doc.creator == user:  # 如果访问者是创建者
             data = {'name': doc.name, 'content': doc.content, 'islike': islike, 'level': 4}
             return JsonResponse(data)
         else:  # 如果访问者是其他人，获取文档的share level
