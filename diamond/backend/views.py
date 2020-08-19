@@ -18,7 +18,7 @@ from notifications.signals import notify
 @receiver(post_save, sender=Document)
 def hash_document_key(sender, instance=None, created=False, **kwargs):
     if created:
-        print("hash document !")
+        # print("hash document !")
         raw_code = instance.key.encode('utf-8')
         # 生成哈希加密后的identifier
         md = hashlib.md5()
@@ -238,10 +238,10 @@ def get_doc(request):
     if user is None:
         return HttpResponse('Unauthorized', status=401)
     # 还需判断该用户权限
-    print("get doc")
+    # print("get doc")
     key = request.POST.get("doc_id")
-    print("key")
-    print(key)
+    # print("key")
+    # print(key)
     doc_id = transfer(key)
     team_id = int(request.POST.get("team_id"))
     doc = Document.objects.get(pk=doc_id)
@@ -366,7 +366,7 @@ def get_doc_key(request):
 
 # 新建、更新浏览记录
 def update_browsing(request):
-    print('update browsing')
+    # print('update browsing')
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
@@ -405,9 +405,10 @@ def get_lock(request):
     doc = Document.objects.get(id=doc_id)
     data = {"success": False}
     if doc.is_locked:
-        print("文章已被上锁！")
+        print("文章已被上锁，用户不能进入！")
     else:
-        print("文章未上锁，现在上锁")
+
+        print("文章未上锁，用户可以进入")
         doc.is_locked = True
         data["success"] = True
     doc.save()
@@ -415,6 +416,7 @@ def get_lock(request):
 
 
 def unlock(request):
+    print("文件解锁！")
     key = request.POST.get('doc_id')
     doc_id = transfer(key)
     doc = Document.objects.get(id=doc_id)

@@ -3,9 +3,10 @@ from django.db.models import Q
 from django.http import JsonResponse, HttpResponse
 from login.views import authentication
 from datetime import datetime
-
+from backend.views import transfer
 # my models
 from backend.models import User, Document, Team, TeamUser, Comment, Collection, Delete_document, Template
+
 
 # Create your views here.
 # 上传评论
@@ -14,7 +15,9 @@ def post_comment(request):
     if user is None:
         return HttpResponse('Unauthorized', status=401)
     # 获取被评论的文档id
-    document = Document.objects.get(id=request.POST.get("doc_id"))
+    key = request.POST.get("doc_id")
+    doc_id = transfer(key)
+    document = Document.objects.get(id=doc_id)
     # 获取评论内容
     body = request.POST.get("body")
     # 存储评论
@@ -29,7 +32,9 @@ def get_comment_list(request):
     if user is None:
         return HttpResponse('Unauthorized', status=401)
     # 获取被评论的文档id
-    document = Document.objects.get(id=request.POST.get("doc_id"))
+    key = request.POST.get("doc_id")
+    doc_id = transfer(key)
+    document = Document.objects.get(id=doc_id)
     # 获取评论
     comments = Comment.objects.filter(document=document)
     # 返还评论列表
