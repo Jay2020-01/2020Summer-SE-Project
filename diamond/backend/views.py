@@ -27,10 +27,17 @@ def hash_document_key(sender, instance=None, created=False, **kwargs):
         instance.save()
 
 
+def transfer(key):
+    doc = Document.objects.get(key=key)
+    doc_id = doc.pk
+    return doc_id
+
+
 # 删除文档
 def delete_doc(request):
     print("delete doc")
-    doc_id = request.POST.get("doc_id")
+    key = request.POST.get("doc_id")
+    doc_id = transfer(key)
     user = authentication(request)
     try:
         doc = Document.objects.get(pk=doc_id)
@@ -39,7 +46,7 @@ def delete_doc(request):
                                                         name=doc.name, content=doc.content,
                                                         created_date=doc.created_date, modified_date=doc.modified_date)
             doc.delete()
-            data = {'flag': "yes", 'delete_doc_id': delete_doc.pk}
+            data = {'flag': "yes", 'delete_doc_id': delete_doc.key}
             print("success")
     except expression as identifier:
         data = {'flag': "no"}
@@ -57,7 +64,7 @@ def get_deleted_docs(request):
     for doc in deleted_documents:
         item = {
             'name': doc.name,
-            'doc_id': doc.pk,
+            'doc_id': doc.key,
         }
         deleted_docs.append(item)
     data = {'deleted_docs': deleted_docs}
@@ -67,7 +74,9 @@ def get_deleted_docs(request):
 # 还原文件
 def restore_doc(request):
     print("restore")
-    delete_doc_id = request.POST.get("doc_id")
+    key = request.POST.get("doc_id")
+    doc_id = transfer(key)
+    delete_doc_id = transfer(key)
     user = authentication(request)
     delete_doc = Delete_document.objects.get(pk=delete_doc_id)
     data = {'flag': "no"}
@@ -77,14 +86,15 @@ def restore_doc(request):
                                       content=delete_doc.content, created_date=delete_doc.created_date,
                                       modified_date=delete_doc.modified_date)
         delete_doc.delete()
-        data = {'flag': "yes", 'doc_id': doc.pk}
+        data = {'flag': "yes", 'doc_id': doc.key}
     return JsonResponse(data)
 
 
 # 彻底删除文件
 def delete_doc_completely(request):
     print("delete doc completely")
-    delete_doc_id = request.POST.get("doc_id")
+    key = request.POST.get("doc_id")
+    delete_doc_id = transfer(key)
     user = authentication(request)
     delete_doc = Delete_document.objects.get(pk=delete_doc_id)
     data = {'flag': "no"}
@@ -97,7 +107,8 @@ def delete_doc_completely(request):
 # 收藏文件
 def collect_doc(request):
     print("collect doc")
-    doc_id = request.POST.get("doc_id")
+    key = request.POST.get("doc_id")
+    doc_id = transfer(key)
     # print(doc_id)
     user = authentication(request)
     if user is None:
@@ -114,7 +125,8 @@ def collect_doc(request):
 # 取消收藏
 def uncollect_doc(request):
     print("uncollect doc")
-    doc_id = request.POST.get("doc_id")
+    key = request.POST.get("doc_id")
+    doc_id = key
     # print(doc_id)
     user = authentication(request)
     if user is None:
@@ -150,7 +162,7 @@ def create_doc(request):
     doc = Document.objects.create(creator=user, name=name, in_group=in_group, team=team, key=key)
 
     # print(doc.pk)
-    data = {'flag': "yes", 'doc_id': doc.pk, 'msg': "create success"}
+    data = {'flag': "yes", 'doc_id': doc.key, 'msg': "create success"}
     # print("success")
     return JsonResponse(data)
 
@@ -178,7 +190,7 @@ def create_doc_with_temp(request):
     temp_content = temp.content
     doc.content = temp_content
     doc.save()
-    data = {'flag': "yes", 'doc_id': doc.pk, 'msg': "create success"}
+    data = {'flag': "yes", 'doc_id': doc.key, 'msg': "create success"}
     return JsonResponse(data)
 
 
@@ -189,7 +201,8 @@ def save_doc(request):
         return HttpResponse('Unauthorized', status=401)
     print('save doc')
     content = request.POST.get("content")
-    doc_id = request.POST.get("doc_id")
+    key = request.POST.get("doc_id")
+    doc_id = transfer(key)
     # create_time = request.POST.get("modified_time")
     doc = Document.objects.get(creator=user, pk=doc_id)
     doc.content = content
@@ -206,7 +219,8 @@ def get_doc(request):
         return HttpResponse('Unauthorized', status=401)
     # 还需判断该用户权限
     print("get doc")
-    doc_id = request.POST.get("doc_id")
+    key = request.POST.get("doc_id")
+    doc_id = transfer(key)
     team_id = int(request.POST.get("team_id"))
     doc = Document.objects.get(creator=user, pk=doc_id)
     if not Collection.objects.filter(Q(user=user) & Q(doc=doc)):
@@ -260,7 +274,7 @@ def my_doc(request):
             c_item = {
                 'name': d.name,
                 # 'content': d.content,
-                'doc_id': d.pk,
+                'doc_id': d.key,
                 'created_time': d.created_date.__format__('%Y-%m-%d %H:%M'),
             }
             created_docs.append(c_item)
@@ -269,7 +283,7 @@ def my_doc(request):
             c_item = {
                 'name': d.doc.name,
                 # 'content': d.content,
-                'doc_id': d.doc.pk,
+                'doc_id': d.doc.key,
                 'collected_time': d.collected_date.__format__('%Y-%m-%d %H:%M'),
             }
             collected_docs.append(c_item)
@@ -290,7 +304,8 @@ def edit_share_level(request):
 
 
 def get_doc_key(request):
-    doc_id = request.POST.get('doc_id')
+    key = request.POST.get('doc_id')
+    doc_id = transfer(key)
     doc = Document.objects.get(id=doc_id)
     data = {"share_level": doc.share_level, 'key': doc.key}
     return JsonResponse(data)
