@@ -40,14 +40,15 @@ def authentication(request):
 def login(request):
     username = request.POST.get("username")
     password = request.POST.get("password")
-    data = {'token': None, 'user': username}
     try:
         user = User.objects.get(username=username)
+        if password == user.password:
+            token = Token.objects.get(user=user)
+            data = {'token': str(token), 'message': "登录成功", 'success': True}
+        else:
+            data = {'token': None, 'message': "登录失败, 密码错误", 'success': False}
     except:
-        return JsonResponse(data)
-    if password == user.password:
-        token = Token.objects.get(user=user)
-        data['token'] = str(token)
+        data = {'token': None, 'message': "登录失败，查无此人", 'success': False}
     return JsonResponse(data)
 
 
@@ -55,14 +56,16 @@ def register(request):
     username = request.POST.get("username")
     mail_address = request.POST.get("mail_address")
     password = request.POST.get("password")
-    data = {'token': None, 'user': username}
-    if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", mail_address) == None:
-        data = {'token': None, 'message': "email wrong"}
+    if not re.match(r'^[0-9a-zA-Z_]{0,19}@[0-9a-zA-Z]{1,13}\.[com,cn,net]{1,3}$', mail_address):
+        data = {'token': None, 'message': "邮箱错误, 请重新填写", 'success': False}
         return JsonResponse(data)
     if not User.objects.filter(username=username):
         user = User.objects.create(username=username, email=mail_address, password=password)
         token = Token.objects.get(user=user)
-        data = {'token': str(token), 'user': username}
+        data = {'token': str(token), 'user': username, 'message': "注册成功", 'success': True}
+    else:
+        data = {'token': None, 'user': username, 'message': "用户名重复, 请重新填写", 'success': False}
+
     return JsonResponse(data)
 
 
