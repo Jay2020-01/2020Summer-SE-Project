@@ -37,6 +37,7 @@ urlpatterns = [
     path('ajax/user_info/', login_views.user_info, name='user_info'),
     path('ajax/image_upload/', login_views.user_avatar_upload, name="user avatar upload"),
     path('ajax/register/', login_views.register, name='register'),
+    path('ajax/get_user_avatar/',login_views.get_user_avatar,name='get_user_avatar'),
     # backend document views
     path('ajax/create_doc/', backend_views.create_doc, name='create_doc'),
     path('ajax/create_doc_with_temp/', backend_views.create_doc_with_temp, name="create_doc_with_temp"),

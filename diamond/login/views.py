@@ -70,6 +70,7 @@ def register(request):
 
 
 # Create your views here.
+# 写文件
 def writeFile(file_path, file):
     with open(file_path, "wb") as f:
         if file.multiple_chunks():
@@ -79,7 +80,7 @@ def writeFile(file_path, file):
             data = file.read()
             f.write(data)
 
-
+# 上传用户头像
 def user_avatar_upload(request):
     user = authentication(request)
     if user is None:
@@ -106,6 +107,15 @@ def user_avatar_upload(request):
                     return JsonResponse({'msg': 'file write failed'})
         return JsonResponse({'msg': 'success'})
 
+# 获取用户头像
+def get_user_avatar(request):
+    # print('get_user_avatar')
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    # print(user.avatar.url)
+    data = {'url': ABSOLUTE_URL + user.avatar.url}
+    return JsonResponse(data)
 
 # 修改用户信息.
 def change_info(request):
