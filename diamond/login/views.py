@@ -40,7 +40,7 @@ def authentication(request):
 def login(request):
     username = request.POST.get("username")
     password = request.POST.get("password")
-    data = {'token': None, 'user': username}
+    data = {'token': None, 'user': username, 'success': False}
     try:
         user = User.objects.get(username=username)
     except:
@@ -48,6 +48,7 @@ def login(request):
     if password == user.password:
         token = Token.objects.get(user=user)
         data['token'] = str(token)
+        data['success'] = True
     return JsonResponse(data)
 
 
@@ -55,14 +56,14 @@ def register(request):
     username = request.POST.get("username")
     mail_address = request.POST.get("mail_address")
     password = request.POST.get("password")
-    data = {'token': None, 'user': username}
+    data = {'token': None, 'message':"用户名已被注册",'success':False}
     if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", mail_address) == None:
-        data = {'token': None, 'message': "email wrong"}
+        data = {'token': None, 'message': "邮箱地址错误", 'success':False}
         return JsonResponse(data)
     if not User.objects.filter(username=username):
         user = User.objects.create(username=username, email=mail_address, password=password)
         token = Token.objects.get(user=user)
-        data = {'token': str(token), 'user': username}
+        data = {'token': str(token), 'message': "注册成功", 'success':True}
     return JsonResponse(data)
 
 

@@ -8,7 +8,7 @@ from django.dispatch import receiver
 import hashlib
 
 # my models
-from .models import User, Document, Team, TeamUser, Comment, Collection, Delete_document, Template
+from .models import User, Document, Team, TeamUser, Comment, Collection, Delete_document, Template, Browsing
 # third-party
 from notifications.models import Notification
 from notifications.signals import notify
@@ -158,6 +158,20 @@ def create_doc(request):
     # print("success")
     return JsonResponse(data)
 
+# 重命名
+def rename_doc(request):
+    print('rename doc')
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    doc_id = request.POST.get("doc_id")
+    doc_name = request.POST.get("title")
+    doc = Document.objects.get(pk=doc_id)
+    doc.name = doc_name
+    doc.save()
+    data = {'flag': True, 'msg': "rename success"}
+    # print("success")
+    return JsonResponse(data)
 
 # 用模板新建文件
 def create_doc_with_temp(request):
@@ -212,7 +226,6 @@ def get_doc(request):
     print("get doc")
     doc_id = request.POST.get("doc_id")
     team_id = request.POST.get("team_id")
-    team = Team.objects.get(id=team_id)
     doc = Document.objects.get(pk=doc_id)
     in_group = doc.in_group
     if not Collection.objects.filter(Q(user=user) & Q(doc=doc)):
@@ -222,6 +235,7 @@ def get_doc(request):
 
     if in_group:  # 如果是团队文档， 团队文档不能分享
         try:  # 如果访问者是团队成员
+            team = Team.objects.get(id=team_id)
             team_user = TeamUser.objects.get(user=user, team=team)
             level = team_user.permission_level
             data = {'name': doc.name, 'content': doc.content, 'islike': islike, 'level': level}
@@ -229,7 +243,7 @@ def get_doc(request):
         except:
             return HttpResponse('Unauthorized', status=401)
     else:  # 如果是个人文档
-        if Document.creator == user:  # 如果访问者是创建者
+        if doc.creator == user:  # 如果访问者是创建者
             data = {'name': doc.name, 'content': doc.content, 'islike': islike, 'level': 4}
             return JsonResponse(data)
         else:  # 如果访问者是其他人，获取文档的share level
@@ -247,19 +261,19 @@ def get_doc(request):
     # islike = True
     # print("success")
 
-
-# 我创建和收藏的文档信息
+# 拉取最近浏览，我创建和收藏的文档信息
 def my_doc(request):
-    # print('my docs')
+    print('my docs')
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
-    # 还需修改：
-    # 只显示个人创建的，不显示团队文档
     created_documents = Document.objects.filter(creator=user)
     created_docs = []
     collections = Collection.objects.filter(user=user)
     collected_docs = []
+    browsing = Browsing.objects.filter(user=user)
+    browsing_docs = []
+    # 我创建的
     for d in created_documents:
         if not d.in_group:
             c_item = {
@@ -269,6 +283,7 @@ def my_doc(request):
                 'created_time': d.created_date.__format__('%Y-%m-%d %H:%M'),
             }
             created_docs.append(c_item)
+    # 我收藏的
     for d in collections:
         if not d.doc.in_group:
             c_item = {
@@ -278,7 +293,30 @@ def my_doc(request):
                 'collected_time': d.collected_date.__format__('%Y-%m-%d %H:%M'),
             }
             collected_docs.append(c_item)
-    data = {'created_docs': created_docs, 'collected_docs': collected_docs}
+    # 最近浏览
+    for d in browsing:    
+        if d.doc.in_group:
+            team = d.doc.team
+            team_user = TeamUser.objects.get(user=user, team=team)
+            c_item = {
+                'name': d.doc.name,
+                'doc_id': d.doc.pk,
+                'in_group': True,
+                'team_id': team.pk,
+                'level': team_user.permission_level,
+                'browse_time': d.browsing_date.__format__('%Y-%m-%d %H:%M'),
+            }
+        else:
+            c_item = {
+                'name': d.doc.name,
+                'doc_id': d.doc.pk,
+                'in_group': False,
+                'team_id': -1,
+                'level': 4,
+                'browse_time': d.browsing_date.__format__('%Y-%m-%d %H:%M'),
+            }
+        browsing_docs.append(c_item)
+    data = {'browsing_docs':browsing_docs, 'created_docs': created_docs, 'collected_docs': collected_docs}
     return JsonResponse(data)
 
 
@@ -299,37 +337,21 @@ def get_doc_key(request):
     doc = Document.objects.get(id=doc_id)
     data = {"share_level": doc.share_level, 'key': doc.key}
     return JsonResponse(data)
-# #最近浏览的文档信息
-# def my_browse_doc(request):
-#     print('my browse docs')
-#     user = authentication(request)
-#     if user is None:
-#         return HttpResponse('Unauthorized', status=401)
-#     browsing = Browsing.objects.filter(user=user)
-#     browsing_docs = []
-#     for d in browsing:
-#         c_item = {
-#             'name': d.doc.name,
-#             # 'content': d.content,
-#             'doc_id': d.doc.pk,
-#         }
-#         browsing_docs.append(c_item)
-#     data = {'browsing_docs':browsing_docs}
-#     return JsonResponse(data)
 
-# #新建、更新浏览记录
-# def update_browsing(request):
-#     user = authentication(request)
-#     doc_id = request.POST.get("doc_id")
-#     doc = Document.objects.get(pk=doc_id)
-#     if user is None:
-#         return HttpResponse('Unauthorized', status=401)
-#     oldb = Browsing.objects.filter(Q(user=user) & Q(doc=doc))
-#     if oldb:
-#         oldb.delete()
-#     newb = Browsing.objects.create(user=user,doc=doc)
-#     data = {"message": 1}
-#     return JsonResponse(data)
+#新建、更新浏览记录
+def update_browsing(request):
+    print('update browsing')
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    doc_id = request.POST.get("doc_id")
+    doc = Document.objects.get(pk=doc_id)
+    oldb = Browsing.objects.filter(Q(user=user) & Q(doc=doc))
+    if oldb:
+        oldb.delete()
+    newb = Browsing.objects.create(user=user,doc=doc)
+    data = {"message": 1}
+    return JsonResponse(data)
 
 # #搜索文档
 # def search(request):

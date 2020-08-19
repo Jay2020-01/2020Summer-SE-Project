@@ -207,13 +207,13 @@ class Template(models.Model):
     name = models.CharField(max_length=64)
     content = models.TextField(null=True)
 
-# #浏览记录
-# class Browsing(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     doc = models.ForeignKey(Document, on_delete=models.CASCADE)
-#     browsing_date = models.DateTimeField("浏览时间",auto_now_add=True)
-#     def __str__(self):
-#         return self.name
+#浏览记录
+class Browsing(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    doc = models.ForeignKey(Document, on_delete=models.CASCADE)
+    browsing_date = models.DateTimeField("浏览时间",auto_now_add=True)
+    def __str__(self):
+        return self.name
 
-#     def get_absolute_url(self):
-#         return reverse("_detail", kwargs={"pk": self.pk})
+    def get_absolute_url(self):
+        return reverse("_detail", kwargs={"pk": self.pk})
