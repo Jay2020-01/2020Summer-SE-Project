@@ -270,7 +270,8 @@ def get_doc(request):
             level = doc.share_level
             print("share level", level)
             if level == 1:  # 如果share level为1，禁止访问
-                return HttpResponse('Unauthorized', status=401)
+                print("禁止方问")
+                return HttpResponse('Unauthorized', status=403)
             data = {'name': doc.name, 'content': doc.content, 'islike': islike, 'level': level}
             return JsonResponse(data)
 
