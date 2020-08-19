@@ -169,6 +169,7 @@ def create_doc(request):
     # print("success")
     return JsonResponse(data)
 
+
 # 重命名
 def rename_doc(request):
     print('rename doc')
@@ -184,6 +185,7 @@ def rename_doc(request):
     data = {'flag': True, 'msg': "rename success"}
     # print("success")
     return JsonResponse(data)
+
 
 # 用模板新建文件
 def create_doc_with_temp(request):
@@ -279,6 +281,7 @@ def get_doc(request):
     # islike = True
     # print("success")
 
+
 # 拉取最近浏览，我创建和收藏的文档信息
 def my_doc(request):
     print('my docs')
@@ -312,7 +315,7 @@ def my_doc(request):
             }
             collected_docs.append(c_item)
     # 最近浏览
-    for d in browsing:    
+    for d in browsing:
         if d.doc.in_group:
             team = d.doc.team
             team_user = TeamUser.objects.get(user=user, team=team)
@@ -334,7 +337,7 @@ def my_doc(request):
                 'browse_time': d.browsing_date.__format__('%Y-%m-%d %H:%M'),
             }
         browsing_docs.append(c_item)
-    data = {'browsing_docs':browsing_docs, 'created_docs': created_docs, 'collected_docs': collected_docs}
+    data = {'browsing_docs': browsing_docs, 'created_docs': created_docs, 'collected_docs': collected_docs}
     return JsonResponse(data)
 
 
@@ -360,7 +363,8 @@ def get_doc_key(request):
     data = {"share_level": str(doc.share_level)}
     return JsonResponse(data)
 
-#新建、更新浏览记录
+
+# 新建、更新浏览记录
 def update_browsing(request):
     print('update browsing')
     user = authentication(request)
@@ -372,9 +376,10 @@ def update_browsing(request):
     oldb = Browsing.objects.filter(Q(user=user) & Q(doc=doc))
     if oldb:
         oldb.delete()
-    newb = Browsing.objects.create(user=user,doc=doc)
+    newb = Browsing.objects.create(user=user, doc=doc)
     data = {"message": 1}
     return JsonResponse(data)
+
 
 # 搜索个人文档
 def doc_search(request):
@@ -393,6 +398,29 @@ def doc_search(request):
         docs.append(c_item)
     return JsonResponse({'docs': docs})
 
+
+def get_lock(request):
+    key = request.POST.get('doc_id')
+    doc_id = transfer(key)
+    doc = Document.objects.get(id=doc_id)
+    data = {"success": False}
+    if doc.is_locked:
+        print("文章已被上锁！")
+    else:
+        print("文章未上锁，现在上锁")
+        doc.is_locked = True
+        data["success"] = True
+    doc.save()
+    return JsonResponse(data)
+
+
+def unlock(request):
+    key = request.POST.get('doc_id')
+    doc_id = transfer(key)
+    doc = Document.objects.get(id=doc_id)
+    doc.is_locked = False
+    doc.save()
+    return JsonResponse({})
 
 # # 搜索团队文档
 # def team_doc_search(request):
