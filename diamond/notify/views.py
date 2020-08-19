@@ -10,6 +10,13 @@ from backend.models import User, Document, Team, TeamUser, Comment, Collection, 
 from notifications.models import Notification
 from notifications.signals import notify
 
+from diamond.settings import DEPLOY
+
+if DEPLOY:
+    ABSOLUTE_URL = "http://121.41.231.2:80"
+else:
+    ABSOLUTE_URL = "http://127.0.0.1:8000"
+
 # Create your views here.
 
 # 发送邀请
@@ -66,6 +73,7 @@ def get_user_notice(request):
             'notice_id': notice.id,
             'actor_id': actor.id,
             'actor_name': actor.username,
+            'actor_avatar': ABSOLUTE_URL + actor.avatar.url,
             'verb': notice.verb,
             'target_id': team.id,
             'target_name': team.team_name,
