@@ -204,7 +204,7 @@ def save_doc(request):
     key = request.POST.get("doc_id")
     doc_id = transfer(key)
     # create_time = request.POST.get("modified_time")
-    doc = Document.objects.get(creator=user, pk=doc_id)
+    doc = Document.objects.get(pk=doc_id)
     doc.content = content
     doc.save()
     data = {'flag': "yes", 'msg': "modified success"}
