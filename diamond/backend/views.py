@@ -34,13 +34,12 @@ def delete_doc(request):
     user = authentication(request)
     try:
         doc = Document.objects.get(pk=doc_id)
-        if user == doc.creator:
-            delete_doc = Delete_document.objects.create(creator=doc.creator, team=doc.team, in_group=doc.in_group,
-                                                        name=doc.name, content=doc.content,
-                                                        created_date=doc.created_date, modified_date=doc.modified_date)
-            doc.delete()
-            data = {'flag': "yes", 'delete_doc_id': delete_doc.pk}
-            print("success")
+        delete_doc = Delete_document.objects.create(creator=doc.creator, team=doc.team, in_group=doc.in_group,
+                                                    name=doc.name, content=doc.content,
+                                                    created_date=doc.created_date, modified_date=doc.modified_date)
+        doc.delete()
+        data = {'flag': "yes", 'delete_doc_id': delete_doc.pk}
+        print("success")
     except expression as identifier:
         data = {'flag': "no"}
     return JsonResponse(data)
@@ -67,13 +66,18 @@ def get_deleted_docs(request):
 # 还原文件
 def restore_doc(request):
     print("restore")
-    delete_doc_id = request.POST.get("doc_id")
     user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    delete_doc_id = request.POST.get("doc_id")
     delete_doc = Delete_document.objects.get(pk=delete_doc_id)
     data = {'flag': "no"}
     if user == delete_doc.creator:
+        # 生成独特的原始码
+        name =delete_doc.name
+        key = user.username + name + str(datetime.now())
         doc = Document.objects.create(creator=delete_doc.creator, team=delete_doc.team, in_group=delete_doc.in_group,
-                                      name=delete_doc.name,
+                                      name=delete_doc.name, key=key,
                                       content=delete_doc.content, created_date=delete_doc.created_date,
                                       modified_date=delete_doc.modified_date)
         delete_doc.delete()
@@ -209,7 +213,7 @@ def get_doc(request):
     doc_id = request.POST.get("doc_id")
     team_id = request.POST.get("team_id")
     team = Team.objects.get(id=team_id)
-    doc = Document.objects.get(creator=user, pk=doc_id)
+    doc = Document.objects.get(pk=doc_id)
     in_group = doc.in_group
     if not Collection.objects.filter(Q(user=user) & Q(doc=doc)):
         islike = False
