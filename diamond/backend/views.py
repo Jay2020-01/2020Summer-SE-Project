@@ -327,7 +327,7 @@ def get_doc_key(request):
 #     data = {"message": 1}
 #     return JsonResponse(data)
 
-# #搜索文档
+# #搜索个人文档
 # def search(request):
 #     user = authentication(request)
 #     if user is None:
@@ -335,15 +335,38 @@ def get_doc_key(request):
 #     keyword = request.POST.get("keyword")
 #     if not keyword:
 #         return Response({'flag': 0, 'message': '输入不能为空'})
-#     search_doc = Document.objects.filter(Q(user=user) & Q(name__icontains=keyword))
+#     search_doc = Document.objects.filter(Q(creator=user) & Q(name__icontains=keyword))
 #     if not search_doc:
 #         return Response({'flag': 0, 'message': '输入不存在'})
 #     sdoc = []
 #     for d in search_doc:
 #         c_item = {
-#             'name': d.doc.name,
+#             'name': d.name,
 #             # 'content': d.content,
-#             'doc_id': d.doc.pk,
+#             'doc_id': d.pk,
 #         }
 #         sdoc.append(c_item)
-#     return Response({'code': 1, 'message': '','sdoc':sdoc})
+#     return Response({'flag': 1, 'message': '','sdoc':sdoc})
+# #搜索团队文档
+# def teamdoc_search(request):
+#     user = authentication(request)
+#     if user is None:
+#         return HttpResponse('Unauthorized', status=401)
+#     keyword = request.POST.get("keyword")
+#     if not keyword:
+#         return Response({'flag': 0, 'message': '输入不能为空'})
+#     belong_team = TeamUser.objects.filter(user=user)
+#     if not belong_team:
+#         return Response({'flag': 0, 'message': '无团队'})
+#     team_sdoc = []
+#     for d in belong_team:
+#         team = d.team
+#         team_docs = Document.objects.filter(team=team)
+#         for e in team_docs:
+#             c_item = {
+#                 'name':e.name
+#                 'team':e.team
+#                 'doc_id':e.pk
+#             }
+#             team_docs.append(c_item)
+#     return Response({'flag': 1, 'message': '','sdoc':team_sdoc})
