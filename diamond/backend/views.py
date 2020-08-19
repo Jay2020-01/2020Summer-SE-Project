@@ -333,7 +333,7 @@ def get_doc_key(request):
 #     keyword = request.POST.get("keyword")
 #     if not keyword:
 #         return Response({'flag': 0, 'message': '输入不能为空'})
-#     search_doc = Document.objects.filter(name__icontains=keyword)
+#     search_doc = Document.objects.filter(Q(user=user) & Q(name__icontains=keyword))
 #     if not search_doc:
 #         return Response({'flag': 0, 'message': '输入不存在'})
 #     sdoc = []
