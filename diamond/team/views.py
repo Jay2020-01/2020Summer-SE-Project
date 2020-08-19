@@ -3,18 +3,20 @@ from django.db.models import Q
 from backend.models import User, Team, TeamUser, Document
 from login.views import authentication
 from django.http import JsonResponse, HttpResponse
+from backend.views import transfer
 
 
 # Create your views here.
 # 新建团队
 def create_team(request):
-    print('create team')
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
     if request.method == "POST":
+        print('POST create team')
         team_name = request.POST.get("name")
     elif request.method == "OPTIONS":
+        print('OPTIONS create team')
         team_name = request.OPTIONS.get("name")
     else:
         print('error')
@@ -75,18 +77,22 @@ def is_leader(request):
 
 # 拉取用户所有的团队
 def get_my_team(request):
-    # print('get my team')
+    print('get my team')
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
-    team_user = TeamUser.objects.filter(user=user)
-    team_list = []
-    for relation in team_user:
-        item = {'team_name': relation.team.team_name, 'team_id': relation.team.id,
-                "introduction": relation.team.introduction, "is_leader": relation.is_leader,
-                "level": relation.permission_level}
-        team_list.append(item)
-    data = {"team_list": team_list}
+    try:
+        team_user = TeamUser.objects.filter(user=user)
+        team_list = []
+        for relation in team_user:
+            item = {'team_name': relation.team.team_name, 'team_id': relation.team.id,
+                    "introduction": relation.team.introduction, "is_leader": relation.is_leader,
+                    "level": relation.permission_level}
+            team_list.append(item)
+        data = {"team_list": team_list}
+    except:
+        print("没有team")
+        data = {"team_list": []}
     return JsonResponse(data)
 
 
@@ -102,11 +108,12 @@ def get_team_name(request):
 
 
 def delete_my_team(request):
+    print("delete my team")
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
     team_id = request.POST.get("team_id")
-    print(team_id)
+    # print(team_id)
     team = Team.objects.get(id=team_id)
     team.delete()
     return JsonResponse({})
@@ -114,7 +121,7 @@ def delete_my_team(request):
 
 # 拉取某团队队内成员
 def get_team_member(request):
-    print("get team list")
+    # print("get team list")
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
@@ -154,7 +161,12 @@ def exit_team(request):
         return HttpResponse('Unauthorized', status=401)
     team_id = request.POST.get("team_id")
     team = Team.objects.get(id=team_id)
-    team_user = TeamUser.objects.get(team=team, user=user)
+    team_user = TeamUser.objects.filter(team=team, user=user)
+    if team_user:
+        team_user[0].delete()
+        print("exit_team success")
+    else:
+        print("exit_team fail")
     team_user.delete()
     return JsonResponse({})
 
@@ -169,8 +181,12 @@ def delete_team_member(request):
     team = Team.objects.get(id=team_id)
     target_username = request.POST.get("username")
     user = User.objects.get(username=target_username)
-    team_user = TeamUser.objects.get(team=team, user=user)
-    team_user.delete()
+    team_user = TeamUser.objects.filter(team=team, user=user)
+    if team_user:
+        team_user[0].delete()
+        print("delete_team_number success")
+    else:
+        print("delete_team_number  fail")
     return JsonResponse({})
 
 
@@ -183,9 +199,15 @@ def modify_permission(request):
     team = Team.objects.get(id=team_id)
     target_user = request.POST.get("target_user")
     permission_level = request.POST.get("permission_level")
-    team_user = TeamUser.objects.get(user=target_user, team=team)
-    team_user.permission_level = permission_level
-    team_user.save()
+    team_user = TeamUser.objects.filter(team=team, user=target_user)
+    if team_user:
+        team_user = team_user[0]
+        team_user.permission_level = permission_level
+        team_user.save()
+        print("modify_permission success")
+    else:
+        print("modify_permission fail")
+
     return JsonResponse({})
 
 
@@ -206,7 +228,7 @@ def get_team_docs(request):
         item = {
             'name': doc.name,
             # 'content': d.content,
-            'doc_id': doc.pk,
+            'doc_id': doc.key,
         }
         docs.append(item)
     data = {'team_docs': docs}
