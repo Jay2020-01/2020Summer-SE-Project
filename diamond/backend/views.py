@@ -376,46 +376,42 @@ def update_browsing(request):
     data = {"message": 1}
     return JsonResponse(data)
 
-# #搜索个人文档
-# def search(request):
+# 搜索个人文档
+def doc_search(request):
+    user = authentication(request)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+    keyword = request.POST.get("keyword")
+    search_doc = Document.objects.filter(Q(creator=user) & Q(name__icontains=keyword))
+    docs = []
+    for d in search_doc:
+        c_item = {
+            'name': d.name,
+            'doc_id': d.key,
+            'created_time': d.created_date
+        }
+        docs.append(c_item)
+    return JsonResponse({'docs': docs})
+
+
+# # 搜索团队文档
+# def team_doc_search(request):
 #     user = authentication(request)
 #     if user is None:
 #         return HttpResponse('Unauthorized', status=401)
 #     keyword = request.POST.get("keyword")
-#     if not keyword:
-#         return Response({'flag': 0, 'message': '输入不能为空'})
-#     search_doc = Document.objects.filter(Q(creator=user) & Q(name__icontains=keyword))
-#     if not search_doc:
-#         return Response({'flag': 0, 'message': '输入不存在'})
-#     sdoc = []
-#     for d in search_doc:
-#         c_item = {
-#             'name': d.name,
-#             # 'content': d.content,
-#             'doc_id': d.pk,
-#         }
-#         sdoc.append(c_item)
-#     return Response({'flag': 1, 'message': '','sdoc':sdoc})
-# #搜索团队文档
-# def teamdoc_search(request):
-#     user = authentication(request)
-#     if user is None:
-#         return HttpResponse('Unauthorized', status=401)
-#     keyword = request.POST.get("keyword")
-#     if not keyword:
-#         return Response({'flag': 0, 'message': '输入不能为空'})
 #     belong_team = TeamUser.objects.filter(user=user)
 #     if not belong_team:
-#         return Response({'flag': 0, 'message': '无团队'})
+#         return JsonResponse({'flag': 0, 'message': '无团队'})
 #     team_sdoc = []
 #     for d in belong_team:
 #         team = d.team
 #         team_docs = Document.objects.filter(team=team)
 #         for e in team_docs:
 #             c_item = {
-#                 'name':e.name
-#                 'team':e.team
-#                 'doc_id':e.pk
+#                 'name': e.name,
+#                 'team': e.team,
+#                 'doc_id': e.key
 #             }
 #             team_docs.append(c_item)
-#     return Response({'flag': 1, 'message': '','sdoc':team_sdoc})
+#     return JsonResponse({'team_docs': team_sdoc})
