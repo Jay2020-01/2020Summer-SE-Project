@@ -70,6 +70,7 @@ def is_leader(request):
     try:
         team_user = TeamUser.objects.get(team=team, user=user)
         data = {"is_leader": team_user.is_leader, "level": team_user.permission_level}
+        print("team user permission level")
         print(team_user.permission_level)
     except:
         data = {}

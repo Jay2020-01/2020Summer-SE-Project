@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Q
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseForbidden
 from login.views import authentication
 from datetime import datetime
 from django.db.models.signals import post_save
@@ -271,7 +271,7 @@ def get_doc(request):
             print("share level", level)
             if level == 1:  # 如果share level为1，禁止访问
                 print("禁止方问")
-                return HttpResponse('Unauthorized', status=403)
+                return HttpResponseForbidden()
             data = {'name': doc.name, 'content': doc.content, 'islike': islike, 'level': level}
             return JsonResponse(data)
 
