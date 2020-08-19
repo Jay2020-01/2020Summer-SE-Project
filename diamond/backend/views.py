@@ -126,7 +126,7 @@ def collect_doc(request):
 def uncollect_doc(request):
     print("uncollect doc")
     key = request.POST.get("doc_id")
-    doc_id = key
+    doc_id = transfer(key)
     # print(doc_id)
     user = authentication(request)
     if user is None:
@@ -220,6 +220,8 @@ def get_doc(request):
     # 还需判断该用户权限
     print("get doc")
     key = request.POST.get("doc_id")
+    print("key")
+    print(key)
     doc_id = transfer(key)
     team_id = int(request.POST.get("team_id"))
     doc = Document.objects.get(creator=user, pk=doc_id)

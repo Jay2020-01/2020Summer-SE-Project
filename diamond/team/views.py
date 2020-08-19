@@ -3,6 +3,7 @@ from django.db.models import Q
 from backend.models import User, Team, TeamUser, Document
 from login.views import authentication
 from django.http import JsonResponse, HttpResponse
+from backend.views import transfer
 
 
 # Create your views here.
@@ -200,7 +201,7 @@ def modify_permission(request):
         print("modify_permission success")
     else:
         print("modify_permission fail")
-    
+
     return JsonResponse({})
 
 
@@ -221,7 +222,7 @@ def get_team_docs(request):
         item = {
             'name': doc.name,
             # 'content': d.content,
-            'doc_id': doc.pk,
+            'doc_id': doc.key,
         }
         docs.append(item)
     data = {'team_docs': docs}
