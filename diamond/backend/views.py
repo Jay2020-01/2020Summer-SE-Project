@@ -324,3 +324,24 @@ def get_doc_key(request):
 #     newb = Browsing.objects.create(user=user,doc=doc)
 #     data = {"message": 1}
 #     return JsonResponse(data)
+
+# #搜索文档
+# def search(request):
+#     user = authentication(request)
+#     if user is None:
+#         return HttpResponse('Unauthorized', status=401)
+#     keyword = request.POST.get("keyword")
+#     if not keyword:
+#         return Response({'flag': 0, 'message': '输入不能为空'})
+#     search_doc = Document.objects.filter(name__icontains=keyword)
+#     if not search_doc:
+#         return Response({'flag': 0, 'message': '输入不存在'})
+#     sdoc = []
+#     for d in search_doc:
+#         c_item = {
+#             'name': d.doc.name,
+#             # 'content': d.content,
+#             'doc_id': d.doc.pk,
+#         }
+#         sdoc.append(c_item)
+#     return Response({'code': 1, 'message': '','sdoc':sdoc})
