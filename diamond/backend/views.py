@@ -262,6 +262,7 @@ def my_doc(request):
                 'name': d.name,
                 # 'content': d.content,
                 'doc_id': d.pk,
+                'created_time': d.created_date.__format__('%Y-%m-%d %H:%M'),
             }
             created_docs.append(c_item)
     for d in collections:
@@ -270,6 +271,7 @@ def my_doc(request):
                 'name': d.doc.name,
                 # 'content': d.content,
                 'doc_id': d.doc.pk,
+                'collected_time': d.collected_date.__format__('%Y-%m-%d %H:%M'),
             }
             collected_docs.append(c_item)
     data = {'created_docs': created_docs, 'collected_docs': collected_docs}
