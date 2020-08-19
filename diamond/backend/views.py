@@ -63,7 +63,7 @@ def get_deleted_docs(request):
     for doc in deleted_documents:
         item = {
             'name': doc.name,
-            'doc_id': doc.key,
+            'doc_id': doc.pk,
         }
         deleted_docs.append(item)
     data = {'deleted_docs': deleted_docs}
@@ -388,7 +388,7 @@ def doc_search(request):
         c_item = {
             'name': d.name,
             'doc_id': d.key,
-            'created_time': d.created_date
+            'created_time': d.created_date.__format__('%Y-%m-%d %H:%M'),
         }
         docs.append(c_item)
     return JsonResponse({'docs': docs})
