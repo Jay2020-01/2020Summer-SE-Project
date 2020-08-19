@@ -154,7 +154,12 @@ def exit_team(request):
         return HttpResponse('Unauthorized', status=401)
     team_id = request.POST.get("team_id")
     team = Team.objects.get(id=team_id)
-    team_user = TeamUser.objects.get(team=team, user=user)
+    team_user = TeamUser.objects.filter(team=team, user=user)
+    if team_user:
+        team_user[0].delete()
+        print("exit_team success")
+    else:
+        print("exit_team fail")
     team_user.delete()
     return JsonResponse({})
 
@@ -169,8 +174,12 @@ def delete_team_member(request):
     team = Team.objects.get(id=team_id)
     target_username = request.POST.get("username")
     user = User.objects.get(username=target_username)
-    team_user = TeamUser.objects.get(team=team, user=user)
-    team_user.delete()
+    team_user = TeamUser.objects.filter(team=team, user=user)
+    if team_user:
+        team_user[0].delete()
+        print("delete_team_number success")
+    else:
+        print("delete_team_number  fail")
     return JsonResponse({})
 
 
@@ -183,9 +192,15 @@ def modify_permission(request):
     team = Team.objects.get(id=team_id)
     target_user = request.POST.get("target_user")
     permission_level = request.POST.get("permission_level")
-    team_user = TeamUser.objects.get(user=target_user, team=team)
-    team_user.permission_level = permission_level
-    team_user.save()
+    team_user = TeamUser.objects.filter(team=team, user=target_user)
+    if team_user:
+        team_user = team_user[0]
+        team_user.permission_level = permission_level
+        team_user.save()
+        print("modify_permission success")
+    else:
+        print("modify_permission fail")
+    
     return JsonResponse({})
 
 
