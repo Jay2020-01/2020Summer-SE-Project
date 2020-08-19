@@ -224,7 +224,7 @@ def get_doc(request):
     print(key)
     doc_id = transfer(key)
     team_id = int(request.POST.get("team_id"))
-    doc = Document.objects.get(creator=user, pk=doc_id)
+    doc = Document.objects.get(pk=doc_id)
     if not Collection.objects.filter(Q(user=user) & Q(doc=doc)):
         islike = False
     else:
@@ -241,9 +241,11 @@ def get_doc(request):
             return HttpResponse('Unauthorized', status=401)
     else:  # 如果是个人文档
         if doc.creator == user:  # 如果访问者是创建者
+            print("访问者是创建者")
             data = {'name': doc.name, 'content': doc.content, 'islike': islike, 'level': 4}
             return JsonResponse(data)
         else:  # 如果访问者是其他人，获取文档的share level
+            print("访问者是其他人")
             level = doc.share_level
             if level == 1:  # 如果share level为1，禁止访问
                 return HttpResponse('Unauthorized', status=401)
@@ -297,9 +299,12 @@ def edit_share_level(request):
     user = authentication(request)
     if user is None:
         return HttpResponse('Unauthorized', status=401)
-    key = request.POST.get('key')
+    key = request.POST.get('doc_id')
+    doc_id = transfer(key)
     level = request.POST.get('level')
-    doc = Document.objects.get(key=key)
+    print("edit share level")
+    print(level)
+    doc = Document.objects.get(id=doc_id)
     doc.share_level = level
     doc.save()
     return JsonResponse({})
@@ -309,7 +314,7 @@ def get_doc_key(request):
     key = request.POST.get('doc_id')
     doc_id = transfer(key)
     doc = Document.objects.get(id=doc_id)
-    data = {"share_level": doc.share_level, 'key': doc.key}
+    data = {"share_level": str(doc.share_level)}
     return JsonResponse(data)
 # #最近浏览的文档信息
 # def my_browse_doc(request):
